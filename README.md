@@ -19,7 +19,7 @@ Recreate as much of the original game as is reasonable in the one week we have a
   + How does scoring work?
     - When numbers are able to combine, the sum is added to the total score.
   + When do tiles enter the game?
-    - If movement is possible, when moved a new "2" tile enters the game. (noted: this is usually on the edge of the game board)
+    - If movement is possible, when moved a new "2" or "4" tile enters the game. (noted: this is usually on the edge of the game board)
   + How do you know if you've won?
     - The score of 2048 is reached on any ONE tile. Not combined score. 
   +  How do you know if you've lost?
@@ -33,7 +33,7 @@ Recreate as much of the original game as is reasonable in the one week we have a
   + How would you know if tiles would collide?
     - See above. If the tile sliding is of equal value to the adjacent tile, they will combine. 
   + What happens when tiles collide?
-    - The previous tile that slid is replaced with an empty cell. The adjacent tile it slid into has a new score. Also, a new "2" tile appears randomly on the board. 
+    - The previous tile that slid is replaced with an empty cell. The adjacent tile it slid into has a new score. Also, a new "2" or "4" tile appears randomly on the board. 
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
