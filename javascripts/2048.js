@@ -10,6 +10,9 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 40: //down
       console.log('down');
+      // console.log($('.tile').data());
+      // tile.data("row", "r2");
+      tile.attr({ "data-row": "r2" });
       break;
     case 37: //left
       console.log('left');
