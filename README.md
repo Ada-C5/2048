@@ -16,23 +16,23 @@ Recreate as much of the original game as is reasonable in the one week we have a
 
 ### Project Baseline
 - Play a couple games of [2048](http://gabrielecirulli.github.io/2048/). Think about everything that's likely happening in the code to support what's happening on the screen. Once you've got a feel for the game, talk with your pair and answer the following questions:
-  1. How does scoring work?
+  + How does scoring work?
    - When numbers are able to combine, the sum is added to the total score.
-  1. When do tiles enter the game?
+  + When do tiles enter the game?
     - If movement is possible, when moved a new "2" tile enters the game. (noted: this is usually on the edge of the game board)
-  1. How do you know if you've won?
+  + How do you know if you've won?
    - The score of 2048 is reached on any ONE tile. Not combined score. 
-  1. How do you know if you've lost?
+  +  How do you know if you've lost?
    - You are unable to combine any more tilesand when the squares are full. 
-  1. What makes tiles move?
+  + What makes tiles move?
    - the arrow keys on the keyboard
-  1. What happens when they move?
+  + What happens when they move?
    - They slide in the direction that the arrow key was pressed. They also slide across the entire board until they encounter a tile they cannot combine with. 
-  1. How would you know how far a tile should move?
+  + How would you know how far a tile should move?
    - They can slide across the board to the furthest empty cell. If the cell adjacent to the sliding tile contains a tile of equal value, they will combine. 
-  1. How would you know if tiles would collide?
+  + How would you know if tiles would collide?
    - See above. If the tile sliding is of equal value to the adjacent tile, they will combine. 
-  1. What happens when tiles collide?
+  + What happens when tiles collide?
    - The previous tile that slid is replaced with an empty cell. The adjacent tile it slid into has a new score. Also, a new "2" tile appears randomly on the board. 
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
