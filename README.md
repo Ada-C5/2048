@@ -48,3 +48,10 @@ We are creating pointers, that tell us the last available space a tile can move 
 We check the tile in the direction of the swipe and the closest one to it (in the same direction), if it matches, we add them. Collision!
 9. What happens when tiles collide?
 They add together, some weird CSS happens and it changes their data val and their actual value in the div.
+
+EDGE CASES
+diag 
+      <div class="tile" data-row="0", data-col="0" data-val="2">2</div>
+      <div class="tile" data-row="1", data-col="1" data-val="2">2</div>
+      <div class="tile" data-row="2", data-col="2" data-val="2">2</div>
+      <div class="tile" data-row="3", data-col="3" data-val="2">2</div>
