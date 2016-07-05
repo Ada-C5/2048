@@ -20,6 +20,13 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
+Game.prototype.addTile = function() {
+
+  var tile_div = "<div class='tile' data-row='r" + (Math.floor(Math.random() * 4) + 1) +  "' data-col='c" + (Math.floor(Math.random() * 4) + 1) + "' data-val='2'>2</div>"
+
+  $('#gameboard').append(tile_div)
+}
+
 $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
@@ -36,8 +43,11 @@ $(document).ready(function() {
 
   $('body').keyup(function(event){
 
-    var tile_div = "<div class='tile' data-row='r" + (Math.floor(Math.random() * 4) + 1) +  "' data-col='c" + (Math.floor(Math.random() * 4) + 1) + "' data-val='2'>2</div>"
-    $('#gameboard').append(tile_div)
+    // var tile_div = "<div class='tile' data-row='r" + (Math.floor(Math.random() * 4) + 1) +  "' data-col='c" + (Math.floor(Math.random() * 4) + 1) + "' data-val='2'>2</div>"
+    //
+    // $('#gameboard').append(tile_div)
+
+    game.addTile();
 
   });
 
