@@ -26,7 +26,7 @@ Recreate as much of the original game as is reasonable in the one week we have a
   have one tile that has a value of 2048
 
   1. How do you know if you've lost?
-  if all of the slots have tiles
+  if all of the slots have tiles, and no collisions can happen.
 
   1. What makes tiles move?
   the arrow button
