@@ -1,5 +1,8 @@
 var Game = function() {
-  // Game logic and initialization here
+  this._board = [[null, null, null, null],
+                [null, null, null, null],
+                [null, null, null, null],
+                [null, null, null, null]]
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -20,6 +23,15 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
+Game.prototype.updateBoard = function() {
+  for (i = 0; i < 3; i++) {
+    for (j = 0; j < 3; j++) {
+      slot = "[" + i.toString() + "][" + j.toString() + "]"
+      $(slot).contents() = this._board[i][j]
+    }
+  }
+}
+
 $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
@@ -29,7 +41,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
+
       game.moveTile(tile, event.which);
     }
   });
