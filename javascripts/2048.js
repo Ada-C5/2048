@@ -1,5 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
+  //add rando first value
   this.matrix = [
     {col:0, row: 0, val:0 },
     {col:1, row: 0, val:0 },
@@ -18,6 +19,12 @@ var Game = function() {
     {col:2, row: 3, val:0 },
     {col:3, row: 3, val:0 }
   ]
+  var initialSquare = this.matrix[Math.floor(Math.random()*this.matrix.length)];
+  console.log(initialSquare)
+
+  const initialValues = [2, 4]
+  initialSquare['val'] = initialValues[Math.floor(Math.random()*initialValues.length)];
+  console.log(initialSquare)
 };
 
 Game.prototype.moveTile = function(tile, direction) {
