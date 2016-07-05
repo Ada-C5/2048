@@ -1,12 +1,16 @@
 var Game = function() {
   // Game logic and initialization here
-  //let's do this!
 };
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
+    tile.attr({
+      "data-row": "r0",
+      "data-val": '8',
+    })
+    tile.text('boo')
       console.log('up');
       break;
     case 40: //down
@@ -21,6 +25,28 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
+Game.prototype.newTile = function() {
+  var rows = ["r0", "r1", "r2", 'r3']
+  var columns = ['c0', 'c1', 'c2', 'c3']
+  var row = rows[Math.floor(Math.random() * rows.length)]
+  var column = columns[Math.floor(Math.random() * columns.length)]
+
+
+  var rand = [2,4]
+  var newTileValue = rand[Math.floor(Math.random() * rand.length)]
+  console.log(newTileValue)
+  var tile = $('#gameboard');
+
+ var newTile = $("#gameboard").append("<div>new tile</div>");
+  // tile.attr({
+  //   "data-row": "r3",
+  //   "data-col": "c1",
+  //   "data-val": '16'
+  // })
+  // tile.text(16)
+
+}
+
 $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
@@ -33,5 +59,6 @@ $(document).ready(function() {
 
       game.moveTile(tile, event.which);
     }
+    game.newTile()
   });
 });
