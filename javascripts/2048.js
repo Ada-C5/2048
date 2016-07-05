@@ -38,7 +38,7 @@ Game.prototype.moveTile = function(tile, direction) {
 Game.prototype.updateBoard = function() {
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
-      slot = "[" + i.toString() + "][" + j.toString() + "]"
+      slot = "#[" + i.toString() + "][" + j.toString() + "]"
       $(slot).contents() = this._board[i][j]
     }
   }
