@@ -31,19 +31,20 @@ Game.prototype.newTile = function() {
   var row = rows[Math.floor(Math.random() * rows.length)]
   var column = columns[Math.floor(Math.random() * columns.length)]
 
-
-  var rand = [2,4]
+  var rand = ['2','4']
   var newTileValue = rand[Math.floor(Math.random() * rand.length)]
   console.log(newTileValue)
-  var tile = $('#gameboard');
+  // var tile = $('#gameboard');
+  var damn = "<div class='tile' data-row=" + row + " data-col=" + column + " data-val=" + newTileValue + ">" + newTileValue + "</div>"
+  var newTile = $("#gameboard").append(damn);
 
- var newTile = $("#gameboard").append("<div>new tile</div>");
-  // tile.attr({
+
+  // hi.attr({
   //   "data-row": "r3",
   //   "data-col": "c1",
   //   "data-val": '16'
   // })
-  // tile.text(16)
+  // hi.text(16)
 
 }
 
