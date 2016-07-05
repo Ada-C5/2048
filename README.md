@@ -16,15 +16,38 @@ Recreate as much of the original game as is reasonable in the one week we have a
 
 ### Project Baseline
 - Play a couple games of [2048](http://gabrielecirulli.github.io/2048/). Think about everything that's likely happening in the code to support what's happening on the screen. Once you've got a feel for the game, talk with your pair and answer the following questions:
+@game start - you have 2 tiles (only 2s and 4s initialte at random location.)
   1. How does scoring work?
+  When tiles collide score goes up by the sum
+  Multiple times in same play?
+
   1. When do tiles enter the game?
+  One tile added after every move
+
   1. How do you know if you've won?
+  when any one tile = 2048
+
   1. How do you know if you've lost?
+  no where left to move or 16 filled spaces
+
   1. What makes tiles move?
+  user can click up - down - left- right
+
   1. What happens when they move?
+  All tiles shifts in direction of user request if they can
+  try move left = starts at left and shifts left AND 1st collision to happen
+  if they can collide, they collide. if they cannot collide, they just bump against another
+
   1. How would you know how far a tile should move?
+  tile should move in the direction indicated by user (if it can), as far as it can to collide (if matches) or to empty space
+  NO SINGLE tile can be involved in more than ONE collision.
+
   1. How would you know if tiles would collide?
+  If they have the same score AND they have not already been involved in a collision that turn.
+
   1. What happens when tiles collide?
+  Tiles collide and go in direction of the move, becoming one tile with the value of their sum.
+
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
