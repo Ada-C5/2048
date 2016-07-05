@@ -17,14 +17,32 @@ Recreate as much of the original game as is reasonable in the one week we have a
 ### Project Baseline
 - Play a couple games of [2048](http://gabrielecirulli.github.io/2048/). Think about everything that's likely happening in the code to support what's happening on the screen. Once you've got a feel for the game, talk with your pair and answer the following questions:
   1. How does scoring work?
+  When tiles collide and combine, their combined tile value is added to the player's score.
+
   1. When do tiles enter the game?
+  Every move initiated by the arrow keys randomly generates one tile.
+
   1. How do you know if you've won?
+  You get a tile with the value 2048.
+
   1. How do you know if you've lost?
+  The board is filled with tiles and no room remains to move.
+
   1. What makes tiles move?
+  The four arrow keys move the tiles.
+
   1. What happens when they move?
+  If two same-valued tiles are adjacent on the axis of the move, they combine into one tile with the original value doubled. If two tiles are adjacent but do not share a value, they move as far as they can in the move direction without combining.
+
   1. How would you know how far a tile should move?
+  The tile moves according to the direction of the arrow chosen and whether or not it will come into contact with another same-valued tile.
+
   1. How would you know if tiles would collide?
+  If the tiles are directly adjacent and on the move axis they will collide.
+
   1. What happens when tiles collide?
+  Either the two tiles combine to form one new tile with their original value doubled, or they remain adjacent to one another with no value change.
+
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
