@@ -46,3 +46,23 @@ Recreate as much of the original game as is reasonable in the one week we have a
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
+
+
+tile movement
+wait for click event
+determine direction
+start comparing tiles with the tiles that are furthest in the direction of the arrow
+
+
+1. get the direction of the arrow
+2. use direction to pick which square to start looking at
+3. determine which in the first row/column have values
+4. pull all values from first row/column and push in order to array
+
+.tile
+  (have to index array here)
+  dataset
+    val (tile value)
+  textContent (display)
+
+  after pulling dataset from DOM 
