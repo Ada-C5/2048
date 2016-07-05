@@ -35,15 +35,18 @@ Game.prototype.newTile = function() {
   var rand = [2,4]
   var newTileValue = rand[Math.floor(Math.random() * rand.length)]
   console.log(newTileValue)
-  var tile = $('#gameboard');
+  // var tile = $('#gameboard');
 
- var newTile = $("#gameboard").append("<div>new tile</div>");
-  // tile.attr({
+  var newTile = $("#gameboard").append("<div>new tile</div>");
+
+  var lastTile = $("#gameboard:last-child")
+  console.log(lastTile)
+  // lastTile.attr({
   //   "data-row": "r3",
   //   "data-col": "c1",
   //   "data-val": '16'
   // })
-  // tile.text(16)
+  // lastTile.text(16)
 
 }
 

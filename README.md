@@ -16,7 +16,7 @@ Recreate as much of the original game as is reasonable in the one week we have a
 
 ### Project Baseline
 - Play a couple games of [2048](http://gabrielecirulli.github.io/2048/). Think about everything that's likely happening in the code to support what's happening on the screen. Once you've got a feel for the game, talk with your pair and answer the following questions:
-@game start - you have 2 tiles (only 2s and 4s initialte at random location.)
+@game start - you have 2 tiles (only 2s and 4s initialize at random location.)
   1. How does scoring work?
   When tiles collide score goes up by the sum
   Multiple times in same play?
@@ -34,7 +34,7 @@ Recreate as much of the original game as is reasonable in the one week we have a
   user can click up - down - left- right
 
   1. What happens when they move?
-  All tiles shifts in direction of user request if they can
+  All tiles shift in direction of user request if they can
   try move left = starts at left and shifts left AND 1st collision to happen
   if they can collide, they collide. if they cannot collide, they just bump against another
 
