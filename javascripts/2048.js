@@ -17,8 +17,20 @@ Game.prototype.moveTile = function(tile, direction) {
     case 37: //left
       console.log('left');
       // this gets the column position of the tile
-      var col = $('.tile')[0]
-      col.setAttribute('data-col', 'c0')
+      var tileC0 = $('.tile')[0]
+      tileC0.setAttribute('data-col', 'c0')
+      var tileC1 = $('.tile')[1]
+      
+      // logic for c1 collapsing into C0 
+
+      // check to see if c0 is empty 
+      // if empty, move all the way to c0 from c1 
+      // if not empty, check and see if value is the same as c1
+        // if the same, they gotta merge
+          // merging happens first, then they move all the way across the board 
+            // c1 tile gets removed completely
+            // c0 tile gets new value of 4 (for right now)
+        // if not the same, nobody moves 
 
       break;
     case 39: //right
