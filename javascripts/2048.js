@@ -2,6 +2,18 @@ var Game = function() {
   // Game logic and initialization here
 };
 
+Game.prototype.collide = function (spaceOne, spaceTwo) {
+  // spaces specified hold values
+  if (spaceOne === spaceTwo) {
+    spaceOne += spaceTwo
+    spaceTwo = null
+  } else {
+    return false
+  }
+
+  return spaceOne
+}
+
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
