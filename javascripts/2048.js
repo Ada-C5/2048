@@ -16,6 +16,12 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 39: //right
       console.log('right');
+      $(".tile").each(function() {
+        let num = parseInt(this.dataset.col[1])
+        num = num + 1
+
+        this.dataset.col = 'c' + num.toString()
+      })
       break;
   }
 };
@@ -29,7 +35,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
+
       game.moveTile(tile, event.which);
     }
   });
