@@ -5,17 +5,28 @@ var Game = function() {
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
-    case 38: //up
-      console.log('up');
-      break;
-    case 40: //down
-      console.log('down');
-      break;
+    // case 38: //up
+    //   console.log('up');
+    //   break;
+    // case 40: //down
+    //   console.log('down');
+    //   var row = $('.tile').data('row')
+    //   var col = $('.tile').data('col')
+    //   debugger; 
+    //   break;
     case 37: //left
       console.log('left');
+      // this gets the column position of the tile
+      var col = $('.tile')[0]
+      col.setAttribute('data-col', 'c0')
+
       break;
     case 39: //right
       console.log('right');
+      var col = $('.tile')[0]
+      col.setAttribute('data-col', 'c3')
+
+
       break;
   }
 };
