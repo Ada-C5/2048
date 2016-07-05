@@ -17,23 +17,23 @@ Recreate as much of the original game as is reasonable in the one week we have a
 ### Project Baseline
 - Play a couple games of [2048](http://gabrielecirulli.github.io/2048/). Think about everything that's likely happening in the code to support what's happening on the screen. Once you've got a feel for the game, talk with your pair and answer the following questions:
   + How does scoring work?
-   - When numbers are able to combine, the sum is added to the total score.
+    - When numbers are able to combine, the sum is added to the total score.
   + When do tiles enter the game?
     - If movement is possible, when moved a new "2" tile enters the game. (noted: this is usually on the edge of the game board)
   + How do you know if you've won?
-   - The score of 2048 is reached on any ONE tile. Not combined score. 
+    - The score of 2048 is reached on any ONE tile. Not combined score. 
   +  How do you know if you've lost?
-   - You are unable to combine any more tilesand when the squares are full. 
+    - You are unable to combine any more tilesand when the squares are full. 
   + What makes tiles move?
-   - the arrow keys on the keyboard
+    - the arrow keys on the keyboard
   + What happens when they move?
-   - They slide in the direction that the arrow key was pressed. They also slide across the entire board until they encounter a tile they cannot combine with. 
+    - They slide in the direction that the arrow key was pressed. They also slide across the entire board until they encounter a tile they cannot combine with. 
   + How would you know how far a tile should move?
-   - They can slide across the board to the furthest empty cell. If the cell adjacent to the sliding tile contains a tile of equal value, they will combine. 
+    - They can slide across the board to the furthest empty cell. If the cell adjacent to the sliding tile contains a tile of equal value, they will combine. 
   + How would you know if tiles would collide?
-   - See above. If the tile sliding is of equal value to the adjacent tile, they will combine. 
+    - See above. If the tile sliding is of equal value to the adjacent tile, they will combine. 
   + What happens when tiles collide?
-   - The previous tile that slid is replaced with an empty cell. The adjacent tile it slid into has a new score. Also, a new "2" tile appears randomly on the board. 
+    - The previous tile that slid is replaced with an empty cell. The adjacent tile it slid into has a new score. Also, a new "2" tile appears randomly on the board. 
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
