@@ -1,5 +1,5 @@
 var Game = function() {
-  // Game logic and initialization here
+  this._score = 0
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -7,6 +7,21 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
+
+      var c0 = $(tile).data('col', 'c0')
+      var c1 = $(tile).data('col', 'c1')
+      var c2 = $(tile).data('col', 'c2')
+      var c3 = $(tile).data('col', 'c3')
+
+      if (c0.length !== 4) {
+        $.each(c0, function(index, value) {
+          if ($(value).data('row') !== 'r0') {
+            // now it does equal that
+            // increment iterator up
+          }
+        })
+      }
+      
       break;
     case 40: //down
       console.log('down');
@@ -29,7 +44,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
+
       game.moveTile(tile, event.which);
     }
   });
