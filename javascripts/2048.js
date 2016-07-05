@@ -16,14 +16,24 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 39: //right
       console.log('right');
-      $(".tile").each(function() {
-        let num = parseInt(this.dataset.col[1])
-        num = num + 1
-
-        this.dataset.col = 'c' + num.toString()
-      })
+      seperateMovementFunction('col', '+')
       break;
   }
+
+  function seperateMovementFunction(type, operand) {
+    tile.each(function() {
+      let num = parseInt(this.dataset[type][3])
+      if (operand === '+') {
+        num = num + 1
+      } else if (operand === '-') {
+        num = num - 1
+      }
+
+
+      this.dataset.col = type + num.toString()
+    })
+  }
+
 };
 
 $(document).ready(function() {
