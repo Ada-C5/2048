@@ -1,5 +1,23 @@
 var Game = function() {
   // Game logic and initialization here
+  this.matrix = [
+    {col:0, row: 0, val:0 },
+    {col:1, row: 0, val:0 },
+    {col:2, row: 0, val:0 },
+    {col:3, row: 0, val:0 },
+    {col:0, row: 1, val:0 },
+    {col:1, row: 1, val:0 },
+    {col:2, row: 1, val:0 },
+    {col:3, row: 1, val:0 },
+    {col:0, row: 2, val:0 },
+    {col:1, row: 2, val:0 },
+    {col:2, row: 2, val:0 },
+    {col:3, row: 2, val:0 },
+    {col:0, row: 3, val:0 },
+    {col:1, row: 3, val:0 },
+    {col:2, row: 3, val:0 },
+    {col:3, row: 3, val:0 }
+  ]
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -18,7 +36,11 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('right');
       break;
   }
+
+
 };
+
+
 
 $(document).ready(function() {
   console.log("ready to go!");
@@ -29,7 +51,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
+
       game.moveTile(tile, event.which);
     }
   });
