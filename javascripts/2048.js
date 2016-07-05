@@ -35,7 +35,8 @@ $(document).ready(function() {
   });
 
   $('body').keyup(function(event){
-    var tile_div = "<div class='tile' data-row='r1' data-col='c3' data-val='2'>2</div>"
+
+    var tile_div = "<div class='tile' data-row='r" + (Math.floor(Math.random() * 4) + 1) +  "' data-col='c" + (Math.floor(Math.random() * 4) + 1) + "' data-val='2'>2</div>"
     $('#gameboard').append(tile_div)
 
   });
