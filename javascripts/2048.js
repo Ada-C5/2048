@@ -12,7 +12,14 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('down');
       // console.log($('.tile').data());
       // tile.data("row", "r2");
-      tile.attr({ "data-row": "r2" });
+      // tile.attr({ "data-row": "r2" });
+      // var $sorted = $(".tile[data-row='r0']");
+      // var $gameboard = $("#gameboard");
+      // $sorted = $sorted.sort(function (a, b) {
+      // return $(a).attr('data-col') - $(b).attr('data-col');
+      // })
+      // $sorted.detach().appendTo(gameboard);
+      // console.log($sorted)
       break;
     case 37: //left
       console.log('left');
@@ -32,7 +39,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
+
       game.moveTile(tile, event.which);
     }
   });
