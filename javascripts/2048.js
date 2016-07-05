@@ -29,8 +29,11 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
-      game.moveTile(tile, event.which);
+
+      game.moveTile(tile, event.which);// event.which means which key
     }
   });
+    $('body').keyup(function(event){
+      var tile_div = $('#gameboard').append("<div class='tile' data-row='r1', data-col='c3' data-val='2'>2</div>")
+    })
 });
