@@ -28,7 +28,9 @@ Game.prototype.moveTile = function(tile, direction) {
 
     case 37: //left
       console.log('left');
-      var row_array = $(".tile[data-row='r2']");
+      let available = [];
+      // loop through all rows
+      var row_array = $(".tile[data-row=r2]");
       sort_things(row_array, "data-col", "left");
       let col = 0;
       for (let i = 0; i < row_array.length; i++) { // .length is needed here instead of 4 since the row won't always be full
@@ -43,11 +45,20 @@ Game.prototype.moveTile = function(tile, direction) {
           $(row_array[i]).text((row_array)[i].dataset.val);
           // remove the 2nd element from the DOM
           $(row_array[i+1]).remove();
-          // increment to skip over the value that was just removed (still in the array used in this loop)
-          i++;
+          // remove from the array
+          row_array.splice(i+1, 1);
         }
         col++;
       }
+      // 4 - tiles.count - how many spaces available
+      let available_count = 4 - row_array.length;
+      // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
+      for (let i = 0; i < available_count; i++) {
+        let col = 3 - i;
+        // when looping through all rows, change the row value
+        available.push(['r2', 'c' + col]);
+      }
+      console.log(available);
       break;
 
     case 39: //right
