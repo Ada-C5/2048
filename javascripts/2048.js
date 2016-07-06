@@ -7,27 +7,58 @@ Game.prototype.moveTile = function(tiles, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
-      this.moves("data-row", "r0")
-      // this.moveUp()
+      this.legit("up")
+      // this.moves("data-row", "r0")
       break;
     case 40: //down
       console.log('down');
-      this.moves("data-row", "r3")
-      // this.moveDown()
+      this.legit("down")
+      // this.moves("data-row", "r3")
       break;
     case 37: //left
       console.log('left');
-      this.moves("data-col", "c0")
+      this.legit("left")
+      // this.moves("data-col", "c0")
       break;
     case 39: //right
       console.log('right');
-      this.moves("data-col", "c3")
+      this.legit("right")
+      // this.moves("data-col", "c3")
       break;
   }
 };
 
 Game.prototype.moves = function (data, space) {
+  this.legit()
   $(".tile").attr(data, space)
+}
+
+Game.prototype.legit = function (direction) {
+  // if left or right use rows
+  //if up or down use col
+  if (direction === "left") {
+    for (var row = 0; row < 4; row++) {
+      var current = $("div[data-row=r" + row + "]")
+      if (current.length && ($(current[0]).data("val") == $(current[1]).data("val"))) { //current.length is null check
+        var tile1 = $(current[0])
+        var tile2 = $(current[1])
+        var total = tile1.data("val") + tile2.data("val")
+        tile1.attr("data-val", total)
+        tile1.html(total)
+        tile2.remove()
+        current.attr("data-col", "c0")
+      }
+    }
+  } else if (direction === "right") {
+    $(".tile").attr("data-col", "c3")
+
+  } else if (direction === "up") {
+    $(".tile").attr("data-row", "r0")
+
+  } else if (direction === "down") {
+    $(".tile").attr("data-row", "r3")
+
+  }
 }
 
 $(document).ready(function() {
