@@ -39,22 +39,29 @@ Game.prototype.legit = function (direction) {
   if (direction === "left") {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
+
       console.log(current);
-      current.each(function (key, value) {
-        if (current[key + 1]) { // edge case, if next thing is not null, go on
-          console.log($(value).data("val"));
-          console.log($(current[key + 1]).data("val"));
-          var curr = $(value)
-          var next = $(current[key + 1])
+
+      current.each(function (i, val) {
+        if (current[i + 1]) { // edge case, if next thing is not null, go on
+
+          console.log($(val).data("val"));
+
+          console.log($(current[i + 1]).data("val"));
+
+          var curr = $(val)
+          var next = $(current[i + 1])
           if (curr.data("val") === next.data("val")) {
             var total = curr.data("val") + next.data("val")
             curr.attr("data-val", total).html(total)
             next.attr("data-col", curr.data("col"))
             next.remove()
-            current.splice([key + 1], 1)
+            current.splice([i + 1], 1)
           }
         }
       })
+      console.log("this is the current");
+      console.log(current);
     }
   } else if (direction === "right") {
     $(".tile").attr("data-col", "c3")
