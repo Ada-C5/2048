@@ -4,7 +4,7 @@ var Game = function() {
     [2,2,0,0],
     [0,0,0,0],
     [0,0,2,0],
-    [2,0,0,2]
+    [4,0,0,2]
   ]
 };
 
@@ -14,6 +14,8 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
 
       console.log('up');
+        // for (let i = 0; i < tile.length; i++)
+       tile.attr({ "data-row": "0" });
       break;
 
     case 40: //down
@@ -32,7 +34,7 @@ Game.prototype.moveTile = function(tile, direction) {
 
 Game.prototype.moveAll = function() {
 
-  console.log(this._board)
+  console.log("START", this._board)
   for (let col = 0; col < 4; col++) {
     let pointer = 0;
     let queryStr = "";
@@ -40,16 +42,8 @@ Game.prototype.moveAll = function() {
     let tempAddRow = 0;
     let currentValue = 0;
 
-//     // queryStr = ".tile[data-col="+col+"]"
-    // console.log("---------------------------------------------- ")
-//
-// console.log("col ", col)
     for (let row = 0; row < 4; row++) {
       // '.tile[data-row=row]'
-      // $(queryStr)
-      //     console.log(" *********")
-      //
-      // console.log("row ", row)
 
       currentValue = this._board[row][col]
       // console.log("")
@@ -64,7 +58,7 @@ Game.prototype.moveAll = function() {
         console.log("FIRST")
 
         this._board[pointer][col] = currentValue*2 ;
-        this._board[row][col]  = 0;
+        this._board[row][col] = 0;
         pointer++;
         tempAdd = 0;
         // tempAddRow = row;
@@ -95,7 +89,7 @@ Game.prototype.moveAll = function() {
         this._board[pointer][col] = currentValue;
         this._board[row][col] = 0;
       }
-      
+
       if (currentValue > 0) {
         console.log("FOURTH")
         tempAdd = currentValue;
@@ -123,7 +117,7 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-    console.log(game._board)
+    console.log("START000000:", game._board)
 
   console.log(game.moveAll())
 
