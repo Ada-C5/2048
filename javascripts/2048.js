@@ -86,14 +86,46 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
 
 
       break;
-    case 37: //left
-      console.log('left');
-      //check each square right of the designated square ranging C0-C3
-
-      break;
     case 39: //right
       console.log('right');
-      //check each square left of the designated square ranging C3-C0
+      //check each square left of the designated square ranging C0-C3
+      for (let r = 0; r<4; r++) { //doing it for each column
+        var this_row = matrix.filter(function(x) {return x['row'] == r})
+        console.log(this_row) //works!!
+        for (var c = 2; c > -1 ; c--) {
+          if (this_row[c]["val"] != "") { //do this whenver you find a tile with a number
+            let currentTile = this_row[c]["val"]
+            for (var s = c+1; s < 4; s++) {
+              if (this_row[s]["val"] == "") { //if the tile above is empty, swap the values
+                this_row[s]["val"] = currentTile
+                this_row[s-1]["val"] = ""
+              }
+            }
+          }
+        }
+        render(game)
+      }
+
+      break;
+    case 37: //left
+      console.log('left');
+      //check each square right of the designated square ranging C3-C0
+      for (let r = 0; r<4; r++) {
+        var this_row = matrix.filter(function(x) {return x['row'] == r})
+        console.log(this_row) //works!!
+        for (var c = 1; c < 4; c++) {
+          if (this_row[c]["val"] != "") { //do this whenver you find a tile with a number
+            let currentTile = this_row[c]["val"]
+            for (var s = c-1; s > -1; s--) {
+              if (this_row[s]["val"] == "") { //if the tile above is empty, swap the values
+                this_row[s]["val"] = currentTile
+                this_row[s+1]["val"] = ""
+              }
+            }
+          }
+        }
+        render(game)
+      }
       break;
   }
 
