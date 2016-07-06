@@ -1,4 +1,31 @@
 Game.prototype.moveLeft = function () {
+  for (let i = 3; i >= 0; i --) {
+    for (let j = 3; j >= 0; j --) {
+      this.collide(this.board[i][j], this.board[i][j-1])
+      }
+    }
+  }
+}
+
+Game.prototype.moveRight = function () {
+  for (let i = 0; i < 4; i ++) {
+    for (let j = 0; j < 4; j ++) {
+      this.collide(this.board[i][j], this.board[i][j+1])
+      }
+    }
+  }
+}
+
+Game.prototype.moveUp = function () {
+  for (let i = 3; i > 0; i --) {
+    for (let j = 3; j > 0; j --) {
+      this.collide(this.board[i][j], this.board[i][j-1])
+      }
+    }
+  }
+}
+
+Game.prototype.moveDown = function () {
   for (let i = 3; i > 0; i --) {
     for (let j = 3; j > 0; j --) {
       this.collide(this.board[i][j], this.board[i][j-1])
