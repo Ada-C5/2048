@@ -120,6 +120,10 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_row[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_row[s]["val"] = currentTile
                 this_row[s+1]["val"] = ""
+              } else if (this_row[s]["val"] == this_row[s+1]["val"]) {
+                console.log("1")
+                this_row[s]["val"] = currentTile * 2
+                this_row[s+1]["val"] = ""
               }
             }
           }
