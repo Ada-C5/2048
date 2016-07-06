@@ -13,15 +13,19 @@ Game.prototype.moveTile = function(tile, direction) {
       var c2 = $(tile).data('col', 'c2')
       var c3 = $(tile).data('col', 'c3')
 
-      if (c0.length !== 4) {
-        $.each(c0, function(index, value) {
+      if (c1.length !== 4) {
+        $.each(c1, function(index, value) {
+          console.log(value)
           if ($(value).data('row') !== 'r0') {
-            // now it does equal that
+            console.log("my row is not r0")
+            $(value).attr('data-row', 'r0')
+            // $(value).switchClass('tile','boop')
+            console.log(value)
             // increment iterator up
           }
         })
       }
-      
+
       break;
     case 40: //down
       console.log('down');
