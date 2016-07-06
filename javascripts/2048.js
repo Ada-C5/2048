@@ -39,9 +39,7 @@ Game.prototype.moveTile = function(tile, direction) {
     // if that value is the same, move up and collide, run score tile method
     tile.attr({
       "data-row": "r0",
-      "data-val": '8',
     })
-    // tile.text('boo')
       console.log('up');
       break;
     case 40: //down
@@ -74,17 +72,17 @@ Game.prototype.newTile = function() {
       var availableSpace = this.unoccupied()[Math.floor(Math.random() * this.unoccupied().length)]
       var row = /.{2}/.exec(availableSpace)[0]
       var column = /.{2}$/.exec(availableSpace)[0]
-      console.log(this.unoccupied())
-      console.log(row)
-      console.log(column)
+      // console.log(this.unoccupied())
+      // console.log(row)
+      // console.log(column)
 
       var rand = ['2','4']
-      var newTileValue = rand[Math.floor(Math.random() * rand.length)]
-
-      var damn = "<div class='tile' data-row=" + row + " data-col=" + column + " data-val=" + newTileValue + ">" + newTileValue + "</div>"
-      var newTile = $("#gameboard").append(damn);
+      var newTileValue = rand[Math.floor(Math.random() * rand.length)] //returns string 2 or 4
       var property = row + column
       this.board[property] = newTileValue
+
+      var newTileDiv = "<div class='tile' data-row=" + row + " data-col=" + column + " data-val=" + this.board[property] + ">" + this.board[property] + "</div>"
+      var newTile = $("#gameboard").append(newTileDiv);
       console.log(this.board)
   }
 }
