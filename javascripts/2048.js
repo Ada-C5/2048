@@ -15,29 +15,30 @@ Game.prototype.moveTile = function(tile, direction) {
 
       if (c0.length !== 4) {
         $.each(c0, function(index, value) {
-          if ($(value).data('row') !== ('r' + index)) {
-            $(value).attr('data-row', ('r' + index))
-            index++
+          if ($(value).data('val') === ($(c0[index+1]).data('val'))) {
+            let val = $(value).attr('data-val')
+            $(value).attr('data-val', (val * 2))
+            $(value).text(val * 2)
+
+            $(c0[index+1]).remove()
+
+            c0 = jQuery.grep(c0, function(value) {
+              return value != c0[index+1];
+            })
           }
+        })
 
-          $.each(c0, function(index, value) {
-            if ($(value).data('val') === $(c0[index+1]).data('val')) {
-              let val = $(value).attr('data-val')
-              $(value).attr('data-val', (val * 2))
-              $(value).text(val * 2)
+        // console.log(c0[0])
+        // console.log(c0[1])
 
-              $(c0[index+1]).remove()
-
-              c0 = jQuery.grep(c0, function(value) {
-                return value != c0[index+1];
-              });
-
-              console.log(c0)
-              index++
-            }
-          })
-        }
-      })
+        $.each(c0, function(index, moving) {
+          console.log(moving)
+          if ($(moving).data('row') !== ('r' + index)) {
+            $(moving).attr('data-row', ('r' + index))
+            console.log(index)
+          }
+        })
+      }
 
 
 
