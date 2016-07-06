@@ -1,7 +1,8 @@
 var Game = function () {
   // Game logic and initialization here
-  thisGame = this
+  var thisGame = this
   this.gameOver = false
+  this.score = 0
 
   this.newGame = function () {
     // spawn 2 tiles in random spaces
@@ -50,6 +51,10 @@ var Game = function () {
     }
   }
 
+  this.addScore = function (num) {
+    this.score = this.score + num
+  }
+
   this.hasWon = function (tile) {
     if (tile.dataset.val === "2048") {
       console.log('won!')
@@ -95,6 +100,8 @@ Game.prototype.moveTile = function (tile, direction) {
   }
   this.newTile()
 
+  // call gameOver() before every move
+  // call addScore() for every combination
 }
 
 $(document).ready(function () {
@@ -114,6 +121,7 @@ $(document).ready(function () {
         var tile = $('.tile')
 
         game.moveTile(tile, event.which)
+        updateScore()
       }
     }
   })
@@ -126,5 +134,8 @@ $(document).ready(function () {
     startGame()
   })
 
+  function updateScore() {
+    $('#score').text(game.score)
+  }
 
 })
