@@ -7,42 +7,28 @@ Game.prototype.moveTile = function(tiles, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
-      this.moveUp()
+      this.moves("data-row", "r0")
+      // this.moveUp()
       break;
     case 40: //down
       console.log('down');
-      this.moveDown()
+      this.moves("data-row", "r3")
+      // this.moveDown()
       break;
     case 37: //left
       console.log('left');
-      this.moveLeft()
+      this.moves("data-col", "c0")
       break;
     case 39: //right
       console.log('right');
-      this.moveRight()
+      this.moves("data-col", "c3")
       break;
   }
 };
 
-Game.prototype.moveLeft = function(){
-  var tiles = $(".tile")
-  tiles.attr('data-col', 'c0')
-};
-
-Game.prototype.moveUp = function(){
-  var tiles = $(".tile")
-  tiles.attr('data-row', 'r0')
-};
-
-Game.prototype.moveRight = function(){
-  var tiles = $(".tile")
-  tiles.attr('data-col', 'c3')
-};
-
-Game.prototype.moveDown = function(){
-  var tiles = $(".tile")
-  tiles.attr('data-row', 'r3')
-};
+Game.prototype.moves = function (data, space) {
+  $(".tile").attr(data, space)
+}
 
 $(document).ready(function() {
   console.log("ready to go!");
