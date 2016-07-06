@@ -40,7 +40,7 @@ Game.prototype.updateBoard = function() {
     for (j = 0; j < 3; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
       console.log(slot)
-      $('div[id='+ slot + ']').html()
+      $('div[id='+ slot + ']').html(this._board[i][j])
     }
   }
 }
