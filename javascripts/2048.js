@@ -10,17 +10,26 @@ Game.prototype.moveTile = function(tile, direction) {
       "data-row": "r0",
       "data-val": '8',
     })
-    tile.text('boo')
+    // tile.text('boo')
       console.log('up');
       break;
     case 40: //down
       console.log('down');
+      tile.attr({
+        'data-row': 'r3'
+      })
       break;
     case 37: //left
       console.log('left');
+      tile.attr({
+        'data-col': 'c0'
+      })
       break;
     case 39: //right
       console.log('right');
+      tile.attr({
+        'data-col': 'c3'
+      })
       break;
   }
 };
@@ -34,17 +43,9 @@ Game.prototype.newTile = function() {
   var rand = ['2','4']
   var newTileValue = rand[Math.floor(Math.random() * rand.length)]
   console.log(newTileValue)
-  // var tile = $('#gameboard');
+
   var damn = "<div class='tile' data-row=" + row + " data-col=" + column + " data-val=" + newTileValue + ">" + newTileValue + "</div>"
   var newTile = $("#gameboard").append(damn);
-
-
-  // hi.attr({
-  //   "data-row": "r3",
-  //   "data-col": "c1",
-  //   "data-val": '16'
-  // })
-  // hi.text(16)
 
 }
 
