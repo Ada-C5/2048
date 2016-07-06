@@ -1,8 +1,8 @@
-
-var Game = function() {
+function Game() {
   var self = this; 
 
-   this.container = {
+  this.gameOver = null;
+  this.container = {
     1:  {},
     2:  {},
     3:  {},
@@ -19,6 +19,12 @@ var Game = function() {
     14: {},
     15: {},
     16: {}
+  }
+
+  this.initialize = function() {
+    self.newTile(); 
+    //event listener 
+    $('body').keydown(self.moveTile()); 
   }
 
   this.generateBoard = function() {
@@ -42,7 +48,7 @@ var Game = function() {
       
 
         var newVal = [2, 4];
-        var randoVal = newtile[Math.floor(Math.random() * newVal.length)]
+        var randoVal = newVal[Math.floor(Math.random() * newVal.length)]
          
         // update object
         self.container[space].col = randoCol;
@@ -53,9 +59,33 @@ var Game = function() {
         randoTile.attr('data-row', "r" + randoRow);
         randoTile.attr('data-col', "c" + randoCol);
         randoTile.attr('data-val', randoVal);
-        randoTile.text(val);
+        randoTile.text(randoVal);
       } 
     };
+  }
+
+  this.buildGameBoard = function() {
+    var array0 = [0, 0, 0, 0];
+    var array1 = [0, 0, 0, 0];
+    var array2 = [0, 0, 0, 0];
+    var array3 = [0, 0, 0, 0];
+    for (var tile in self.container) {
+      if (self.container[tile].col === 0) {
+        array0[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
+      } else if (self.container[tile].col === 1) {
+        array1[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
+      } else if (self.container[tile].col === 2) {
+        array2[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
+      } else if (self.container[tile].col === 3) {
+        array3[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
+      }
+    };
+    console.log(array0);
+    console.log(array1)
+    console.log(array2)
+    console.log(array3)
+    
+    self.newTile();
   }
  
  this.moveTile = function(tile, direction) {
@@ -79,20 +109,13 @@ var Game = function() {
 }
 
 
-$(document).ready(function() {
-  console.log("ready to go!");
-  // Any interactive jQuery functionality
-  var game = new Game();
-
-  $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40];
-    if (arrows.indexOf(event.which) > -1) {
-      var tile = $('.tile');
-      
-      game.moveTile(tile, event.which);
-    }
-  });
-});
+// $(document).ready(function() {
+//   console.log("ready to go!");
+//     $('.new-game').on('click', function(event) {
+//     $('.tile').text('')
+//     $('.tile').css('background', 'rgba(238, 228, 218, 0.35)')
+//     var game = new Game(); 
+//   })
 
 // this gets the column position of the tile
 // var tileC0 = $('.tile')[0]
