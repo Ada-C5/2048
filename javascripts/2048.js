@@ -52,10 +52,8 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
         }
       })
       if (current.length > 0) {
-        console.log("i'm in");
         for (var j = 0; j < current.length; j++) {
           var space = $(current[j])
-          console.log(space);
           space.attr("data-col", "c" + j)
         }
       }
