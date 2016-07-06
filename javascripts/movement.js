@@ -17,9 +17,9 @@ Game.prototype.moveRight = function () {
 }
 
 Game.prototype.moveUp = function () {
-  for (let i = 3; i > 0; i --) {
-    for (let j = 3; j > 0; j --) {
-      this.collide(this.board[i][j], this.board[i][j-1])
+  for (let i = 3; i >= 0; i --) {
+    for (let j = 3; j >= 0; j --) {
+      this.collide(this.board[i][j], this.board[i+1][j])
       }
     }
   }
@@ -28,7 +28,7 @@ Game.prototype.moveUp = function () {
 Game.prototype.moveDown = function () {
   for (let i = 3; i > 0; i --) {
     for (let j = 3; j > 0; j --) {
-      this.collide(this.board[i][j], this.board[i][j-1])
+      this.collide(this.board[i][j], this.board[i+1][j])
       }
     }
   }
