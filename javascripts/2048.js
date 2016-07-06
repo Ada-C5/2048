@@ -31,7 +31,12 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('right');
       var row_array = $(".tile[data-row='r0']");
       sort_things(row_array, "data-col", "right")
-      console.log(row_array);
+      for (let i = 0; i < 4; i++) {
+        let col = 3 - i;
+        console.log(row_array[i]);
+        $(row_array[i]).attr({ "data-col": "c" + col });
+      }
+      // console.log(row_array[0].getAttribute("data-col")[1]);
       break;
   }
 };
