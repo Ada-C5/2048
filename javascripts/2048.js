@@ -1,8 +1,8 @@
 var Game = function() {
-  this._board = [[null, 2, 2, 2],
+  this._board = [[null, null, 2, 2],
+                [null, null, 2, null],
                 [null, 2, 2, null],
-                [2, 2, 2, null],
-                [2, null, null, 2]]
+                [2, 2, null, null]]
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -20,6 +20,7 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 39: //right
       console.log('right');
+      this.moveRight()
       break;
   }
 };
@@ -50,16 +51,32 @@ Game.prototype.collide = function (spaceOne, spaceTwo) {
   return spaceOne
 }
 
-
 Game.prototype.moveLeft = function () {
-  for (let i = 0; i < 4; i ++) {
-    for (let j = 0; j < 4; j ++) {
-      for (let k = j; k >= 0; k --) {
-        console.log("K")
-        let newValue = this.collide(this._board[i][k], this._board[i][k+1])
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      for (let k = j; k >= 0; k--) {
+        console.log('K')
+        let newValue = this.collide(this._board[i][k], this._board[i][k + 1])
         if (newValue !== false) {
           this._board[i][k] = newValue
-          if (k < 3) { this._board[i][k+1] = null }
+          if (k < 3) { this._board[i][k + 1] = null }
+        } if (newValue === false) {
+          console.log('FALSE!!!')
+        }
+      }
+    }
+  }
+}
+
+Game.prototype.moveRight = function () {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 4; j > 0; j--) {
+      for (let k = j; k <= 4; k++) {
+        console.log('K')
+        let newValue = this.collide(this._board[i][k], this._board[i][k - 1])
+        if (newValue !== false) {
+          this._board[i][k] = newValue
+          if (k > 0) { this._board[i][k - 1] = null }
         } if (newValue === false) {
           console.log('FALSE!!!')
         }
