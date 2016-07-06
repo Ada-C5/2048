@@ -27,23 +27,14 @@ var Game = function() {
   // console.log(initialSquare)
 };
 
+
+
 Game.prototype.moveTile = function(tile, direction, matrix, game) {
   // Game method here
+
   switch(direction) {
     case 38: //up
       console.log('up');
-      //check each square above the designated square ranging R0-R3
-      // if tile_hash[row] === R0
-        // check all squares with the same column value with row values 1-3 to see if they are occupied
-      // else if tile_hash[row] === R1
-        // check all squares with the same column value with row values 2-3 to see if they are occupied
-      // else if tile_hash[row] === R2
-        // check square with same column value and R3 to see if it is occupied
-
-      //first column
-        //check upmost (row 0) cell for non=empty values
-
-
       // MOVING COLUMNS (UP)
       for (let c = 0; c<4; c++) {
         var this_col = matrix.filter(function(x) {return x['col'] == c})
@@ -55,17 +46,21 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_col[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_col[s]["val"] = currentTile
                 this_col[s+1]["val"] = ""
+              } else if (this_col[s]["val"] == this_col[s+1]["val"]) {
+                console.log("1")
+                this_col[s]["val"] = currentTile * 2
+                this_col[s+1]["val"] = ""
               }
             }
           }
         }
-        render(game)
       }
+      randomTile(game)
+      render(game)
 
       break;
     case 40: //down
       console.log('down');
-      //check each square below the designated square ranging R3-R0
       // MOVING COLUMNS (DOWN)
       for (let c = 0; c<4; c++) { //doing it for each column
         var this_col = matrix.filter(function(x) {return x['col'] == c})
@@ -77,18 +72,23 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_col[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_col[s]["val"] = currentTile
                 this_col[s-1]["val"] = ""
+              } else if (this_col[s]["val"] == this_col[s-1]["val"]) {
+                console.log("1")
+                this_col[s]["val"] = currentTile * 2
+                this_col[s-1]["val"] = ""
               }
             }
           }
         }
-        render(game)
       }
+      randomTile(game)
+      render(game)
 
 
       break;
     case 39: //right
       console.log('right');
-      //check each square left of the designated square ranging C0-C3
+      //MOVING ROWS RIGHT
       for (let r = 0; r<4; r++) { //doing it for each column
         var this_row = matrix.filter(function(x) {return x['row'] == r})
         console.log(this_row) //works!!
@@ -99,17 +99,22 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_row[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_row[s]["val"] = currentTile
                 this_row[s-1]["val"] = ""
+              } else if (this_row[s]["val"] == this_row[s-1]["val"]) {
+                console.log("1")
+                this_row[s]["val"] = currentTile * 2
+                this_row[s-1]["val"] = ""
               }
             }
           }
         }
-        render(game)
       }
+      randomTile(game)
+      render(game)
 
       break;
     case 37: //left
       console.log('left');
-      //check each square right of the designated square ranging C3-C0
+      //MOVING ROWS LEFT
       for (let r = 0; r<4; r++) {
         var this_row = matrix.filter(function(x) {return x['row'] == r})
         console.log(this_row) //works!!
@@ -128,10 +133,14 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
             }
           }
         }
-        render(game)
       }
+      randomTile(game)
+      render(game)
       break;
   }
+
+
+
 
 };
 
@@ -150,6 +159,17 @@ function render(game) {
      tilex[i].innerHTML = game.matrix[i]['val']
   }
 //
+}
+
+function randomTile(game) {
+  availableSquares = game.matrix.filter(function(x) {return x['val'] == ""})
+  var emptySquare = availableSquares[Math.floor(Math.random()*availableSquares.length)];
+
+  console.log(emptySquare)
+
+  const initialValues = [2, 4]
+  emptySquare['val'] = initialValues[Math.floor(Math.random()*initialValues.length)];
+  // console.log(initialSquare)
 }
 
 $(document).ready(function() {
