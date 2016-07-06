@@ -1,11 +1,11 @@
 var Game = function() {
   // Game logic and initialization here
-  this._board = [
-    [2,2,0,2],
-    [2,0,2,2],
-    [0,2,0,0],
-    [2,0,0,4]
-  ]
+  // this._board = [
+  //   [2,2,0,2],
+  //   [2,0,2,2],
+  //   [0,2,0,0],
+  //   [2,0,0,4]
+  // ]
 };
 
 Game.prototype.moveAll = function(tile) {
@@ -30,9 +30,10 @@ Game.prototype.moveAll = function(tile) {
 // ]
   //
   // var column = []
-  for (let j =0; j < matrix.length -1 ; j++){ //j is column
+  for (let j = 0; j < matrix.length -1 ; j++){ //j is column
 
     for (let i=0; i< matrix[j].length; i++) {
+      console.log("i: ", i)
       if ($(matrix[j][i]).text().toString() === $(matrix[j][i+1]).text().toString()) {
 
         // CHANGES VAL AND DATA
@@ -41,9 +42,14 @@ Game.prototype.moveAll = function(tile) {
         $(matrix[j][i]).text(value);
 
         // DELETES
-        $(matrix[j][i]).attr({ "data-row": "0" });
+        $(matrix[j][i]).attr({ "data-row": i.toString() });
         $(matrix[j][i+1]).remove();
-        $(matrix[j][i+2]).attr({ "data-row": (i+1).toString()});
+        matrix[j].splice(i+1,1)
+        console.log(matrix[j])
+        // $(matrix[j][i+2]).attr({ "data-row": (i+1).toString()});
+      } else {
+        console.log("hi")
+        $(matrix[j][i]).attr({ "data-row": i.toString()});
       }
     }
 
