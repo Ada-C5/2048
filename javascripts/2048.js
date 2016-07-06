@@ -5,18 +5,6 @@ var Game = function() {
                 [null, null, null, null]]
 };
 
-Game.prototype.collide = function (spaceOne, spaceTwo) {
-  // spaces specified hold values
-  if (spaceOne === spaceTwo) {
-    spaceOne += spaceTwo
-    spaceTwo = null
-  } else {
-    return false
-  }
-
-  return spaceOne
-}
-
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
@@ -39,11 +27,54 @@ Game.prototype.updateBoard = function() {
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
-      console.log(slot)
+      // console.log(slot)
       $('div[id='+ slot + ']').html(this._board[i][j])
     }
   }
 }
+
+Game.prototype.collide = function (spaceOne, spaceTwo) {
+  // spaces specified hold values
+  if (spaceOne === spaceTwo) {
+    spaceOne += spaceTwo
+    spaceTwo = null
+  } else if (spaceOne === null) {
+    spaceOne = spaceTwo
+    spaceTwo = null
+  } else {
+    return false
+  }
+
+  return spaceOne
+}
+
+
+Game.prototype.moveLeft = function () {
+  for (let i = 0; i < 4; i ++) {
+    for (let j = 0; j < 4; j ++) {
+      for (let k = j; k >= 0; k --) {
+        this.collide(this._board[i][k], this._board[i][k+1])
+      }
+    }
+  }
+}
+
+Game.prototype.moveUp = function () {
+  for (let i = 3; i >= 0; i --) {
+    for (let j = 3; j >= 0; j --) {
+      this.collide(this._board[i][j], this._board[i+1][j])
+    }
+  }
+}
+
+Game.prototype.moveDown = function () {
+  for (let i = 3; i > 0; i --) {
+    for (let j = 3; j > 0; j --) {
+      this.collide(this._board[i][j], this._board[i+1][j])
+    }
+  }
+}
+
 
 $(document).ready(function() {
   console.log("ready to go!");
@@ -54,7 +85,9 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
+      console.log(game._board)
       game.updateBoard()
+      game.moveLeft()
       game.moveTile(tile, event.which);
       game.updateBoard()
     }
