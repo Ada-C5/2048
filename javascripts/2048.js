@@ -17,6 +17,14 @@ var Game = function() {
     "row2col3": null,
     "row3col3": null
   }
+  this.unoccupied = function() {
+    var unoccupied = []
+      for (var space in this.board) {
+      if (this.board[space] === null) {
+        unoccupied.push(space)
+      }
+    }
+  }
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -52,20 +60,24 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.newTile = function() {
-  var rows = ["r0", "r1", "r2", 'r3']
-  var columns = ['c0', 'c1', 'c2', 'c3']
-  var row = rows[Math.floor(Math.random() * rows.length)]
-  var column = columns[Math.floor(Math.random() * columns.length)]
-  // checks randomized tile locale
-  var checkSpace = $('#gameboard').find("[data-col='" + column + "'][data-row='" + row + "']").length
-  console.log(column, row, checkSpace)
-
+  // var rows = ["r0", "r1", "r2", 'r3']
+  // var columns = ['c0', 'c1', 'c2', 'c3']
+  // var row = rows[Math.floor(Math.random() * rows.length)]
+  // var column = columns[Math.floor(Math.random() * columns.length)]
+  // // checks randomized tile locale
+  // var checkSpace = $('#gameboard').find("[data-col='" + column + "'][data-row='" + row + "']").length
+  // console.log(column, row, checkSpace)
+  var availableSpace = this.unoccupied[Math.floor(Math.random() * rand.length)]
+  var row = availableSpace.split(0..1)
+  console.log(row)
+  
   var rand = ['2','4']
   var newTileValue = rand[Math.floor(Math.random() * rand.length)]
   // console.log(newTileValue)
 
   var damn = "<div class='tile' data-row=" + row + " data-col=" + column + " data-val=" + newTileValue + ">" + newTileValue + "</div>"
   var newTile = $("#gameboard").append(damn);
+}
 
 $(document).ready(function() {
   console.log("ready to go!");
