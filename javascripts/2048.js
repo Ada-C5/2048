@@ -1,8 +1,8 @@
 var Game = function() {
-  this._board = [[null, null, null, null],
-                [null, null, 2, null],
+  this._board = [[null, 2, 2, 2],
                 [null, 2, 2, null],
-                [null, null, null, null]]
+                [2, 2, 2, null],
+                [2, null, null, 2]]
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -25,8 +25,8 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.updateBoard = function() {
-  for (i = 0; i < 3; i++) {
-    for (j = 0; j < 3; j++) {
+  for (i = 0; i < 4; i++) {
+    for (j = 0; j < 4; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
       // console.log(slot)
       $('div[id='+ slot + ']').html(this._board[i][j])
@@ -39,11 +39,9 @@ Game.prototype.collide = function (spaceOne, spaceTwo) {
   if (spaceOne === spaceTwo) {
     console.log("one === two")
     spaceOne += spaceTwo
-    spaceTwo = null
   } else if (spaceOne === null || spaceOne === 0) {
     console.log("null move")
     spaceOne = spaceTwo
-    spaceTwo = null
   } else {
     console.log("wut")
     return false
@@ -61,7 +59,9 @@ Game.prototype.moveLeft = function () {
         let newValue = this.collide(this._board[i][k], this._board[i][k+1])
         if (newValue !== false) {
           this._board[i][k] = newValue
-          this._board[i][k+1] = null
+          if (k < 3) { this._board[i][k+1] = null }
+        } if (newValue === false) {
+          console.log('FALSE!!!')
         }
       }
     }
