@@ -29,9 +29,7 @@ Game.prototype.moveBoard = function (direction) {
   // $(".tile").attr(data, space)
 }
 
-Game.prototype.legit = function (direction) {
-  // if left or right use rows
-  //if up or down use col
+Game.prototype.legit = function (direction) { // if left or right use rows ||  if up or down use col
   if (direction === "left") {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
@@ -41,9 +39,11 @@ Game.prototype.legit = function (direction) {
           var next = $(current[i + 1])
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
-            curr.attr("data-val", total).html(total)
             next.attr("data-col", curr.attr("data-col"))
-            next.remove()
+            setTimeout(function () {
+              curr.attr("data-val", total).html(total)
+              next.remove()
+            }, 150)
             current.splice([i + 1], 1)
           }
         }
