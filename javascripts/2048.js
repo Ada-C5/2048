@@ -2,7 +2,7 @@ var Board = function() {
   //first digit in name is row number, second digit is col number
   this.cell00 = {
     whichCell: $('.cell.r0.c1'),
-    isTaken: true
+    isTaken: false
   }
   this.cell01 = {
     whichCell: $('.cell.r0.c1'),
@@ -96,19 +96,39 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
 
-      // for (var tile of tiles)
-      // why can't we use for loop? why do we need this weird jquery method?
+      // why can't we use "for..of" loop for iterating through the tiles here? why did we need to use the weird jquery "each" method to pass the individual tile into moveTile?
 
-      // i have access to current tile! get the cell that's in row0 above it
+      // for any tile that's in the leftmost column... do for each column
         if (tile.attr('data-col') === 'c0') {
-          // if (this.board[cell00].isTaken === false) {
-          //   tile.attr('data-row', 'r0')
-          // }
+          // check if the tile in the top row is taken, if not, put the tile there, otherwise do the same check for the next row below that, and so forth
 
-        } else {
-          console.log(tile)
-          console.log(tile.attr('data-col'))
-          tile.attr('data-row', 'r0')
+          //might have to do some super &&s here...
+          if (this.board.cell00.isTaken === false) {
+            tile.attr('data-row', 'r0')
+            this.board.cell00.isTaken = true
+          } else if (this.board.cell10.isTaken === false) {
+            tile.attr('data-row', 'r1')
+            this.board.cell10.isTaken = true
+          } else if (this.board.cell20.isTaken === false) {
+            tile.attr('data-row', 'r2')
+            this.board.cell20.isTaken = true
+          }
+
+
+        } else if (tile.attr('data-col') === 'c1') {
+          //do the same thing you did above here. DRY it up later.
+          // if (this.board.cell01.isTaken === false) {
+          //   tile.attr('data-row', 'r0')
+          //   this.board.cell01.isTaken = true
+          //   if (this.board.cell11.isTaken === false) {
+          //     tile.attr('data-row', 'r1')
+          //     this.board.cell11.isTaken = true
+          //     if (this.board.cell21.isTaken === false) {
+          //       tile.attr('data-row', 'r2')
+          //       this.board.cell21.isTaken = true
+          //     }
+          //   }
+          // }
 
         }
 
