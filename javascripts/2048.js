@@ -3,7 +3,7 @@ var Game = function() {
   //add rando first value
   this.matrix = [
     {col:0, row:0, val:"" },
-    {col:1, row:0, val:"2" },
+    {col:1, row:0, val:"" },
     {col:2, row:0, val:"" },
     {col:3, row:0, val:"" },
     {col:0, row:1, val:"" },
@@ -11,7 +11,7 @@ var Game = function() {
     {col:2, row:1, val:"" },
     {col:3, row:1, val:"" },
     {col:0, row:2, val:"" },
-    {col:1, row:2, val:"2" },
+    {col:1, row:2, val:"" },
     {col:2, row:2, val:"" },
     {col:3, row:2, val:"" },
     {col:0, row:3, val:"" },
@@ -36,6 +36,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
     case 38: //up
       console.log('up');
       // MOVING COLUMNS (UP)
+      let modTiles = []
       for (let c = 0; c<4; c++) {
         var this_col = matrix.filter(function(x) {return x['col'] == c})
         console.log(this_col) //works!!
