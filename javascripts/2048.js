@@ -35,13 +35,13 @@ Game.prototype.moveTile = function (tile, direction) {
 
       //gets all the tiles in the second row
       arrayTiles = $('.tile[data-row=row1]')
-
+      // console.log(event);
     $.each(arrayTiles, function( index, value ) {
       //convert the colunm into an integer
       let num = parseInt(value.dataset["col"][3])
       //defines the next colunm
       let nextEle = num + 1
-
+      // console.log(num);
       while (nextEle < 4) {
 
         let nextString = nextEle.toString()
@@ -52,6 +52,18 @@ Game.prototype.moveTile = function (tile, direction) {
         //check if next tile is empty,
           if (nextColEle.length == 0) {
             value.dataset[type] = type + nextString
+          }
+
+          if (nextColEle.length > 0) {
+
+            if (value.dataset.val === nextColEle[0].dataset.val) {
+              console.log("melissa");
+              value.dataset[type] = type + nextString
+              value.dataset.val = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
+              setTimeout(function(){
+                $(value).text(value.dataset.val)
+              }, 300);
+            }
           }
 
           //keep moving next while empty, and colum is equal or less than 3
