@@ -36,8 +36,8 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
     case 38: //up
       console.log('up');
       // MOVING COLUMNS (UP)
-      let modTiles = []
       for (let c = 0; c<4; c++) {
+        let modTiles = []
         var this_col = matrix.filter(function(x) {return x['col'] == c})
         console.log(this_col) //works!!
         for (var r = 1; r < 4; r++) {
@@ -47,10 +47,12 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_col[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_col[s]["val"] = currentTile
                 this_col[s+1]["val"] = ""
-              } else if (this_col[s]["val"] == this_col[s+1]["val"]) {
+              } else if (this_col[s]["val"] == this_col[s+1]["val"] && modTiles.includes(this_col[s+1]) == false) {
                 console.log("1")
                 this_col[s]["val"] = currentTile * 2
                 this_col[s+1]["val"] = ""
+                modTiles.push(this_col[s])
+                console.log(modTiles)
               }
             }
           }
@@ -64,6 +66,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       console.log('down');
       // MOVING COLUMNS (DOWN)
       for (let c = 0; c<4; c++) { //doing it for each column
+        let modTiles = []
         var this_col = matrix.filter(function(x) {return x['col'] == c})
         console.log(this_col) //works!!
         for (var r = 2; r > -1 ; r--) {
@@ -73,10 +76,11 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_col[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_col[s]["val"] = currentTile
                 this_col[s-1]["val"] = ""
-              } else if (this_col[s]["val"] == this_col[s-1]["val"]) {
-                console.log("1")
+              } else if (this_col[s]["val"] == this_col[s-1]["val"] && modTiles.includes(this_col[s-1]) == false) {
                 this_col[s]["val"] = currentTile * 2
                 this_col[s-1]["val"] = ""
+                modTiles.push(this_col[s])
+                console.log(modTiles)
               }
             }
           }
@@ -91,6 +95,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       console.log('right');
       //MOVING ROWS RIGHT
       for (let r = 0; r<4; r++) { //doing it for each column
+        let modTiles = []
         var this_row = matrix.filter(function(x) {return x['row'] == r})
         console.log(this_row) //works!!
         for (var c = 2; c > -1 ; c--) {
@@ -100,10 +105,12 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_row[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_row[s]["val"] = currentTile
                 this_row[s-1]["val"] = ""
-              } else if (this_row[s]["val"] == this_row[s-1]["val"]) {
+              } else if (this_row[s]["val"] == this_row[s-1]["val"] && modTiles.includes(this_row[s-1]) == false) {
                 console.log("1")
                 this_row[s]["val"] = currentTile * 2
                 this_row[s-1]["val"] = ""
+                modTiles.push(this_row[s])
+                console.log(modTiles)
               }
             }
           }
@@ -117,6 +124,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       console.log('left');
       //MOVING ROWS LEFT
       for (let r = 0; r<4; r++) {
+        let modTiles = []
         var this_row = matrix.filter(function(x) {return x['row'] == r})
         console.log(this_row) //works!!
         for (var c = 1; c < 4; c++) {
@@ -126,10 +134,12 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               if (this_row[s]["val"] == "") { //if the tile above is empty, swap the values
                 this_row[s]["val"] = currentTile
                 this_row[s+1]["val"] = ""
-              } else if (this_row[s]["val"] == this_row[s+1]["val"]) {
+              } else if (this_row[s]["val"] == this_row[s+1]["val"] && modTiles.includes(this_row[s+1]) == false) {
                 console.log("1")
                 this_row[s]["val"] = currentTile * 2
                 this_row[s+1]["val"] = ""
+                modTiles.push(this_row[s])
+                console.log(modTiles)
               }
             }
           }
