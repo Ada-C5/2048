@@ -174,6 +174,9 @@ function render(game) {
 
 function randomTile(game) {
   availableSquares = game.matrix.filter(function(x) {return x['val'] == ""})
+  if (availableSquares.length == 0) {
+    console.log("You lost!")
+  }
   var emptySquare = availableSquares[Math.floor(Math.random()*availableSquares.length)];
 
   console.log(emptySquare)
