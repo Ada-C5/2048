@@ -14,12 +14,13 @@ function Game() {
     $('body').keydown(function(event){
       var arrows = [37, 38, 39, 40]
       if (arrows.indexOf(event.which) > -1) {
-        var tile = $('.tile')
-        self.moveTile(tile, event.which)
+        var tiles = $('.tile')
+        self.moveTile(tiles, event.which)
       }
     }) 
   }
 
+  // generates a new tile anywhere on the board 
   this.newTile = function() {
     // get random col and row 
     var randoCol = Math.floor((Math.random() * (4 - 0) + 0));
@@ -32,7 +33,7 @@ function Game() {
     if (self.container[randoRow][randoCol] === 0) {
       self.container[randoRow][randoCol] = randoVal
     } else {
-      this.newTile()
+      self.newTile()
     }
     // get div id
 
@@ -44,24 +45,13 @@ function Game() {
     randoTile.attr('data-val', randoVal);
     randoTile.text(randoVal); 
   }
-
-  this.currentBoardState = function() {
-    var array = []
-    for (var tile in self.container) {
-      if (self.container[tile].val === undefined) {   
-        console.log("hallo?")
-        array.push([self.container[tile].row, self.container[tile].col])
-      }
-    }
-    console.log(array + " = BOARDSTATE ARRAY")
-    return array
-  }
  
  this.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
       self.newTile();
+      // check tiles
       break;
     case 40: //down
       console.log('down');
