@@ -20,7 +20,7 @@ Game.prototype.moveAll = function(tile) {
       return +a.getAttribute('data-row') - +b.getAttribute('data-row');
     })
     matrix.push(row)
-    matrixValues.push(row.text().split(""))
+    // matrixValues.push(row.text().split(""))
   }
 //   [
 //   [2, 4, 2],
@@ -31,44 +31,40 @@ Game.prototype.moveAll = function(tile) {
   //
   // var column = []
   for (let j =0; j < matrix.length -1 ; j++){ //j is column
-    // for (let i=0; i<4; i++) { // i is the row
-    //   if (matrix[i][j] !== 0 ){
-    //     column.push(matrix[i][0]);
-    //   }
-    // }
-    // console.log(matrix[0][0])
-    for (let i=0; i< matrixValues[j].length; i++) {
-      if (matrixValues[j][i] == matrixValues[j][i+1]) {
+
+    for (let i=0; i< matrix[j].length; i++) {
+      if ($(matrix[j][i]).text().toString() === $(matrix[j][i+1]).text().toString()) {
 
         // CHANGES VAL AND DATA
-        var value = matrixValues[j][i]*2;
-        matrixValues[j][i] = value
+        var value = $(matrix[j][i]).text()*2;
         $(matrix[j][i]).attr({ "data-val": value.toString() });
         $(matrix[j][i]).text(value);
 
         // DELETES
-        $(matrixValues[j][i]).attr({ "data-row": "0" });
-        // matrix[j].splice(i+1,1)
-        console.log("HI: ", matrix[i][j])
+        $(matrix[j][i]).attr({ "data-row": "0" });
         $(matrix[j][i+1]).remove();
-
-        // CHANGE INDEXES
-
-           //
-          //  change matrix[0].attr({ "data-val": "4" })
-          //     matrix[0].text(4)
-           //
-          //     matrix[0].remove()
-          //
-        // matrix[]
-        // .delete the div
+        $(matrix[j][i+2]).attr({ "data-row": (i+1).toString()});
       }
     }
+
     // console.log(column)
   }
 
   console.log(matrix)
 }
+
+  // matrix[j].splice(i+1,1)
+  // console.log("HI: ", matrix[j][i])
+  // CHANGE INDEXES
+
+     //
+    //  change matrix[0].attr({ "data-val": "4" })
+    //     matrix[0].text(4)
+     //
+    //     matrix[0].remove()
+    //
+  // matrix[]
+  // .delete the div
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
