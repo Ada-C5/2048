@@ -6,8 +6,8 @@ var Game = function () {
 
   this.newGame = function () {
     // spawn 2 tiles in random spaces
-    this.newTile(2)
-    setTimeout(this.newTile, 5)
+    this.newTile()
+    this.newTile()
     // this.newTile(2)
   }
 
@@ -37,6 +37,7 @@ var Game = function () {
       }
     }
     $(".cells").after(newTile)
+    newTile = null
   }
 
   function randomSpace() {
