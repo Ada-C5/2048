@@ -40,19 +40,14 @@ Game.prototype.legit = function (direction) {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
 
-      console.log(current);
+      // console.log(current);
 
       current.each(function (i, val) {
         if (current[i + 1]) { // edge case, if next thing is not null, go on
-
-          console.log($(val).data("val"));
-
-          console.log($(current[i + 1]).data("val"));
-
           var curr = $(val)
           var next = $(current[i + 1])
-          if (curr.data("val") === next.data("val")) {
-            var total = curr.data("val") + next.data("val")
+          if (curr.attr("data-val") === next.attr("data-val")) {
+            var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             curr.attr("data-val", total).html(total)
             next.attr("data-col", curr.data("col"))
             next.remove()
@@ -60,8 +55,6 @@ Game.prototype.legit = function (direction) {
           }
         }
       })
-      console.log("this is the current");
-      console.log(current);
     }
   } else if (direction === "right") {
     $(".tile").attr("data-col", "c3")
