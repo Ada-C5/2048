@@ -49,7 +49,7 @@ Game.prototype.legit = function (direction) {
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             curr.attr("data-val", total).html(total)
-            next.attr("data-col", curr.data("col"))
+            next.attr("data-col", curr.attr("data-col"))
             next.remove()
             current.splice([i + 1], 1)
           }
