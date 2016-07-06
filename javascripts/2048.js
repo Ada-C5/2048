@@ -8,66 +8,39 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
 
-      var c0 = $(tile).data('col', 'c0')
-      var c1 = $(tile).data('col', 'c1')
-      var c2 = $(tile).data('col', 'c2')
-      var c3 = $(tile).data('col', 'c3')
+      var c0 = $(tile).filter("[data-col=c0]")
+      var c1 = $(tile).filter("[data-col=c1]")
+      var c2 = $(tile).filter("[data-col=c2]")
+      var c3 = $(tile).filter("[data-col=c3]")
 
-      if (c0.length !== 4) {
-        $.each(c0, function(index, value) {
-          if ($(value).data('val') === ($(c0[index+1]).data('val'))) {
-            let val = $(value).attr('data-val')
-            $(value).attr('data-val', (val * 2))
-            $(value).text(val * 2)
+      var array = []
 
-            $(c0[index+1]).remove()
+      array.push(c0)
+      array.push(c1)
+      array.push(c2)
+      array.push(c3)
 
-            c0 = jQuery.grep(c0, function(value) {
-              return value != c0[index+1];
-            })
+      $.each(array, function(i, column) {
+        $.each(column, function(index, value) {
+          if ($(value).attr("data-val") === ($(column[index+1]).attr("data-val"))) {
+            $(value).attr('data-val', (($(value).attr('data-val')) * 2))
+            $(value).text($(value).attr('data-val'))
+
+            $(column[index+1]).remove()
+
+            column.splice((index + 1), 1)
           }
         })
 
-        // console.log(c0[0])
-        // console.log(c0[1])
+        $.each(column, function(index, moving) {
+          row = $(moving).attr('data-row')
+          thing = ('r' + index)
 
-        $.each(c0, function(index, moving) {
-          console.log(moving)
-          if ($(moving).data('row') !== ('r' + index)) {
-            $(moving).attr('data-row', ('r' + index))
-            console.log(index)
+          if (row !== thing) {
+            let changed = $(moving).attr('data-row', thing)
           }
         })
-      }
-
-
-
-      if (c1.length !== 4) {
-        $.each(c1, function(index, value) {
-          if ($(value).data('row') !== ('r' + index)) {
-            $(value).attr('data-row', ('r' + index))
-            index++
-          }
-        })
-      }
-
-      if (c2.length !== 4) {
-        $.each(c2, function(index, value) {
-          if ($(value).data('row') !== ('r' + index)) {
-            $(value).attr('data-row', ('r' + index))
-            index++
-          }
-        })
-      }
-
-      if (c3.length !== 4) {
-        $.each(c3, function(index, value) {
-          if ($(value).data('row') !== ('r' + index)) {
-            $(value).attr('data-row', ('r' + index))
-            index++
-          }
-        })
-      }
+      })
 
       break;
     case 40: //down
