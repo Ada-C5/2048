@@ -1,12 +1,12 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <title>2048</title>
     <link rel="stylesheet" media="all" href="stylesheets/2048.css"/>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
+  <button class="new-game">New Game</button>
     <div id="gameboard">
       <div class="cells">
         <div class="cell"></div>
@@ -42,6 +42,14 @@
       <div class="tile" id="14" data-row="" data-col="" data-val="0"></div>
       <div class="tile" id="15" data-row="" data-col="" data-val="0"></div>
       <div class="tile" id="16" data-row="" data-col="" data-val="0"></div>
+
     </div>
   </body>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="./javascripts/2048.js"></script>
+  <script type="text/javascript">
+    $(document).on('ready', function() {
+      new Game().initialize('#gameboard');
+    })
+  </script>
 </html>
