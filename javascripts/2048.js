@@ -2,112 +2,82 @@ function Game() {
   var self = this; 
 
   this.gameOver = null;
-  this.container = {
-    1:  {},
-    2:  {},
-    3:  {},
-    4:  {},
-    5:  {},
-    6:  {},
-    7:  {},
-    8:  {},
-    9:  {},
-    10: {},
-    11: {},
-    12: {},
-    13: {},
-    14: {},
-    15: {},
-    16: {}
-  }
+  this.container = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
+  ]
 
-  this.initialize = function() {
+  this.initialize = function(selector) {
     self.newTile(); 
-    //event listener 
-    $('body').keydown(self.moveTile()); 
-  }
-
-  this.generateBoard = function() {
-    // logic to make the board 
-    // that will be compared with the container
+    $('body').keydown(function(event){
+      var arrows = [37, 38, 39, 40]
+      if (arrows.indexOf(event.which) > -1) {
+        var tile = $('.tile')
+        self.moveTile(tile, event.which)
+      }
+    }) 
   }
 
   this.newTile = function() {
-    // loop through cells in the gameboard container 
-    for (var space in self.container) {
-      if (self.container[space].col === undefined) {
-        var randoTile = $('#' + space)
-    
-        //logic to handle if something is already in that space? 
-        // if val !== "0"
-        // do another rando 
+    // get random col and row 
+    var randoCol = Math.floor((Math.random() * (4 - 0) + 0));
+    var randoRow = Math.floor((Math.random() * (4 - 0) + 0));
 
-        // get random col and row 
-        var randoCol = Math.floor((Math.random() * 4) + 0);
-        var randoRow = Math.floor((Math.random() * 4) + 0);
-      
+    // get a random 2 or 4 
+    var newVal = [2, 4];
+    var randoVal = newVal[Math.floor(Math.random() * newVal.length)]
 
-        var newVal = [2, 4];
-        var randoVal = newVal[Math.floor(Math.random() * newVal.length)]
-         
-        // update object
-        self.container[space].col = randoCol;
-        self.container[space].row = randoRow;
-        self.container[space].val = randoVal;
+    if (self.container[randoRow][randoCol] === 0) {
+      self.container[randoRow][randoCol] = randoVal
+    } else {
+      this.newTile()
+    }
+    // get div id
 
-        // update div info
-        randoTile.attr('data-row', "r" + randoRow);
-        randoTile.attr('data-col', "c" + randoCol);
-        randoTile.attr('data-val', randoVal);
-        randoTile.text(randoVal);
-      } 
-    };
+    // update div info
+    var id = (randoRow * 4) + randoCol
+    var randoTile = $('#' + id)
+    randoTile.attr('data-row', "r" + randoRow);
+    randoTile.attr('data-col', "c" + randoCol);
+    randoTile.attr('data-val', randoVal);
+    randoTile.text(randoVal); 
   }
 
-  this.buildGameBoard = function() {
-    var array0 = [0, 0, 0, 0];
-    var array1 = [0, 0, 0, 0];
-    var array2 = [0, 0, 0, 0];
-    var array3 = [0, 0, 0, 0];
+  this.currentBoardState = function() {
+    var array = []
     for (var tile in self.container) {
-      if (self.container[tile].col === 0) {
-        array0[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
-      } else if (self.container[tile].col === 1) {
-        array1[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
-      } else if (self.container[tile].col === 2) {
-        array2[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
-      } else if (self.container[tile].col === 3) {
-        array3[self.container[tile].row] = [tile, self.container[tile].col, self.container[tile].row, self.container[tile].val]
+      if (self.container[tile].val === undefined) {   
+        console.log("hallo?")
+        array.push([self.container[tile].row, self.container[tile].col])
       }
-    };
-    console.log(array0);
-    console.log(array1)
-    console.log(array2)
-    console.log(array3)
-    
-    self.newTile();
+    }
+    console.log(array + " = BOARDSTATE ARRAY")
+    return array
   }
  
  this.moveTile = function(tile, direction) {
-
-  // Game method here
   switch(direction) {
     case 38: //up
       console.log('up');
+      self.newTile();
       break;
     case 40: //down
       console.log('down');
+      self.newTile();
       break;
     case 37: //left
       console.log('left');
+      self.newTile();
       break;
     case 39: //right
       console.log('right');
+      self.newTile();
       break;
     }
   }
 }
-
 
 // $(document).ready(function() {
 //   console.log("ready to go!");
