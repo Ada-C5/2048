@@ -1,5 +1,22 @@
 var Game = function() {
-  // Game logic and initialization here
+  this.board = {
+    "row0col0": null,
+    "row1col0": null,
+    "row2col0": null,
+    "row3col0": null,
+    "row0col1": null,
+    "row1col1": null,
+    "row2col1": null,
+    "row3col1": null,
+    "row0col2": null,
+    "row1col2": null,
+    "row2col2": null,
+    "row3col2": null,
+    "row0col3": null,
+    "row1col3": null,
+    "row2col3": null,
+    "row3col3": null
+  }
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -30,24 +47,16 @@ Game.prototype.newTile = function() {
   var columns = ['c0', 'c1', 'c2', 'c3']
   var row = rows[Math.floor(Math.random() * rows.length)]
   var column = columns[Math.floor(Math.random() * columns.length)]
+  // checks randomized tile locale
+  var checkSpace = $('#gameboard').find("[data-col='" + column + "'][data-row='" + row + "']").length
+  console.log(column, row, checkSpace)
 
-
-  var rand = [2,4]
+  var rand = ['2','4']
   var newTileValue = rand[Math.floor(Math.random() * rand.length)]
-  console.log(newTileValue)
-  // var tile = $('#gameboard');
+  // console.log(newTileValue)
 
-  var newTile = $("#gameboard").append("<div>new tile</div>");
-
-  var lastTile = $("#gameboard:last-child")
-  console.log(lastTile)
-  // lastTile.attr({
-  //   "data-row": "r3",
-  //   "data-col": "c1",
-  //   "data-val": '16'
-  // })
-  // lastTile.text(16)
-
+  var damn = "<div class='tile' data-row=" + row + " data-col=" + column + " data-val=" + newTileValue + ">" + newTileValue + "</div>"
+  var newTile = $("#gameboard").append(damn);
 }
 
 $(document).ready(function() {
