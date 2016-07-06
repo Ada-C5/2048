@@ -28,9 +28,9 @@ Game.prototype.moveTile = function(tiles, direction) {
   }
 };
 
-Game.prototype.moves = function (data, space) {
-  this.legit()
-  $(".tile").attr(data, space)
+Game.prototype.moveBoard = function (direction) {
+  // this.legit()
+  // $(".tile").attr(data, space)
 }
 
 Game.prototype.legit = function (direction) {
@@ -39,15 +39,22 @@ Game.prototype.legit = function (direction) {
   if (direction === "left") {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
-      if (current.length && ($(current[0]).data("val") == $(current[1]).data("val"))) { //current.length is null check
-        var tile1 = $(current[0])
-        var tile2 = $(current[1])
-        var total = tile1.data("val") + tile2.data("val")
-        tile1.attr("data-val", total)
-        tile1.html(total)
-        tile2.remove()
-        current.attr("data-col", "c0")
-      }
+      console.log(current);
+      current.each(function (key, value) {
+        if (current[key + 1]) { // edge case, if next thing is not null, go on
+          console.log($(value).data("val"));
+          console.log($(current[key + 1]).data("val"));
+          var curr = $(value)
+          var next = $(current[key + 1])
+          if (curr.data("val") === next.data("val")) {
+            var total = curr.data("val") + next.data("val")
+            curr.attr("data-val", total).html(total)
+            next.attr("data-col", curr.data("col"))
+            next.remove()
+            current.splice([key + 1], 1)
+          }
+        }
+      })
     }
   } else if (direction === "right") {
     $(".tile").attr("data-col", "c3")
@@ -59,6 +66,7 @@ Game.prototype.legit = function (direction) {
     $(".tile").attr("data-row", "r3")
 
   }
+  this.moveBoard(direction)
 }
 
 $(document).ready(function() {
