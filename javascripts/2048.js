@@ -17,6 +17,14 @@ var Game = function() {
     "r2c3": null,
     "r3c3": null
   }
+  this.unoccupied = function() {
+    var unoccupied = []
+      for (var space in this.board) {
+      if (this.board[space] === null) {
+        unoccupied.push(space)
+      }
+    }
+  }
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -72,10 +80,15 @@ Game.prototype.newTile = function() {
   // }
   // var checkSpace = $('#gameboard').find("[data-col='" + column + "'][data-row='" + row + "']").length
 
-  
-
 
   // console.log(checkSpace)
+
+  // // checks randomized tile locale
+  // var checkSpace = $('#gameboard').find("[data-col='" + column + "'][data-row='" + row + "']").length
+  // console.log(column, row, checkSpace)
+  var availableSpace = this.unoccupied[Math.floor(Math.random() * rand.length)]
+  var row = availableSpace.split(0..1)
+  console.log(row)
 
   var rand = ['2','4']
   var newTileValue = rand[Math.floor(Math.random() * rand.length)]
@@ -87,6 +100,7 @@ Game.prototype.newTile = function() {
   this.board[property] = newTileValue
   console.log(this.board)
 }
+
 
 
 $(document).ready(function() {
