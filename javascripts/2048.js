@@ -1,68 +1,68 @@
 var Board = function() {
   //first digit in name is row number, second digit is col number
   this.cell00 = {
-    'whichCell': $('.cell.r0.c1'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r0.c1'),
+    isTaken: true
   }
   this.cell01 = {
-    'whichCell': $('.cell.r0.c1'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r0.c1'),
+    isTaken: false
   }
   this.cell02 = {
-    'whichCell': $('.cell.r0.c2'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r0.c2'),
+    isTaken: false
   }
   this.cell03 = {
-    'whichCell': $('.cell.r0.c3'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r0.c3'),
+    isTaken: false
   }
   this.cell10 = {
-    'whichCell': $('.cell.r1.c0'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r1.c0'),
+    isTaken: false
   }
   this.cell11 = {
-    'whichCell': $('.cell.r1.c1'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r1.c1'),
+    isTaken: false
   }
   this.cell12 = {
-    'whichCell': $('.cell.r1.c2'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r1.c2'),
+    isTaken: false
   }
   this.cell13 = {
-    'whichCell': $('.cell.r1.c3'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r1.c3'),
+    isTaken: false
   }
   this.cell20 = {
-    'whichCell': $('.cell.r2.c0'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r2.c0'),
+    isTaken: false
   }
   this.cell21 = {
-    'whichCell': $('.cell.r2.c1'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r2.c1'),
+    isTaken: false
   }
   this.cell22 = {
-    'whichCell': $('.cell.r2.c2'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r2.c2'),
+    isTaken: false
   }
   this.cell23 = {
-    'whichCell': $('.cell.r2.c3'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r2.c3'),
+    isTaken: false
   }
   this.cell30 = {
-    'whichCell': $('.cell.r3.c0'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r3.c0'),
+    isTaken: false
   }
   this.cell31 = {
-    'whichCell': $('.cell.r3.c1'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r3.c1'),
+    isTaken: false
   }
   this.cell32 = {
-    'whichCell': $('.cell.r3.c2'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r3.c2'),
+    isTaken: false
   }
   this.cell33 = {
-    'whichCell': $('.cell.r3.c3'),
-    'isTaken': 'false'
+    whichCell: $('.cell.r3.c3'),
+    isTaken: false
   }
 }
 
@@ -96,9 +96,47 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
 
-      // if (is_already_filled(space) === false) {
-        $('.tile').attr("data-row", "r0");
+      // for (var tile of tiles)
+      // why can't we use for loop? why do we need this weird jquery method?
+
+      // i have access to current tile! get the cell that's in row0 above it
+        if (tile.attr('data-col') === 'c0') {
+          // if (this.board[cell00].isTaken === false) {
+          //   tile.attr('data-row', 'r0')
+          // }
+
+        } else {
+          console.log(tile)
+          console.log(tile.attr('data-col'))
+          tile.attr('data-row', 'r0')
+
+        }
+
+
+
+      // if (_CELL_IN_ROW0_AND_THIS_COL.isTaken === false) {
+      //   $('.tile').attr("data-row", "r0");
       // }
+      //
+      //   for (var cell in this.board) {
+      //
+      //     // looking through every tile
+      //     for (var tile of $('.tile')) {
+      //       // if a cell contains the same row AND column as the tile, it's taken
+      //       if (this.board[cell].whichCell.includes(tile.attr("data-row")) && this.board[cell].whichCell.includes(tile.attr("data-col"))) {
+      //
+      //         this.board[cell].isTaken = true
+      //       }
+            // that is to say, if there's a tile with the same row and column as the cell
+            // change the cell's takenness to true now that it's taken up
+          // }
+
+          //
+
+        // }
+
+      // }
+
 
       break;
     case 40: //down
@@ -130,9 +168,10 @@ $(document).ready(function() {
   $('body').keydown(function(event) {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
-      var tile = $('.tile');
 
-      game.moveTile(tile, event.which);
+      $('.tile').each(function() {
+        game.moveTile($(this), event.which);
+      })
     }
   });
 
