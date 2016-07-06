@@ -64,7 +64,11 @@ var Game = function () {
 
   this.hasLost = function () {
     console.log('lost!')
-    thisGame.gameOver = true
+    // checks if the board is full
+    // needs to check if there are no more valid moves
+    if ($('.tiles').length === 9) {
+      thisGame.gameOver = true
+    }
   }
 }
 
