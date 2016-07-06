@@ -1,7 +1,7 @@
 var Game = function() {
   this._board = [[null, null, null, null],
                 [null, null, 2, null],
-                [null, 2, null, null],
+                [null, 2, 2, null],
                 [null, null, null, null]]
 };
 
@@ -16,6 +16,7 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 37: //left
       console.log('left');
+      this.moveLeft()
       break;
     case 39: //right
       console.log('right');
@@ -36,12 +37,15 @@ Game.prototype.updateBoard = function() {
 Game.prototype.collide = function (spaceOne, spaceTwo) {
   // spaces specified hold values
   if (spaceOne === spaceTwo) {
+    console.log("one === two")
     spaceOne += spaceTwo
     spaceTwo = null
-  } else if (spaceOne === null) {
+  } else if (spaceOne === null || spaceOne === 0) {
+    console.log("null move")
     spaceOne = spaceTwo
     spaceTwo = null
   } else {
+    console.log("wut")
     return false
   }
 
@@ -53,7 +57,12 @@ Game.prototype.moveLeft = function () {
   for (let i = 0; i < 4; i ++) {
     for (let j = 0; j < 4; j ++) {
       for (let k = j; k >= 0; k --) {
-        this.collide(this._board[i][k], this._board[i][k+1])
+        console.log("K")
+        let newValue = this.collide(this._board[i][k], this._board[i][k+1])
+        if (newValue !== false) {
+          this._board[i][k] = newValue
+          this._board[i][k+1] = null
+        }
       }
     }
   }
@@ -87,7 +96,6 @@ $(document).ready(function() {
       var tile = $('.tile');
       console.log(game._board)
       game.updateBoard()
-      game.moveLeft()
       game.moveTile(tile, event.which);
       game.updateBoard()
     }
