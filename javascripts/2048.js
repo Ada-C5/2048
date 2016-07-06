@@ -13,15 +13,57 @@ Game.prototype.moveTile = function(tile, direction) {
       var c2 = $(tile).data('col', 'c2')
       var c3 = $(tile).data('col', 'c3')
 
+      if (c0.length !== 4) {
+        $.each(c0, function(index, value) {
+          if ($(value).data('row') !== ('r' + index)) {
+            $(value).attr('data-row', ('r' + index))
+            index++
+          }
+
+          $.each(c0, function(index, value) {
+            if ($(value).data('val') === $(c0[index+1]).data('val')) {
+              let val = $(value).attr('data-val')
+              $(value).attr('data-val', (val * 2))
+              $(value).text(val * 2)
+
+              $(c0[index+1]).remove()
+
+              c0 = jQuery.grep(c0, function(value) {
+                return value != c0[index+1];
+              });
+
+              console.log(c0)
+              index++
+            }
+          })
+        }
+      })
+
+
+
       if (c1.length !== 4) {
         $.each(c1, function(index, value) {
-          console.log(value)
-          if ($(value).data('row') !== 'r0') {
-            console.log("my row is not r0")
-            $(value).attr('data-row', 'r0')
-            // $(value).switchClass('tile','boop')
-            console.log(value)
-            // increment iterator up
+          if ($(value).data('row') !== ('r' + index)) {
+            $(value).attr('data-row', ('r' + index))
+            index++
+          }
+        })
+      }
+
+      if (c2.length !== 4) {
+        $.each(c2, function(index, value) {
+          if ($(value).data('row') !== ('r' + index)) {
+            $(value).attr('data-row', ('r' + index))
+            index++
+          }
+        })
+      }
+
+      if (c3.length !== 4) {
+        $.each(c3, function(index, value) {
+          if ($(value).data('row') !== ('r' + index)) {
+            $(value).attr('data-row', ('r' + index))
+            index++
           }
         })
       }
