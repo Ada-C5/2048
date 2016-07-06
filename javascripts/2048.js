@@ -3,7 +3,64 @@ var Game = function () {
   thisGame = this
   this.gameOver = false
 
+  this.newGame = function () {
+    // spawn 2 tiles in random spaces
+    this.newTile(2)
+    setTimeout(this.newTile, 5)
+    // this.newTile(2)
+  }
 
+  this.newTile = function (numberOfTiles) {
+    let tiles = $('.tile')
+    let randRow = 'row' + randomSpace()
+    let randCol = 'col' + randomSpace()
+    let randVal = randomVal({4:0.3, 2:0.7})
+    var newTile = null
+
+    if (tiles[0] === undefined) {
+      newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
+    } else {
+      console.log(newTile)
+      while (newTile === null) {
+        for (let i = 0; i < tiles.length; i++) {
+          if (tiles[i].row !== randRow || tiles[i].col !== randCol) {
+            console.log('coords: ', randRow)
+            console.log('coords: ', randCol)
+            console.log('val: ', randVal)
+            newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
+          } else {
+            randRow = 'row' + randomSpace()
+            randCol = 'col' + randomSpace()
+          }
+        }
+      }
+    }
+    $(".cells").after(newTile)
+  }
+
+  function randomSpace() {
+    return Math.floor(Math.random() * (4 - 0)) + 0
+  }
+
+  function randomVal(spec) {
+    var i, sum = 0, r = Math.random()
+    for (i in spec) {
+      sum += spec[i]
+      if (r <= sum) return i
+    }
+  }
+
+  this.hasWon = function (tile) {
+    if (tile.dataset.val === "2048") {
+      console.log('won!')
+      thisGame.gameOver = true
+    }
+  }
+
+  this.hasLost = function () {
+    console.log('lost!')
+    thisGame.gameOver = true
+  }
 }
 
 Game.prototype.moveTile = function (tile, direction) {
@@ -33,10 +90,10 @@ Game.prototype.moveTile = function (tile, direction) {
         num = num - 1
       }
 
-
       this.dataset[type] = type + num.toString()
     })
   }
+  this.newTile()
 
 }
 
