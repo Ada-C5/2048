@@ -1,5 +1,7 @@
 var Game = function () {
   // Game logic and initialization here
+  thisGame = this
+  this.gameOver = false
 
 
 }
@@ -41,14 +43,31 @@ Game.prototype.moveTile = function (tile, direction) {
 $(document).ready(function () {
   console.log("ready to go!")
   // Any interactive jQuery functionality
-  var game = new Game();
+  startGame()
+
+  function startGame() {
+      game = new Game()
+      game.newGame()
+  }
 
   $('body').keydown(function(event) {
-    var arrows = [37, 38, 39, 40];
-    if (arrows.indexOf(event.which) > -1) {
-      var tile = $('.tile')
+    if (!game.gameOver) {
+      var arrows = [37, 38, 39, 40];
+      if (arrows.indexOf(event.which) > -1) {
+        var tile = $('.tile')
 
-      game.moveTile(tile, event.which)
+        game.moveTile(tile, event.which)
+      }
     }
   })
+
+  $('#newgame').click(function() {
+    // remove all tiles
+    $('.tile').each(function () {
+      this.remove()
+    })
+    startGame()
+  })
+
+
 })
