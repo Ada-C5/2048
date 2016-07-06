@@ -38,13 +38,10 @@ Game.prototype.updateBoard = function() {
 Game.prototype.collide = function (spaceOne, spaceTwo) {
   // spaces specified hold values
   if (spaceOne === spaceTwo) {
-    console.log("one === two")
     spaceOne += spaceTwo
-  } else if (spaceOne === null || spaceOne === 0) {
-    console.log("null move")
+  } else if (spaceOne === null || spaceOne === 0 || typeof spaceOne === 'undefined') {
     spaceOne = spaceTwo
   } else {
-    console.log("wut")
     return false
   }
 
@@ -61,7 +58,7 @@ Game.prototype.moveLeft = function () {
           this._board[i][k] = newValue
           if (k < 3) { this._board[i][k + 1] = null }
         } if (newValue === false) {
-          console.log('FALSE!!!')
+          // does a thing ever happen here?
         }
       }
     }
@@ -70,15 +67,15 @@ Game.prototype.moveLeft = function () {
 
 Game.prototype.moveRight = function () {
   for (let i = 0; i < 4; i++) {
-    for (let j = 4; j > 0; j--) {
-      for (let k = j; k <= 4; k++) {
+    for (let j = 3; j > 0; j--) {
+      for (let k = j; k <= 3; k++) {
         console.log('K')
         let newValue = this.collide(this._board[i][k], this._board[i][k - 1])
         if (newValue !== false) {
           this._board[i][k] = newValue
           if (k > 0) { this._board[i][k - 1] = null }
         } if (newValue === false) {
-          console.log('FALSE!!!')
+          // does a thing ever happen here?
         }
       }
     }
