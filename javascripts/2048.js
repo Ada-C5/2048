@@ -4,9 +4,43 @@ var Game = function() {
 };
 
 
+gameBoard = [
+"r0 c0",
+ "r0 c1",
+ "r0 c2",
+ "r0 c3",
+ "r1 c0",
+ "r1 c1",
+ "r1 c2",
+ "r1 c3",
+ "r2 c0",
+ "r2 c1",
+ "r2 c2",
+ "r2 c3",
+ "r3 c0",
+ "r3 c1",
+ "r3 c2",
+ "r3 c4"]
+
+ tiles = [
+
+ ]
+
+
+
+
+
 Game.prototype.newTile = function(newTile){
 
-return $('#gameboard').append("<div class='tile' data-row='r" + ( Math.floor(Math.random() * 4) + 1) + "', data-col='c" + ( Math.floor(Math.random() * 4) + 1) + "' data-val='2'>2</div>")
+return $('#gameboard').append("<div class='tile' data-row='r" + ( Math.floor(Math.random() * 1) + 0) + "', data-col='c" + ( Math.floor(Math.random() * 1) + 0) + "' data-val='2'>2</div>")
+}
+
+
+
+Game.prototype.spotAlreadytaken = function(tile){
+
+
+
 }
 
 
@@ -16,7 +50,8 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
-      $('.tile').attr("data-row", "r0")
+        $('.tile').attr("data-row", "r0")
+
       break;
     case 40: //down
       console.log('down');
