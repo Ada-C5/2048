@@ -23,17 +23,47 @@ Game.prototype.moveTile = function (tile, direction) {
   }
 
   function seperateMovementFunction(type, operand) {
-    tile.each(function() {
-      let num = parseInt(this.dataset[type][3])
-      if (operand === '+') {
-        num = num + 1
-      } else if (operand === '-') {
-        num = num - 1
+    // tile.each(function() {
+    //   let num = parseInt(this.dataset[type][3])
+    //   if (operand === '+') {
+    //     num = num + 1
+    //   } else if (operand === '-') {
+    //     num = num - 1
+    //   }
+    // })
+    // this.dataset[type] = type + num.toString()
+
+      //gets all the tiles in the second row
+      arrayTiles = $('.tile[data-row=row1]')
+
+    $.each(arrayTiles, function( index, value ) {
+      //convert the colunm into an integer
+      let num = parseInt(value.dataset["col"][3])
+      //defines the next colunm
+      let nextEle = num + 1
+
+      while (nextEle < 4) {
+
+        let nextString = nextEle.toString()
+        //interpolates the next element
+        let nextCol = '.tile[data-col=' + type + nextString + ']'
+        let nextColEle = $(nextCol)
+
+        //check if next tile is empty,
+          if (nextColEle.length == 0) {
+            value.dataset[type] = type + nextString
+          }
+
+          //keep moving next while empty, and colum is equal or less than 3
+      nextEle++;
       }
 
+          //if it is not empty
+            //if it is the same value, sum and keep moving
+              //elseif is different, grab that one and star looking for next empty tile
 
-      this.dataset[type] = type + num.toString()
-    })
+    });
+
   }
 
 }
