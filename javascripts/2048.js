@@ -14,7 +14,8 @@ Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
   this.createMatrix(tile, dataValue, dataValue2, matrix, reverse)
   this.moveTiles(tile, matrix, num, dataValue)
   // let self = this
-  setTimeout(() => this.createTile(), 0.3*1000)
+  setTimeout(() => this.createTile(), 1*1000)
+  console.log("MATRIX AFTER: ", matrix)
 
 }
 
@@ -78,10 +79,18 @@ Game.prototype.unoccupiedSpaces = function() {
   console.log("all", allSpaces)
   var occupiedSpaces = []
   // board of spaces that are occupied ["00","04"]
-  $('.tile').map(function() { occupiedSpaces.push($(this).data('row').toString()+$(this).data('col').toString())});
+  // console.log("ALL TILES PLS: ", $('.tile'))
+  var x = $('.tile')
+  for (let i = 0; i < x.length; i++) {
+    // console.log("THIS DATA? ", x[i].dataset)
+    occupiedSpaces.push(x[i].dataset.row+x[i].dataset.col)
+  }
+  // $('.tile').map(function() {
+  //   console.log($(this).data())
+  //  occupiedSpaces.push($(this).data('row').toString()+$(this).data('col').toString())});
   console.log("occupied: ", occupiedSpaces)
   unoccupiedSpaces = allSpaces.diff(occupiedSpaces)
-  console.log("unoccupied: ", unoccupiedSpaces)
+  // console.log("unoccupied: ", unoccupiedSpaces)
 
   return unoccupiedSpaces
 }
@@ -89,8 +98,12 @@ Game.prototype.unoccupiedSpaces = function() {
 Game.prototype.createTile = function() {
   let availableSpaces = this.unoccupiedSpaces()
   console.log("-->available spaces:  ", availableSpaces)
-  let tileLocation = availableSpaces[Math.floor(Math.random() * availableSpaces.length)];
+  // Math.floor(Math.random() * 7)
+  console.log(availableSpaces.length)
+  let tileLocation = availableSpaces[Math.floor(Math.random() * (availableSpaces.length))];
   console.log("new tile: ", tileLocation)
+  console.log("a:", tileLocation.charAt(0) + " b:", tileLocation.charAt(1))
+
   $('#gameboard').append("<div class=tile data-row=" + tileLocation.charAt(0) + " data-col=" + tileLocation.charAt(1) + " data-val=2>2</div>")
 }
 
