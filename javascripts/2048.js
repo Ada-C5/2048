@@ -50,10 +50,10 @@ Game.prototype.collideAllLeft = function(tiles) {
     }
   })
   g = this
+  console.log(leftSortedTiles)
   leftSortedTiles.each(function(){
-    console.log(leftSortedTiles)
     var tile = $(this)[0]
-    console.log(tile)
+    // console.log(tile)
     var row = tile.dataset['row']
     var col = tile.dataset['col']
     var val = tile.dataset['val']
@@ -408,12 +408,8 @@ $(document).ready(function() {
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
-      // for (var i = 0; i < 3; i++) {
         var tiles = $('.tile');
        game.moveTile(tiles, event.which);
-
-       game.display()
-    //  }
     }
     game.display()
     game.newTile()
