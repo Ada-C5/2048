@@ -53,32 +53,55 @@ function Game() {
   // right is 0, 1 
  
  this.moveTile = function(tile, direction) {
+  var row = 0 
+  var column = 0 
   switch(direction) {
     case 38: //up
       console.log('up');
-      self.moveAll()
+      self.moveAll( {row: 1, column: 0} )
       self.newTile();
       break;
     case 40: //down
       console.log('down');
+      self.moveAll( {row: -1, column: 0} )
       self.newTile();
       break;
     case 37: //left
       console.log('left');
+      self.moveAll( {row: 0, column: -1} )
       self.newTile();
       break;
     case 39: //right
       console.log('right');
+      self.moveAll( {row: 0, column: 1} )
       self.newTile();
       break;
     }
   }
 
-  this.moveAll = function() {
+  this.moveAll = function(row, column) {
+    // get all of the tiles on the board
     allTiles = $('div.tile[data-val !=""]')
+
     $.each(allTiles, function(index, value) {
-      console.log($(value).attr('data-col', 'data-row'))
-      // console.log($(value).attr('data-row'))
+      console.log($(value).attr('data-col'))
+      console.log($(value).attr('data-row'))
+      // if up
+        // check to see if the adjacent cell is empty or not
+        // subtract off of the row, do nothing to the column 
+        // worry about collisions later 
+      // if down
+        // check to see if the adjacent cell is empty or not
+        // add to the row, do nothing to the column 
+        // worry about collisions later 
+      // if left
+        // check to see if the adjacent cell is empty or not
+        // do nothing to the row, subtract off of the column 
+        // worry about collisions later 
+      // if right 
+        // check to see if the adjacent cell is empty or not
+        // do nothing to the row, add to the column 
+        // worry about collisions later 
     })
   }
 }
