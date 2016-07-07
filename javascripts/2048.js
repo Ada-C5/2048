@@ -125,10 +125,11 @@ Game.prototype.moveTile = function (tile, direction) {
   }
 
   function seperateMovementFunction(type, operand) {
+    function sortArrays(type, operand) {
+
     var arrayTiles = []
 
       if (type === "col" && operand === '+' ) {
-        console.log(rightSort($('.tile[data-row=row0]')).length);
         arrayTiles.push(rightSort($('.tile[data-row=row0]')))
         arrayTiles.push(rightSort($('.tile[data-row=row1]')))
         arrayTiles.push(rightSort($('.tile[data-row=row2]')))
@@ -149,55 +150,66 @@ Game.prototype.moveTile = function (tile, direction) {
         arrayTiles.push(downSort($('.tile[data-col=col2]')))
         arrayTiles.push(downSort($('.tile[data-col=col3]')))
       }
+      return arrayTiles
+    }
 
-    moveAllTheWay(arrayTiles, type, operand)
+    moveAllTheWay(sortArrays(type, operand), type, operand)
 
-    collideIfSameValue(arrayTiles,type, operand)
+    // collideIfSameValue(sortArrays(type, operand),type, operand)
 
-    moveAllTheWay(arrayTiles,  type, operand)
+    // moveAllTheWay(sortArrays(type, operand), type, operand)
 
   }
 
   function moveAllTheWay(arrayQuerys, type, operand) {
-  for( line of arrayQuerys) {
-    $.each(line, function( index, value ) {
-      //convert the colunm into an integer
-      var num = parseInt(value.dataset[type][3])
-      //defines the next colunm
-      if (operand === "+") {
-        var nextEle = num + 1
-      } else {
-        var nextEle = num - 1
+    console.log(arrayQuerys);
+    for( line of arrayQuerys) {
+      console.log(line);
+      if (line.length > 0) {
+        $.each(line, function( index, value ) {
+          var num = parseInt(value.dataset[type][3])
+          if (operand === "+") {
+            var nextEle = num + 1
+            var wall = 4
+          } else if (operand === "-"){
+            var nextEle = num - 1
+            var wall = 0
+          }
+          var nextCol = '.tile[data-' + type + '=' + type + nextEle.toString() + ']'
+          var nextColEle = $(nextCol)
+          if (wall === 4) {
+            while (nextEle < wall) {
+              let nextString = nextEle.toString()
+              let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
+              let nextColEle = $(nextCol)
+
+              if (nextColEle.length == 0) {
+                value.dataset[type] = type + nextString
+              }
+              nextEle++;
+            }
+          } else if (wall === 0) {
+            while (nextEle >= wall) {
+              let nextString = nextEle.toString()
+            //interpolates the next element
+              let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
+              let nextColEle = $(nextCol)
+
+              //check if next tile is empty,
+              if (nextColEle.length == 0) {
+                value.dataset[type] = type + nextString
+              }
+              nextEle--;
+            }
+          }
+        });
       }
-
-      var nextString = nextEle.toString()
-      //interpolates the next element
-      var nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
-      var nextColEle = $(nextCol)
-
-      //if it is not empty
-
-      while (nextEle < 4) {
-        let nextString = nextEle.toString()
-        //interpolates the next element
-        let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
-        let nextColEle = $(nextCol)
-
-        //check if next tile is empty,
-        if (nextColEle.length == 0) {
-          value.dataset[type] = type + nextString
-        }
-        //keep moving next while empty, and colum is equal or less than 3
-        nextEle++;
-      }
-    });
-  }
+    }
   }
 
   function collideIfSameValue(arrayQuerys,type, operand) {
     for( line of arrayQuerys) {
     $.each(line, function( index, value ) {
-
       var num = parseInt(value.dataset[type][3])
       //defines the next colunm
       if (operand === "+") {
@@ -221,6 +233,7 @@ Game.prototype.moveTile = function (tile, direction) {
                 setTimeout(function(){
                   $(value).text(value.dataset.val)
                 }, 240);
+                nextColEle[0].remove()
               }
             }
     });
