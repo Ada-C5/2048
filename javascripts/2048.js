@@ -49,9 +49,12 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('down');
 
       var c0 = $(tile).filter("[data-col=c0]").toArray().reverse()
-      var c1 = $(tile).filter("[data-col=c1]")
-      var c2 = $(tile).filter("[data-col=c2]")
-      var c3 = $(tile).filter("[data-col=c3]")
+      var c1 = $(tile).filter("[data-col=c1]").toArray().reverse()
+      var c2 = $(tile).filter("[data-col=c2]").toArray().reverse()
+      var c3 = $(tile).filter("[data-col=c3]").toArray().reverse()
+
+      console.log(c0[0])
+      console.log(c0[1])
 
       var array = []
 
