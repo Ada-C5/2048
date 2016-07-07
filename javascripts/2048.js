@@ -1,10 +1,10 @@
 var Game = function() {
-  this._board = [[null, null, 2, 2],
-                [null, null, 2, null],
-                [null, 2, 2, null],
-                [2, 2, null, null]]
+  this._board = [[null, null, null, null],
+                [null, null, null, null],
+                [null, null, null, null],
+                [null, null, null, null]]
 
-  this._availableSpaces = []
+  this._availableSpaces = [[0, 1], [0, 2], [0, 3]]
 };
 
 Game.prototype.moveTile = function(tile, direction, callback) {
@@ -35,7 +35,7 @@ Game.prototype.updateBoard = function() {
     for (j = 0; j < 4; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
       // console.log(slot)
-      if (this._board[i][j] === null || this._board[i][j] === 0 || isNaN(this._board[i][j]) || typeof this._board[i][j] === 'undefined') {
+      if (this._board[i][j] === 0 || isNaN(this._board[i][j]) || typeof this._board[i][j] === 'undefined') {
         $('div[id='+ slot + ']').html(null)
         this._board[i][j] = null
         this._availableSpaces.push([i, j])
@@ -123,19 +123,23 @@ Game.prototype.moveUp = function () {
   }
 }
 
-Game.prototype.addTile = function () {
+Game.prototype.addTile = function (callback) {
+  console.log(this._availableSpaces)
+  console.log(Math.floor(Math.random() * this._availableSpaces.length))
   let random = this._availableSpaces[Math.floor(Math.random() * this._availableSpaces.length)]
   console.log(random)
   let firstIndex = random.toString()[0]
   let secondIndex = random.toString()[2]
   this._board[firstIndex][secondIndex] = 2
+  callback
 }
 
 $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-  game.updateBoard()
+  game.addTile(game.updateBoard())
+
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
