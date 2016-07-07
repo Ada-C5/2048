@@ -41,7 +41,6 @@ Game.prototype.moveTilesUp = function(tiles) {
     var val = tile.dataset['val']
     g.moveSingleTileUp(tile, row, col, val)
   })
-  // this.display()
 }
 
 Game.prototype.moveTilesDown = function(tiles) {
@@ -53,7 +52,6 @@ Game.prototype.moveTilesDown = function(tiles) {
     var val = tile.dataset['val']
     g.moveSingleTileDown(tile, row, col, val)
   })
-  // this.display()
 }
 
 Game.prototype.moveTilesLeft = function(tiles) {
@@ -65,7 +63,6 @@ Game.prototype.moveTilesLeft = function(tiles) {
     var val = tile.dataset['val']
     g.moveSingleTileLeft(tile, row, col, val)
   })
-  // this.display()
 }
 
 Game.prototype.moveTilesRight = function(tiles) {
@@ -77,7 +74,6 @@ Game.prototype.moveTilesRight = function(tiles) {
     var val = tile.dataset['val']
     g.moveSingleTileRight(tile, row, col, val)
   })
-  // this.display()
 }
 
 Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
@@ -87,14 +83,12 @@ Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
       this.board[higher_row + col] = val
       this.board[row + col] = null
     }
-
   } else if (row === 'r2') {
     var higher_row = 'r1'
     if (!this.board[higher_row + col]) {
       this.board[higher_row + col] = val
       this.board[row + col] = null
     }
-
   }  else if (row === 'r3') {
       var higher_row = 'r2'
       if (!this.board[higher_row + col]) {
@@ -102,6 +96,9 @@ Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
+  this.collideUp(tile, row, col, val)
+  this.display()
+  console.log(this.board)
 }
 
 Game.prototype.moveSingleTileDown = function(tile, row, col, val) {
@@ -176,6 +173,30 @@ Game.prototype.moveSingleTileRight = function(tile, row, col, val) {
     }
 }
 
+Game.prototype.collideUp = function(tile, row, col, val) {
+  if (row === 'r1') {
+    var higher_row = 'r0'
+    if (this.board[higher_row + col] === this.board[row + col]) {
+      this.board[higher_row + col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+
+  } else if (row === 'r2') {
+    var higher_row = 'r1'
+    if (this.board[higher_row + col] === this.board[row + col]) {
+      this.board[higher_row + col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+
+  }  else if (row === 'r3') {
+      var higher_row = 'r2'
+      if (this.board[higher_row + col] === this.board[row + col]) {
+        this.board[higher_row + col] = String(Number(val) * 2)
+        this.board[row + col] = null
+      }
+    }
+}
+
 Game.prototype.display = function() {
   g = this
   for (var tile in this.board) {
@@ -188,15 +209,17 @@ Game.prototype.display = function() {
       var currentTile = $('.tile[data-row="' + row + '"][data-col="' + col + '"]')
 
       if (currentTile.length != 0) {
-        // console.log("current tile" , currentTile)
-
         currentTile.attr({'data-row': row})
         currentTile.attr({'data-col': col})
-        currentTile.attr({'data-val': this.board["'" + position + "'"]})
-        currentTile.text(this.board["'" + position + "'"])
+        currentTile.attr({'data-val': this.board[position]})
+        currentTile.text(this.board[position])
       } else {
         var newTileDiv = "<div class='tile' data-row=" + row + " data-col=" + col + " data-val=" + this.board[position] + ">" + this.board[position] + "</div>"
         var newTile = $("#gameboard").append(newTileDiv);
+        // debugger
+        console.log("position", position, this.board[position], this.board)
+        console.log(this.board["r1c2"])
+        console.log(position)
         // newTile.text('ha')
 
       }
@@ -205,12 +228,7 @@ Game.prototype.display = function() {
       currentTile.remove()
     }
   }
-
-
-
 }
-
-
 
 Game.prototype.moveTile = function(tiles, direction) {
   g = this;
@@ -232,7 +250,6 @@ Game.prototype.moveTile = function(tiles, direction) {
     this.moveTilesRight(tiles)
       break;
   }
-
 };
 
 Game.prototype.newTile = function() {
@@ -272,6 +289,7 @@ $(document).ready(function() {
        game.display()
      }
     }
+    game.display()
     game.newTile()
 
   });
