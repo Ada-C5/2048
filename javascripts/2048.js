@@ -3,6 +3,7 @@ var Game = function () {
   thisGame = this
   this.gameOver = false
   this.score = 0
+  this.validCollision = true
 
   this.newGame = function () {
     // spawn 2 tiles in random spaces
@@ -54,8 +55,9 @@ var Game = function () {
   }
 
   this.hasWon = function (tile) {
-    if (tile.dataset.val === "2048") {
+    if (tile === 2048) {
       console.log('won!')
+      $('#endgame').text("You Won!")
       thisGame.gameOver = true
     }
   }
@@ -64,7 +66,8 @@ var Game = function () {
     console.log('lost!')
     // checks if the board is full
     // needs to check if there are no more valid moves
-    if ($('.tiles').length === 9) {
+    if ($('.tiles').length === 9 && this.validCollision === false) {
+      $('#endgame').text("You Lost :(")
       thisGame.gameOver = true
     }
   }
@@ -116,19 +119,21 @@ function rightSort(arr) {
 
 Game.prototype.moveTile = function (direction) {
   // Game method here
-  switch(direction) {
-    case 38: //up
-      seperateMovementFunction('row', '-')
-      break;
-    case 40: //down
-      seperateMovementFunction('row', '+')
-      break;
-    case 37: //left
-      seperateMovementFunction('col', '-')
-      break;
-    case 39: //right
-      seperateMovementFunction('col', '+')
-      break;
+  if (!thisGame.gameOver) {
+    switch(direction) {
+      case 38: //up
+        seperateMovementFunction('row', '-')
+        break;
+      case 40: //down
+        seperateMovementFunction('row', '+')
+        break;
+      case 37: //left
+        seperateMovementFunction('col', '-')
+        break;
+      case 39: //right
+        seperateMovementFunction('col', '+')
+        break;
+    }
   }
 
   function seperateMovementFunction(type, operand) {
@@ -167,11 +172,8 @@ Game.prototype.moveTile = function (direction) {
 
   function moveAllTheWay(arrayQuerys, type, operand) {
     for( line of arrayQuerys) {
-      console.log(line);
       if (line.length > 0) {
         $.each(line, function( index, value ) {
-          // console.log(line.selector.slice(15, 19) + " contains: " + line.length);
-          // console.log('value: ', value);
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
             // debugger
@@ -190,7 +192,6 @@ Game.prototype.moveTile = function (direction) {
           }
           var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
           var nextColEle = $(nextCol)
-          // console.log('next: ', nextEle);
 
           if (wall === 4) {
             while (nextEle < wall) {
@@ -250,14 +251,15 @@ Game.prototype.moveTile = function (direction) {
             value.dataset[type] = type + nextString
             let newVal = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
             value.dataset.val = newVal
-            console.log(typeof newVal)
             thisGame.addScore(newVal)
+            thisGame.hasWon(newVal)
             setTimeout(function(){
               $(value).text(value.dataset.val)
             }, 240);
 
             nextColEle[0].remove()
           }
+          // return false
         }
       });
     }
