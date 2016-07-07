@@ -44,6 +44,42 @@ Game.prototype.moveTilesUp = function(tiles) {
   // this.display()
 }
 
+Game.prototype.moveTilesDown = function(tiles) {
+  g = this
+  tiles.each(function(){
+    var tile = $(this)[0]
+    var row = tile.dataset['row']
+    var col = tile.dataset['col']
+    var val = tile.dataset['val']
+    g.moveSingleTileDown(tile, row, col, val)
+  })
+  // this.display()
+}
+
+Game.prototype.moveTilesLeft = function(tiles) {
+  g = this
+  tiles.each(function(){
+    var tile = $(this)[0]
+    var row = tile.dataset['row']
+    var col = tile.dataset['col']
+    var val = tile.dataset['val']
+    g.moveSingleTileLeft(tile, row, col, val)
+  })
+  // this.display()
+}
+
+Game.prototype.moveTilesRight = function(tiles) {
+  g = this
+  tiles.each(function(){
+    var tile = $(this)[0]
+    var row = tile.dataset['row']
+    var col = tile.dataset['col']
+    var val = tile.dataset['val']
+    g.moveSingleTileRight(tile, row, col, val)
+  })
+  // this.display()
+}
+
 Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
   if (row === 'r1') {
     var higher_row = 'r0'
@@ -63,6 +99,78 @@ Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
       var higher_row = 'r2'
       if (!this.board[higher_row + col]) {
         this.board[higher_row + col] = val
+        this.board[row + col] = null
+      }
+    }
+}
+
+Game.prototype.moveSingleTileDown = function(tile, row, col, val) {
+  if (row === 'r2') {
+    var lower_row = 'r3'
+    if (!this.board[lower_row + col]) {
+      this.board[lower_row + col] = val
+      this.board[row + col] = null
+    }
+
+  } else if (row === 'r1') {
+    var lower_row = 'r2'
+    if (!this.board[lower_row + col]) {
+      this.board[lower_row + col] = val
+      this.board[row + col] = null
+    }
+
+  }  else if (row === 'r0') {
+      var lower_row = 'r1'
+      if (!this.board[lower_row + col]) {
+        this.board[lower_row + col] = val
+        this.board[row + col] = null
+      }
+    }
+}
+
+Game.prototype.moveSingleTileLeft = function(tile, row, col, val) {
+  if (col === 'c1') {
+    var leftier_col = 'c0'
+    if (!this.board[row + leftier_col]) {
+      this.board[row + leftier_col] = val
+      this.board[row + col] = null
+    }
+
+  } else if (col === 'c2') {
+    var leftier_col = 'c1'
+    if (!this.board[row + leftier_col]) {
+      this.board[row + leftier_col] = val
+      this.board[row + col] = null
+    }
+
+  }  else if (col === 'c3') {
+      var leftier_col = 'c2'
+      if (!this.board[row + leftier_col]) {
+        this.board[row + leftier_col] = val
+        this.board[row + col] = null
+      }
+    }
+}
+
+Game.prototype.moveSingleTileRight = function(tile, row, col, val) {
+  if (col === 'c2') {
+    var rightier_col = 'c3'
+    if (!this.board[row + rightier_col]) {
+      this.board[row + rightier_col] = val
+      this.board[row + col] = null
+    }
+
+  } else if (col === 'c1') {
+    var rightier_col = 'c2'
+    if (!this.board[row + rightier_col]) {
+      this.board[row + rightier_col] = val
+      this.board[row + col] = null
+    }
+
+  }  else if (col === 'c0') {
+      var rightier_col = 'c1'
+      if (!this.board[row + rightier_col]) {
+        this.board[row + rightier_col] = val
         this.board[row + col] = null
       }
     }
@@ -112,23 +220,16 @@ Game.prototype.moveTile = function(tiles, direction) {
      this.moveTilesUp(tiles)
     break;
     case 40: //down
+    this.moveTilesDown(tiles)
       console.log('down');
-      tile.attr({
-        'data-row': 'r3'
-      })
       break;
     case 37: //left
       console.log('left');
-      tile.attr({
-        'data-col': 'c0'
-      })
+    this.moveTilesLeft(tiles)
       break;
     case 39: //right
       console.log('right');
-      // tile.attr({
-      //   'data-col': 'c3'
-      // })
-      // separateMovementFunction('col', "+")
+    this.moveTilesRight(tiles)
       break;
   }
 
@@ -157,9 +258,11 @@ Game.prototype.newTile = function() {
 
 $(document).ready(function() {
   console.log("ready to go!");
+
   // Any interactive jQuery functionality
   var game = new Game();
-
+  game.newTile()
+  game.newTile()
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
@@ -170,5 +273,6 @@ $(document).ready(function() {
      }
     }
     game.newTile()
+
   });
 });
