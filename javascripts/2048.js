@@ -21,13 +21,9 @@ var Game = function () {
     if (tiles[0] === undefined) {
       newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
     } else {
-      // console.log(newTile)
       while (newTile === null) {
         for (let i = 0; i < tiles.length; i++) {
           if (tiles[i].row !== randRow || tiles[i].col !== randCol) {
-            // console.log('coords: ', randRow)
-            // console.log('coords: ', randCol)
-            // console.log('val: ', randVal)
             newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
           } else {
             randRow = 'row' + randomSpace()
@@ -252,7 +248,10 @@ Game.prototype.moveTile = function (direction) {
         if (nextColEle.length > 0) {
           if (value.dataset.val === nextColEle[0].dataset.val) {
             value.dataset[type] = type + nextString
-            value.dataset.val = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
+            let newVal = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
+            value.dataset.val = newVal
+            console.log(typeof newVal)
+            thisGame.addScore(newVal)
             setTimeout(function(){
               $(value).text(value.dataset.val)
             }, 240);
