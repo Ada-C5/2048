@@ -30,6 +30,7 @@ Game.prototype.moveTile = function(tile, direction, callback) {
 };
 
 Game.prototype.updateBoard = function() {
+  this._availableSpaces = []
   for (i = 0; i < 4; i++) {
     for (j = 0; j < 4; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
@@ -37,6 +38,7 @@ Game.prototype.updateBoard = function() {
       if (this._board[i][j] === null || this._board[i][j] === 0 || this._board[i][j] === NaN || typeof this._board[i][j] === 'undefined') {
         $('div[id='+ slot + ']').html(0)
         this._board[i][j] = null
+        this._availableSpaces.push([i, j])
       } else {
       $('div[id='+ slot + ']').html(this._board[i][j])
     }}
@@ -134,6 +136,7 @@ $(document).ready(function() {
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       console.log(game._board)
+      console.log(game._availableSpaces)
       game.updateBoard()
       game.moveTile(tile, event.which);
       game.updateBoard()
