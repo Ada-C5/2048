@@ -13,6 +13,7 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 40: //down
       console.log('down');
+      this.moveDown()
       break;
     case 37: //left
       console.log('left');
@@ -82,21 +83,24 @@ Game.prototype.moveRight = function () {
   }
 }
 
-Game.prototype.moveUp = function () {
-  for (let i = 3; i >= 0; i --) {
-    for (let j = 3; j >= 0; j --) {
-      this.collide(this._board[i][j], this._board[i+1][j])
+Game.prototype.moveDown = function () {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 3; j > 0; j--) {
+      for (let k = j; k <= 3; k++) {
+        console.log('K')
+        let newValue = this.collide(this._board[k][i], this._board[k - 1][i])
+        if (newValue !== false) {
+          this._board[k][i] = newValue
+          if (k > 0) { this._board[k - 1][i] = null }
+        } if (newValue === false) {
+          // does a thing ever happen here?
+        }
+      }
     }
   }
 }
 
-Game.prototype.moveDown = function () {
-  for (let i = 3; i > 0; i --) {
-    for (let j = 3; j > 0; j --) {
-      this.collide(this._board[i][j], this._board[i+1][j])
-    }
-  }
-}
+
 
 
 $(document).ready(function() {
