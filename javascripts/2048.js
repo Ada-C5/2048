@@ -154,15 +154,12 @@ Game.prototype.moveTile = function (direction) {
     }
 
     moveAllTheWay(sortArrays(type, operand), type, operand)
-
-    // collideIfSameValue(sortArrays(type, operand),type, operand)
-
-    // moveAllTheWay(sortArrays(type, operand), type, operand)
+    collideIfSameValue(sortArrays(type, operand),type, operand)
+    moveAllTheWay(sortArrays(type, operand), type, operand)
 
   }
 
   function moveAllTheWay(arrayQuerys, type, operand) {
-    // console.log(arrayQuerys);
     for( line of arrayQuerys) {
       console.log(line);
       if (line.length > 0) {
@@ -226,34 +223,37 @@ Game.prototype.moveTile = function (direction) {
         var nextEle = num - 1
       }
 
+      if (type === "col") {
+        var type2 = "row"
+        var type2Number = value.dataset[type2][3]
+      } else if (type === "row") {
+        type2 = "col"
+        var type2Number = value.dataset[type2][3]
+      }
+
       let nextString = nextEle.toString()
-      //interpolates the next element
-      let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
+      var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
       let nextColEle = $(nextCol)
 
-          //if it is the same value, sum and keep moving
-            //elseif is different, grab that one and star looking for next empty tile
-            if (nextColEle.length > 0) {
-              //chek if value is the same than current tile
-              if (value.dataset.val === nextColEle[0].dataset.val) {
-                value.dataset[type] = type + nextString
-                value.dataset.val = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
-                setTimeout(function(){
-                  $(value).text(value.dataset.val)
-                }, 240);
-                nextColEle[0].remove()
-              }
-            }
-    });
-  }
+        if (nextColEle.length > 0) {
+          if (value.dataset.val === nextColEle[0].dataset.val) {
+            value.dataset[type] = type + nextString
+            value.dataset.val = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
+            setTimeout(function(){
+              $(value).text(value.dataset.val)
+            }, 240);
+            nextColEle[0].remove()
+          }
+        }
+      });
+    }
   }
 
   thisGame.newTile()
-      // call gameOver() before every move
-      // call addScore() for every combination
+  // call gameOver() before every move
+  // call addScore() for every combination
 
 }
-
 
 $(document).ready(function () {
   console.log("ready to go!")
