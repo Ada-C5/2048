@@ -42,11 +42,56 @@ Game.prototype.sortDownMoveTiles = function(tilesArray){
     return bRowNumber - aRowNumber
   })
 
-
   for (var i = 0; i < tilesArray.length; i++) {
-    $(tilesArray[i]).attr('data-row', 'r' + (3-i))
+
+    $(tilesArray[i]).attr('data-row', 'r' + (3 - i))
   }
 }
+
+
+Game.prototype.sortMoveLeftTiles = function(tilesArray){
+  tilesArray = tilesArray.sort(function(a,b){
+    var aColNumber = parseInt($(a).attr('data-col').substring(1))
+    var bColNumber = parseInt($(b).attr('data-col').substring(1))
+    return aColNumber - bColNumber
+    var combineTiles = Number((tilesArray[i]).attr('data-val')) * Number((tilesArray[i]).attr('data-val'))
+  })
+  for (var i = 0; i < tilesArray.length; i++) {
+    console.log(i)
+
+    if($(tilesArray[i]).attr('data-val') === $(tilesArray[i + 1]).attr('data-val')){
+      console.log('trying to remove', $(tilesArray[i + 1]))
+        $(tilesArray[i + 1]).remove()
+        $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
+        $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
+
+        //$(selector).attr(attribute,value)
+
+      }
+
+    $(tilesArray[i]).attr('data-col', 'c' + i)
+  }
+}
+
+
+
+
+
+Game.prototype.sortMoveRightTiles = function(tilesArray){
+  tilesArray = tilesArray.sort(function(a,b){
+
+  var aColNumber = parseInt($(a).attr('data-col').substring(1))
+  var bColNumber = parseInt($(b).attr('data-col').substring(1))
+  return aColNumber - bColNumber
+  })
+for (var i = 0; i < tilesArray.length; i++) {
+
+  $(tilesArray[i]).attr('data-col', 'c' + (3 - i))
+  }
+}
+
+
+
 
 
 
@@ -58,6 +103,10 @@ Game.prototype.moveTile = function(tiles, direction) {
   var tilesc2 = tiles.filter('[data-col=c2]').toArray()
   var tilesc3 = tiles.filter('[data-col=c3]').toArray()
   // Game method here
+  var tilesr0 = tiles.filter('[data-row=r0]').toArray()
+  var tilesr1 = tiles.filter('[data-row=r1]').toArray()
+  var tilesr2 = tiles.filter('[data-row=r2]').toArray()
+  var tilesr3 = tiles.filter('[data-row=r3]').toArray()
   switch(direction) {
     case 38: //up
 
@@ -83,11 +132,19 @@ Game.prototype.moveTile = function(tiles, direction) {
       break;
     case 37: //left
       console.log('left');
-        $('.tile').attr("data-col", "c0")
+      this.sortMoveLeftTiles(tilesr0)
+      this.sortMoveLeftTiles(tilesr1)
+      this.sortMoveLeftTiles(tilesr2)
+      this.sortMoveLeftTiles(tilesr3)
       break;
     case 39: //right
       console.log('right');
-        $('.tile').attr("data-col", "c3")
+      this.sortMoveRightTiles(tilesr0)
+      this.sortMoveRightTiles(tilesr1)
+      this.sortMoveRightTiles(tilesr2)
+      this.sortMoveRightTiles(tilesr3)
+
+
       break;
   }
 };
