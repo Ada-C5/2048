@@ -32,8 +32,11 @@ Game.prototype.updateBoard = function() {
     for (j = 0; j < 4; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
       // console.log(slot)
+      if (this._board[i][j] === null || this._board[i][j] === 0 || this._board[i][j] === NaN || typeof this._board[i][j] === 'undefined') {
+        $('div[id='+ slot + ']').html(0)
+      } else {
       $('div[id='+ slot + ']').html(this._board[i][j])
-    }
+    }}
   }
 }
 
@@ -94,7 +97,7 @@ Game.prototype.moveDown = function () {
           this._board[k][i] = newValue
           if (k > 0) { this._board[k - 1][i] = null }
         } else if (newValue === false) {
-          // does a thing ever happen here?
+         x // does a thing ever happen here?
         }
       }
     }
