@@ -100,8 +100,22 @@ Game.prototype.moveDown = function () {
   }
 }
 
-
-
+Game.prototype.moveUp = function () {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      for (let k = j; k >= 0; k--) {
+        console.log('K')
+        let newValue = this.collide(this._board[k][i], this._board[k + 1][i])
+        if (newValue !== false) {
+          this._board[k][i] = newValue
+          if (k > 0) { this._board[k + 1][i] = null }
+        } if (newValue === false) {
+          // does a thing ever happen here?
+        }
+      }
+    }
+  }
+}
 
 $(document).ready(function() {
   console.log("ready to go!");
