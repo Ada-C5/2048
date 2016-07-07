@@ -3,9 +3,11 @@ var Game = function() {
                 [null, null, 2, null],
                 [null, 2, 2, null],
                 [2, 2, null, null]]
+
+  this._availableSpaces = []
 };
 
-Game.prototype.moveTile = function(tile, direction) {
+Game.prototype.moveTile = function(tile, direction, callback) {
   // Game method here
   switch(direction) {
     case 38: //up
@@ -34,6 +36,7 @@ Game.prototype.updateBoard = function() {
       // console.log(slot)
       if (this._board[i][j] === null || this._board[i][j] === 0 || this._board[i][j] === NaN || typeof this._board[i][j] === 'undefined') {
         $('div[id='+ slot + ']').html(0)
+        this._board[i][j] = null
       } else {
       $('div[id='+ slot + ']').html(this._board[i][j])
     }}
@@ -97,7 +100,7 @@ Game.prototype.moveDown = function () {
           this._board[k][i] = newValue
           if (k > 0) { this._board[k - 1][i] = null }
         } else if (newValue === false) {
-         x // does a thing ever happen here?
+         // does a thing ever happen here?
         }
       }
     }
