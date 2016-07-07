@@ -15,6 +15,27 @@ var Game = function() {
   //
   // $("gameboard").append($elem)
 
+  this.lost = function() {
+    for (let c = 0; c < 4; c++) {
+      let col_array = $(".tile[data-col=c" + c + "]");
+      for (let i = 0; i < col_array.length; i++) {
+        if (col_array[i+1] && $(col_array)[i].dataset.val === $(col_array)[i+1].dataset.val) {
+          return false;
+        }
+      }
+    }
+
+    for (let r = 0; r < 4; r++) {
+      let row_array = $(".tile[data-row=r" + r + "]");
+      for (let i = 0; i < row_array.length; i++) {
+        if (row_array[i+1] && $(row_array)[i].dataset.val === $(row_array)[i+1].dataset.val) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -200,9 +221,14 @@ $(document).ready(function() {
       var tile = $('.tile');
 
       let available = game.moveTile(tile, event.which);
-      setTimeout(function(){
-        game.new_tiles(available);
-      }, 1200);
+      let num_tiles = $('.tile').length;
+      if (num_tiles == 16) {
+        game.lost();
+      } else {
+        setTimeout(function(){
+          game.new_tiles(available);
+        }, 200);
+      }
     }
   });
 });
