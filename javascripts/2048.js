@@ -18,19 +18,15 @@ Game.prototype.moveTile = function(tiles, direction) {
     case 37: //left
       console.log('left');
       this.legit("left")
-      this.addTile()
+      // this.addTile()
       break;
     case 39: //right
       console.log('right');
       this.legit("right")
-      this.addTile()
+      // this.addTile()
       break;
   }
 };
-
-Game.prototype.moveBoard = function (direction) {
-}
-
 
 Game.prototype.addTile = function () {
   var tiles = $(".tile")
@@ -42,7 +38,7 @@ Game.prototype.addTile = function () {
   var random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
   while (newTile === null) {
     tiles.each(function(index, val){
-      if ($(val).attr("data-row") === random[0] && $(val).attr("data-col")){
+      if ($(val).attr("data-row") === random[0] && $(val).attr("data-col") === random[1]){
         random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
         console.log("match", newTile)
         newTile = null
@@ -85,6 +81,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
         }
       }
     }
+    this.addTile()
 
   } else if (direction === "right") {
     for (var row = 0; row < 4; row++) {
@@ -115,6 +112,9 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
         }
       }
     }
+    // setTimeout(function () {
+      this.addTile()
+    // }, 925)
 
   } else if (direction === "up") {
     $(".tile").attr("data-row", "r0")
@@ -123,7 +123,6 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
     $(".tile").attr("data-row", "r3")
 
   }
-  this.moveBoard(direction)
 }
 
 $(document).ready(function() {
