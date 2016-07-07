@@ -1,19 +1,4 @@
 var Game = function() {
-  // Game logic and initialization here
-  //
-  // let r_num = "r" + [0..3][Math.floor(Math.random()*4)]
-  // let c_num = "c" + [0..3][Math.floor(Math.random()*4)]
-  //
-  // let $elem = $("<div/>")
-  //           .attr({
-  //               "data-col": c_num,
-  //               "data-row": r_num,
-  //               "data-val": 2
-  //             })
-  //           .addClass("tile")
-  //           .html("<div>2</div>")
-  //
-  // $("gameboard").append($elem)
 
   this.lost = function() {
     if (axis_loss("col") === false || axis_loss("row") === false) {
@@ -126,7 +111,6 @@ Game.prototype.moveTile = function(tile, direction) {
       sort_things(array, "data-col", "right");
       for (let i = 0; i < array.length; i++) {
         slide_tile(array, axis_index, i, axis);
-        console.log(axis_index);
         axis_index--;
       }
       // 4 - tiles.count - how many spaces available
@@ -183,7 +167,12 @@ function slide_tile(array, axis_index, i, axis) {
 
     setTimeout (function() {
       // double the value stored in data-val
-      curr.attr({"data-val": $(array)[i].dataset.val * 2});
+      let tile = curr.attr({"data-val": $(array)[i].dataset.val * 2});
+      // check for win
+      let val = tile[0].dataset.val;
+      if (val === "2048") {
+        console.log("YOU WIN")
+      };
       // double the number that shows on the tile
       curr.text((array)[i].dataset.val);
       // remove the 2nd element from the DOM
