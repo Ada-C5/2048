@@ -37,7 +37,8 @@ var Game = function () {
       }
     }
     $(".cells").after(newTile)
-    newTile = null
+    // newTile = null
+    return newTile
   }
 
   function randomSpace() {
@@ -74,37 +75,47 @@ var Game = function () {
 }
 
 function upSort(arr) {
-  return arr.sort(ascending)
+  return arr.sort(function row_ascending(a, b) {
+    if (a.dataset.row[3] < b.dataset.row[3]) {
+      return -1
+    } else if (a.dataset.row[3] > b.dataset.row[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 function downSort(arr) {
-  return arr.sort(descending)
+  return arr.sort(function row_descending(a, b) {
+    if (a.dataset.row[3] > b.dataset.row[3]) {
+      return -1
+    } else if (a.dataset.row[3] < b.dataset.row[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 function leftSort(arr) {
-  return arr.sort(ascending)
+  return arr.sort(function col_ascending(a, b) {
+    if (a.dataset.col[3] < b.dataset.col[3]) {
+      return -1
+    } else if (a.dataset.col[3] > b.dataset.col[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 function rightSort(arr) {
-  return arr.sort(descending)
-}
-
-function ascending(a, b) {
-  if (a.dataset.col[3] < b.dataset.col[3]) {
-    return -1
-  } else if (a.dataset.col[3] > b.dataset.col[3]) {
-    return 1
-  }
-  return 0
-}
-
-function descending(a, b) {
-  if (a.dataset.col[3] > b.dataset.col[3]) {
-    return -1
-  } else if (a.dataset.col[3] < b.dataset.col[3]) {
-    return 1
-  }
-  return 0
+  return arr.sort(function col_descending(a, b) {
+    if (a.dataset.col[3] > b.dataset.col[3]) {
+      return -1
+    } else if (a.dataset.col[3] < b.dataset.col[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 Game.prototype.moveTile = function (direction) {
@@ -126,8 +137,7 @@ Game.prototype.moveTile = function (direction) {
 
   function seperateMovementFunction(type, operand) {
     function sortArrays(type, operand) {
-
-    var arrayTiles = []
+      var arrayTiles = []
 
       if (type === "col" && operand === '+' ) {
         arrayTiles.push(rightSort($('.tile[data-row=row0]')))
@@ -164,12 +174,14 @@ Game.prototype.moveTile = function (direction) {
       console.log(line);
       if (line.length > 0) {
         $.each(line, function( index, value ) {
+          // console.log(line.selector.slice(15, 19) + " contains: " + line.length);
+          // console.log('value: ', value);
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
             // debugger
             var nextEle = num + 1
             var wall = 4
-          } else if (operand === "-"){
+          } else if (operand === "-") {
             var nextEle = num - 1
             var wall = 0
           }
@@ -182,13 +194,15 @@ Game.prototype.moveTile = function (direction) {
           }
           var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
           var nextColEle = $(nextCol)
+          // console.log('next: ', nextEle);
+
           if (wall === 4) {
             while (nextEle < wall) {
               let nextString = nextEle.toString()
               var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
               let nextColEle = $(nextCol)
 
-              if (nextColEle.length == 0) {
+              if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
               }
               nextEle++;
@@ -201,7 +215,7 @@ Game.prototype.moveTile = function (direction) {
               let nextColEle = $(nextCol)
 
               //check if next tile is empty,
-              if (nextColEle.length == 0) {
+              if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
               }
               nextEle--;
@@ -242,6 +256,7 @@ Game.prototype.moveTile = function (direction) {
             setTimeout(function(){
               $(value).text(value.dataset.val)
             }, 240);
+
             nextColEle[0].remove()
           }
         }
@@ -249,10 +264,11 @@ Game.prototype.moveTile = function (direction) {
     }
   }
 
+  // spawn a new tile after each move
   thisGame.newTile()
-  // call gameOver() before every move
-  // call addScore() for every combination
-
+  // console.log('new: ', thisGame.newTile())
+    // call gameOver() before every move
+    // call addScore() for every combination
 }
 
 $(document).ready(function () {
