@@ -106,7 +106,6 @@ Game.prototype.moveTile = function(tile, direction) {
         sort_things(array, "data-col", "right");
         for (let i = 0; i < array.length; i++) {
           slide_tile(array, axis_index, i, axis);
-          console.log(axis_index);
           axis_index--;
         }
         // 4 - tiles.count - how many spaces available
@@ -168,23 +167,24 @@ function slide_tile(array, axis_index, i, axis) {
       curr.text((array)[i].dataset.val);
       // remove the 2nd element from the DOM
       nxt.remove();
-    }, 1200);
+    }, 200);
     // remove from the array
     array.splice(i+1, 1);
   }
 }
 
 Game.prototype.new_tiles = function(available) {
-  let tile = available[Math.floor(Math.random()*available.length)]
+  let tile = available[Math.floor(Math.random()*available.length)];
+  let val = Math.random() < 0.9 ? 2 : 4;
 
   let $elem = $("<div/>")
             .attr({
                 "data-col": tile[0],
                 "data-row": tile[1],
-                "data-val": 2
+                "data-val": val
               })
             .addClass("tile")
-            .html("2")
+            .html(val)
 
   $("#gameboard").append($elem)
 }
