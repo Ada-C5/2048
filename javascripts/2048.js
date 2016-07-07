@@ -19,62 +19,81 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
+  var available,
+      axis_index,
+      axis,
+      array;
+
   switch(direction) {
     case 38: //up
       console.log('up');
-      var col_array = $(".tile[data-col='c2']");
-      sort_things(col_array, "data-row", "up");
-      for (let i = 0; i < 4; i++) {
-        let row = 0 + i;
-        $(col_array[i]).attr({ "data-row": "r" + row });
+      axis = "row";
+      for (let n = 0; n < 4; n++) {
+        axis_index = 0;
+        var array = $(".tile[data-col=c" + n + "]");
+        sort_things(array, "data-row", "up");
+        for (let i = 0; i < 4; i++) {
+          slide_tile(array, axis_index, i, axis);
+          axis_index++;
+        }
       }
       break;
 
     case 40: //down
       console.log('down');
+      axis = "row";
       // tile.attr({ "data-row": "r2" });
-      var col_array = $(".tile[data-col='c2']");
-      sort_things(col_array, "data-row", "down");
-      for (let i = 0; i < 4; i++) {
-        let row = 3 - i;
-        $(col_array[i]).attr({ "data-row": "r" + row });
+      for (let n = 0; n < 4; n++) {
+        axis_index = 3;
+        var array = $(".tile[data-col=c" + n + "]");
+        sort_things(array, "data-row", "down");
+        for (let i = 0; i < 4; i++) {
+          slide_tile(array, axis_index, i, axis);
+          axis_index--;
+        }
       }
       break;
 
     case 37: //left
       console.log('left');
-      let available = [],
-          axis_index = 0,
-          axis = "data-col"
+      available = [];
+      axis = "col";
+      // axis = "data-col";
       // loop through all rows
-      var array = $(".tile[data-row=r2]");
-      // console.log(array)
-      sort_things(array, "data-col", "left");
-      for (let i = 0; i < array.length; i++) {
-        slide_tile(array, axis_index, i)
-        axis_index++
-      }
-      // console.log(row_array[0].getAttribute("data-col")[1]);
+      for (let n = 0; n < 4; n++) {
+        axis_index = 0;
+        array = $(".tile[data-row=r" + n + "]");
+        sort_things(array, "data-col", "left");
+        for (let i = 0; i < array.length; i++) {
+          slide_tile(array, axis_index, i, axis)
+          axis_index++
+        }
 
-      // 4 - tiles.count - how many spaces available
-      let available_count = 4 - array.length;
-      // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
-      for (let i = 0; i < available_count; i++) {
-        let col = 3 - i;
-        // when looping through all rows, change the row value
-        available.push(['r2', 'c' + col]);
+        // 4 - tiles.count - how many spaces available
+        let available_count = 4 - array.length;
+        // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
+        for (let i = 0; i < available_count; i++) {
+          let col = 3 - i;
+          // when looping through all rows, change the row value
+          available.push(['r2', 'c' + col]);
+        }
       }
-      // console.log(available);
+      console.log(available);
       break;
 
     case 39: //right
       console.log('right');
-      var array = $(".tile[data-row='r2']");
-      sort_things(array, "data-col", "right");
-      for (let i = 0; i < array.length; i++) {
-        slide_tile(array, "data-col", 3)
+      axis = "col";
+      for (let n = 0; n < 4; n++) {
+        axis_index = 3;
+        array = $(".tile[data-row=r" + n + "]");
+        sort_things(array, "data-col", "right");
+        for (let i = 0; i < array.length; i++) {
+          slide_tile(array, axis_index, i, axis);
+          console.log(axis_index);
+          axis_index--;
+        }
       }
-      // console.log(row_array[0].getAttribute("data-col")[1]);
       break;
   }
 };
@@ -101,14 +120,20 @@ function sort_things(tile_array, sort_by, direction) {
   });
 }
 
-function slide_tile(array, axis_index, i) {
-  let char = "c";
-
-  $(array[i]).attr({ "data-col": char + axis_index });
+function slide_tile(array, axis_index, i, axis) {
+  if (axis === "col") {
+    $(array[i]).attr({ "data-col": "c" + axis_index });
+  } else {
+    $(array[i]).attr({ "data-row": "r" + axis_index });
+  }
   // if two values next to each other are the same
   if (array[i+1] && $(array)[i].dataset.val === $(array)[i+1].dataset.val) {
     // move the 2nd value to where the 1st one is
-    $(array[i+1]).attr({ "data-col": char + axis_index });
+    if (axis === "col") {
+      $(array[i+1]).attr({ "data-col": "c" + axis_index });
+    } else {
+      $(array[i+1]).attr({ "data-row": "r" + axis_index });      
+    }
     // double the value stored in data-val
     $(array[i]).attr({"data-val": $(array)[i].dataset.val * 2});
     // double the number that shows on the tile
