@@ -43,8 +43,49 @@ Game.prototype.moveTile = function(tile, direction) {
       })
 
       break;
+
+
     case 40: //down
       console.log('down');
+
+      var c0 = $(tile).filter("[data-col=c0]").toArray().reverse()
+      var c1 = $(tile).filter("[data-col=c1]")
+      var c2 = $(tile).filter("[data-col=c2]")
+      var c3 = $(tile).filter("[data-col=c3]")
+
+      var array = []
+
+      array.push(c0)
+      array.push(c1)
+      array.push(c2)
+      array.push(c3)
+
+      // "reverse each" through the array so you are looking at the bottom-est first,
+      // and comparing it to the bottom-est possible index... thing...
+
+      $.each(array, function(i, column) {
+        $.each(column, function(index, value) {
+
+          if ($(value).attr("data-val") === ($(column[index+1]).attr("data-val"))) {
+            $(value).attr('data-val', (($(value).attr('data-val')) * 2))
+            $(value).text($(value).attr('data-val'))
+
+            $(column[index+1]).remove()
+
+            column.splice((index + 1), 1)
+          }
+        })
+
+        $.each(column, function(index, moving) {
+          row = $(moving).attr('data-row')
+          thing = ('r' + index)
+
+          if (row !== thing) {
+            let changed = $(moving).attr('data-row', thing)
+          }
+        })
+      })
+
       break;
     case 37: //left
       console.log('left');
