@@ -30,7 +30,6 @@ Game.prototype.moveTile = function(tile, direction, callback) {
 };
 
 Game.prototype.updateBoard = function() {
-  this._availableSpaces = []
   for (i = 0; i < 4; i++) {
     for (j = 0; j < 4; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
@@ -38,16 +37,21 @@ Game.prototype.updateBoard = function() {
       if (this._board[i][j] === 0 || isNaN(this._board[i][j]) || typeof this._board[i][j] === 'undefined') {
         $('div[id='+ slot + ']').html(null)
         this._board[i][j] = null
-        this._availableSpaces.push([i, j])
       } else {
       $('div[id='+ slot + ']').html(this._board[i][j])
     }}
   }
 }
 
-Game.prototype.newTile = function () {
-  // select random index of available tiles to use for new square
-  let newIndex = Math.floor(Math.random() * (3 - 0 + 1)) + 0
+Game.prototype.boardCleaner = function () {
+  this._availableSpaces = []
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      if (this._board[i][j] === null || this._board[i][j]) {
+        this._availableSpaces.push([i, j])
+      }
+    }
+  }
 }
 
 Game.prototype.collide = function (spaceOne, spaceTwo) {
@@ -67,7 +71,6 @@ Game.prototype.moveLeft = function () {
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 3; j++) {
       for (let k = j; k >= 0; k--) {
-        console.log('K')
         let newValue = this.collide(this._board[i][k], this._board[i][k + 1])
         if (newValue !== false) {
           this._board[i][k] = newValue
@@ -82,7 +85,6 @@ Game.prototype.moveRight = function () {
   for (let i = 0; i < 4; i++) {
     for (let j = 3; j > 0; j--) {
       for (let k = j; k <= 3; k++) {
-        console.log('K')
         let newValue = this.collide(this._board[i][k], this._board[i][k - 1])
         if (newValue !== false) {
           this._board[i][k] = newValue
@@ -97,7 +99,6 @@ Game.prototype.moveDown = function () {
   for (let i = 0; i < 4; i++) {
     for (let j = 3; j > 0; j--) {
       for (let k = j; k <= 3; k++) {
-        console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k - 1][i])
         if (newValue !== false) {
           this._board[k][i] = newValue
@@ -112,7 +113,6 @@ Game.prototype.moveUp = function () {
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 3; j++) {
       for (let k = j; k >= 0; k--) {
-        console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k + 1][i])
         if (newValue !== false) {
           this._board[k][i] = newValue
@@ -142,11 +142,12 @@ $(document).ready(function() {
 
 
   $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40];
+    var arrows = [37, 38, 39, 40, 86];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
       game.addTile()
+      game.boardCleaner()
       console.log(game._board)
       game.updateBoard()
     }
