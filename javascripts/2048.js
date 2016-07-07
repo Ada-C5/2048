@@ -19,6 +19,9 @@ var Game = function() {
     {col:2, row:3, val:"" },
     {col:3, row:3, val:"" }
   ]
+
+  this.score = 0
+
   var initialSquare = this.matrix[Math.floor(Math.random()*this.matrix.length)];
   // console.log(initialSquare)
 
@@ -50,6 +53,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               } else if (this_col[s]["val"] == this_col[s+1]["val"] && modTiles.includes(this_col[s+1]) == false) {
                 console.log("1")
                 this_col[s]["val"] = currentTile * 2
+                updateScore(game, (currentTile * 2))
                 this_col[s+1]["val"] = ""
                 modTiles.push(this_col[s])
                 console.log(modTiles)
@@ -78,6 +82,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
                 this_col[s-1]["val"] = ""
               } else if (this_col[s]["val"] == this_col[s-1]["val"] && modTiles.includes(this_col[s-1]) == false) {
                 this_col[s]["val"] = currentTile * 2
+                updateScore(game, (currentTile * 2))
                 this_col[s-1]["val"] = ""
                 modTiles.push(this_col[s])
                 console.log(modTiles)
@@ -108,6 +113,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               } else if (this_row[s]["val"] == this_row[s-1]["val"] && modTiles.includes(this_row[s-1]) == false) {
                 console.log("1")
                 this_row[s]["val"] = currentTile * 2
+                updateScore(game, (currentTile * 2))
                 this_row[s-1]["val"] = ""
                 modTiles.push(this_row[s])
                 console.log(modTiles)
@@ -137,6 +143,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
               } else if (this_row[s]["val"] == this_row[s+1]["val"] && modTiles.includes(this_row[s+1]) == false) {
                 console.log("1")
                 this_row[s]["val"] = currentTile * 2
+                updateScore(game, (currentTile * 2))
                 this_row[s+1]["val"] = ""
                 modTiles.push(this_row[s])
                 console.log(modTiles)
@@ -195,14 +202,15 @@ function checkLose() {
 function checkWin(game) {
   game.matrix.forEach( function (object) {
     var x = object.prop1 + 2;
-    if (object['val'] == 8) {
+    if (object['val'] == 2048) {
       console.log("you win!!!")
     };
   });
 }
 
-function updateScore() {
-
+function updateScore(game, pointsToAdd) {
+  game.score = game.score + pointsToAdd
+  console.log(game.score)
 }
 
 
