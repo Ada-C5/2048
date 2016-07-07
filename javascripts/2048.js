@@ -46,7 +46,7 @@ Game.prototype.moveTile = function(tile, direction) {
           available.push(['c' + n, 'r' + col]);
         }
       }
-      break;
+      return available;
 
     case 40: //down
       console.log('down');
@@ -65,12 +65,11 @@ Game.prototype.moveTile = function(tile, direction) {
         let available_count = 4 - array.length;
         // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
         for (let i = 0; i < available_count; i++) {
-          let col = 3 - i;
           // when looping through all rows, change the row value
-          available.push(['c' + n, 'r' + col]);
+          available.push(['c' + n, 'r' + i]);
         }
       }
-      break;
+      return available;
 
     case 37: //left
       console.log('left');
@@ -92,10 +91,10 @@ Game.prototype.moveTile = function(tile, direction) {
         for (let i = 0; i < available_count; i++) {
           let col = 3 - i;
           // when looping through all rows, change the row value
-          available.push(['r' + n, 'c' + col]);
+          available.push(['c' + col, 'r' + n]);
         }
       }
-      break;
+      return available;
 
     case 39: //right
       console.log('right');
@@ -114,12 +113,11 @@ Game.prototype.moveTile = function(tile, direction) {
         let available_count = 4 - array.length;
         // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
         for (let i = 0; i < available_count; i++) {
-          let col = 3 - i;
           // when looping through all rows, change the row value
-          available.push(['r' + n, 'c' + col]);
+          available.push(['c' + i, 'r' + n]);
         }
       }
-      break;
+      return available;
   }
 };
 
@@ -162,13 +160,28 @@ function slide_tile(array, axis_index, i, axis) {
     // double the value stored in data-val
     $(array[i]).attr({"data-val": $(array)[i].dataset.val * 2});
     // double the number that shows on the tile
-    $(array[i]).text((array)[i].dataset.val);
+    setTimeout (function() {$(array[i]).text((array)[i].dataset.val)}, 1000);
     // remove the 2nd element from the DOM
     $(array[i+1]).remove();
     // remove from the array
     array.splice(i+1, 1);
     // console.log(array)
   }
+}
+
+Game.prototype.new_tiles = function(available) {
+  let tile = available[Math.floor(Math.random()*available.length)]
+
+  let $elem = $("<div/>")
+            .attr({
+                "data-col": tile[0],
+                "data-row": tile[1],
+                "data-val": 2
+              })
+            .addClass("tile")
+            .html("2")
+
+  $("#gameboard").append($elem)
 }
 
 $(document).ready(function() {
@@ -181,7 +194,8 @@ $(document).ready(function() {
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
 
-      game.moveTile(tile, event.which);
+      let available = game.moveTile(tile, event.which);
+      game.new_tiles(available);
     }
   });
 });
