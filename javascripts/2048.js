@@ -157,15 +157,20 @@ function slide_tile(array, axis_index, i, axis) {
     } else {
       $(array[i+1]).attr({ "data-row": "r" + axis_index });
     }
-    // double the value stored in data-val
-    $(array[i]).attr({"data-val": $(array)[i].dataset.val * 2});
-    // double the number that shows on the tile
-    setTimeout (function() {$(array[i]).text((array)[i].dataset.val)}, 1000);
-    // remove the 2nd element from the DOM
-    $(array[i+1]).remove();
+
+    let curr = $(array[i]);
+    let nxt = $(array[i+1]);
+
+    setTimeout (function() {
+      // double the value stored in data-val
+      curr.attr({"data-val": $(array)[i].dataset.val * 2});
+      // double the number that shows on the tile
+      curr.text((array)[i].dataset.val);
+      // remove the 2nd element from the DOM
+      nxt.remove();
+    }, 1200);
     // remove from the array
     array.splice(i+1, 1);
-    // console.log(array)
   }
 }
 
