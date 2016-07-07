@@ -89,6 +89,7 @@ Game.prototype.moveTile = function(tile, direction) {
       })
 
       break;
+
     case 37: //left
       console.log('left');
 
@@ -130,8 +131,53 @@ Game.prototype.moveTile = function(tile, direction) {
       })
 
       break;
-    case 39: //right
+
+    case 39: //RIGHT RIGHT RIGHT! DO THIS ONE!
       console.log('right');
+
+      var r0 = $(tile).filter("[data-row=r0]").toArray().reverse()
+      var r1 = $(tile).filter("[data-row=r1]").toArray().reverse()
+      var r2 = $(tile).filter("[data-row=r2]").toArray().reverse()
+      var r3 = $(tile).filter("[data-row=r3]").toArray().reverse()
+
+      console.log("first element")
+      console.log(r1[0])
+      console.log("second element")
+      console.log(r1[1])
+
+      var array = []
+
+      array.push(r0)
+      array.push(r1)
+      array.push(r2)
+      array.push(r3)
+
+      $.each(array, function(i, row) {
+        $.each(row, function(index, value) {
+
+          if ($(value).attr("data-val") === ($(row[index+1]).attr("data-val"))) {
+            $(value).attr('data-val', (($(value).attr('data-val')) * 2))
+            $(value).text($(value).attr('data-val'))
+
+            $(row[index+1]).remove()
+
+            row.splice((index + 1), 1)
+          }
+        })
+
+        last = 3
+        $.each(row, function(index, moving) {
+          col = $(moving).attr('data-col')
+          thing = ('c' + last)
+
+          if (col !== thing) {
+            let changed = $(moving).attr('data-col', thing)
+          }
+          last--
+        })
+      })
+
+
       break;
   }
 };
