@@ -43,6 +43,29 @@ Game.prototype.moveTilesUp = function(tiles) {
   })
 }
 
+Game.prototype.collideAllLeft = function(tiles) {
+  var leftSortedTiles = tiles.sort(function(a, b) {
+    var a = a.dataset['col']
+    var b = b.dataset['col']
+    if (a > b) {
+      return 1
+    } else {
+      return -1
+    }
+  })
+  g = this
+  leftSortedTiles.each(function(){
+    console.log(leftSortedTiles)
+    var tile = $(this)[0]
+    console.log(tile)
+    var row = tile.dataset['row']
+    var col = tile.dataset['col']
+    var val = tile.dataset['val']
+    g.collideLeft(tile, row, col, val)
+  })
+  g.display()
+}
+
 Game.prototype.moveTilesDown = function(tiles) {
   g = this
   tiles.each(function(){
@@ -61,8 +84,10 @@ Game.prototype.moveTilesLeft = function(tiles) {
     var row = tile.dataset['row']
     var col = tile.dataset['col']
     var val = tile.dataset['val']
+    // g.collideLeft(tile, row, col, val)
     g.moveSingleTileLeft(tile, row, col, val)
   })
+  g.display()
 }
 
 Game.prototype.moveTilesRight = function(tiles) {
@@ -96,9 +121,9 @@ Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
-  this.collideUp(tile, row, col, val)
+  // this.collideUp(tile, row, col, val)
   this.display()
-  console.log(this.board)
+  // console.log(this.board)
 }
 
 Game.prototype.moveSingleTileDown = function(tile, row, col, val) {
@@ -128,6 +153,7 @@ Game.prototype.moveSingleTileDown = function(tile, row, col, val) {
 }
 
 Game.prototype.moveSingleTileLeft = function(tile, row, col, val) {
+  // this.collideLeft(tile, row, col, val)
   if (col === 'c1') {
     var leftier_col = 'c0'
     if (!this.board[row + leftier_col]) {
@@ -149,7 +175,6 @@ Game.prototype.moveSingleTileLeft = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
-  this.collideLeft(tile, row, col, val)
   this.display()
 }
 
@@ -175,7 +200,7 @@ Game.prototype.moveSingleTileRight = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
-  this.collideRight(tile, row, col, val)
+  // this.collideRight(tile, row, col, val)
   this.display()
 }
 
@@ -309,6 +334,7 @@ Game.prototype.moveTile = function(tiles, direction) {
   switch(direction) {
     case 38: //up
      this.moveTilesUp(tiles)
+     this.collideUp()
     break;
     case 40: //down
     this.moveTilesDown(tiles)
@@ -317,6 +343,10 @@ Game.prototype.moveTile = function(tiles, direction) {
     case 37: //left
       console.log('left');
     this.moveTilesLeft(tiles)
+    this.collideAllLeft(tiles)
+    this.moveTilesLeft(tiles)
+
+
       break;
     case 39: //right
       console.log('right');
@@ -364,6 +394,5 @@ $(document).ready(function() {
     }
     game.display()
     game.newTile()
-
   });
 });
