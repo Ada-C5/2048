@@ -36,8 +36,7 @@ Game.prototype.updateBoard = function() {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
       // console.log(slot)
       if (this._board[i][j] === null || this._board[i][j] === 0 || isNaN(this._board[i][j]) || typeof this._board[i][j] === 'undefined') {
-        this._board[i][j] = 0
-        $('div[id='+ slot + ']').html(0)
+        $('div[id='+ slot + ']').html(null)
         this._board[i][j] = null
         this._availableSpaces.push([i, j])
       } else {
@@ -96,8 +95,8 @@ Game.prototype.moveRight = function () {
 
 Game.prototype.moveDown = function () {
   for (let i = 0; i < 4; i++) {
-    for (let j = 3; j >= 0; j--) {
-      for (let k = j; k < 4; k++) {
+    for (let j = 3; j > 0; j--) {
+      for (let k = j; k <= 3; k++) {
         console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k - 1][i])
         if (newValue !== false) {
@@ -124,6 +123,14 @@ Game.prototype.moveUp = function () {
   }
 }
 
+Game.prototype.addTile = function () {
+  let random = this._availableSpaces[Math.floor(Math.random() * this._availableSpaces.length)]
+  console.log(random)
+  let firstIndex = random.toString()[0]
+  let secondIndex = random.toString()[2]
+  this._board[firstIndex][secondIndex] = 2
+}
+
 $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
@@ -134,10 +141,8 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      console.log(game._board)
-      console.log(game._availableSpaces)
-      game.updateBoard()
       game.moveTile(tile, event.which);
+      game.addTile()
       console.log(game._board)
       game.updateBoard()
     }
