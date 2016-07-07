@@ -14,7 +14,7 @@ Game.prototype.moveAll = function(tile, dataValue, num, reverse) {
   var matrixValues = []
 
   // if (num % 2 == 0) {
-    this.createMatrix(tile, 'data-col', matrix, reverse)
+    this.createMatrix(tile, dataValue, matrix, reverse)
   // } else if (num % 2 == 1) {
   //   this.createMatrix(tile, 'data-row', matrix)
   // }
@@ -29,13 +29,13 @@ Game.prototype.moveAll = function(tile, dataValue, num, reverse) {
         // console.log( "b", matrix[j][i].dataset['val'] = value)
         // console.log( "c", matrix[j][i].dataset)
 
-  console.log("OUTSIDE: ", matrix[0])
-  console.log("OUTSIDE: ", matrix[1])
-  console.log("AHHHHHHHHHHHH")
-  console.log("LENGTH: ", matrix.length)
+  // console.log("OUTSIDE: ", matrix[0])
+  // console.log("OUTSIDE: ", matrix[1])
+  // console.log("AHHHHHHHHHHHH")
+  // console.log("LENGTH: ", matrix.length)
 
   // if (num === 2) {
-    this.moveTiles(tile, matrix, num)
+    this.moveTiles(tile, matrix, num, dataValue)
   // }
   // console.log(matrix)
 }
@@ -62,36 +62,31 @@ Game.prototype.createMatrix = function(tile, data, matrix, reverse) {
   return matrix;
 }
 
-Game.prototype.moveTiles = function(tile, matrix, direction) {
-  // if (direction === 2) {
-  //   var start1 = 0
-  //   var start2 = (matrix.length)
-  //   var counts = 1
-  // } else {
-  //   var start1 = (matrix.length)
-  //   var start2 = 0
-  //   var counts = -1
-  // }
+Game.prototype.moveTiles = function(tile, matrix, direction, data) {
 
+  console.log("DATA: ", data)
+  var i2 = 0;
   for (let j = 0; j < matrix.length ; j++) {
-     //j is column
-    // matrix.each do ()
-    // var col = $(matrix[j][0]).data("col")
-    // .toString()
     var i3 = 0;
-    if (direction === 2) {
+    if (direction === 2 || direction === 1 ) {
       for (let i = 0; i < matrix[j].length; i++) {
-        var i2 = i + 1;
+        i2 = i + 1;
         i3 = i;
-        var k = i;
-        this.moveDirection(j,i, i2, matrix, k, i3)
+        this.moveDirection(j,i, i2, i3, matrix, data)
       }
-    } else {
+    } else if (direction === 3 || direction === 4) {
       for (let i = 3; i > (3-matrix[j].length); i--) {
-        var k = i+1;
+        k = i+1;
         i2 = i
-        this.moveDirection(j, i, i2, matrix, k , i3)
+        this.moveDirection(j, i, i2, i3, matrix, data)
         i3 = i3+1;
+      }
+      // else if (direction === 1) {
+        // for (let i = 0; i < matrix[j].length; i++) {
+        //   i2 = i + 1;
+        //   i3 = i;
+        //   this.moveDirection(j,i, i2, i3, matrix, 'data-row')
+        // }
       }
     }
 
@@ -105,7 +100,7 @@ Game.prototype.moveTiles = function(tile, matrix, direction) {
     //   var work = i+'> 0'
     // }
     // console.log(column)
-  }
+  // }
 }
   // matrix[j].splice(i+1,1)
   // console.log("HI: ", matrix[j][i])
@@ -119,7 +114,7 @@ Game.prototype.moveTiles = function(tile, matrix, direction) {
     //
   // matrix[]
   // .delete the div
-Game.prototype.moveDirection = function(j, i, i2, matrix, k, i3) {
+Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
   // console.log("[i]: ", i + " [i2]: ", i2 + " [k]: ", k)
   // console.log("COLOR-1 ", i2)
   // console.log("[j][i]: ", $(matrix[j][i]).text().toString() + " [j][i2]: " , $(matrix[j][i2]).text().toString() )
@@ -132,13 +127,21 @@ Game.prototype.moveDirection = function(j, i, i2, matrix, k, i3) {
     $(matrix[j][i3]).text(value);
 
     // DELETES
-    $(matrix[j][i3]).attr({ "data-row": i.toString() });
+    if (data === 'data-col') {
+    $(matrix[j][i3]).attr({ 'data-row' : i.toString() });
+  } else {
+    $(matrix[j][i3]).attr({ 'data-col' : i.toString() });
+  }
     $(matrix[j][i3+1]).remove();
     matrix[j].splice(i3,1)
     // console.log("SPLICE: ", matrix[j])
 
   } else {
-    $(matrix[j][i3]).attr({ "data-row": i.toString()});
+    if (data == 'data-col') {
+      $(matrix[j][i3]).attr({ 'data-row' : i.toString()});
+    } else {
+      $(matrix[j][i3]).attr({ 'data-col' : i.toString()});
+    }
   }
 }
 
@@ -160,13 +163,15 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
 
     case 37: //left
-          this.moveAll(tile, 'data-row')
-
-      console.log('left');
+      console.log('left')
+      this.moveAll(tile, 'data-row', 1, 'false')
+      // console.log('left');
       break;
+
 
     case 39: //right
       console.log('right');
+      this.moveAll(tile, 'data-row', 3, 'true')
       break;
   }
 };
