@@ -28,9 +28,9 @@ var Game = function() {
   }
 };
 
-Game.prototype.getTile = function(row, col) {
-    return '.tile[data-row="' + row + '"][data-col="' + col + '"]'
-}
+// Game.prototype.getTile = function(row, col) {
+//     return '.tile[data-row="' + row + '"][data-col="' + col + '"]'
+// }
 
 Game.prototype.moveTilesUp = function(tiles) {
   g = this
@@ -41,6 +41,7 @@ Game.prototype.moveTilesUp = function(tiles) {
     var val = tile.dataset['val']
     g.moveSingleTileUp(tile, row, col, val)
   })
+  // this.display()
 }
 
 Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
@@ -57,6 +58,7 @@ Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
       this.board[higher_row + col] = val
       this.board[row + col] = null
     }
+
   }  else if (row === 'r3') {
       var higher_row = 'r2'
       if (!this.board[higher_row + col]) {
@@ -64,10 +66,6 @@ Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
-
-
-  console.log("board", this.board)
-  // console.log('display', this.display())
 }
 
 Game.prototype.display = function() {
@@ -82,7 +80,7 @@ Game.prototype.display = function() {
       var currentTile = $('.tile[data-row="' + row + '"][data-col="' + col + '"]')
 
       if (currentTile.length != 0) {
-        console.log("current tile" , currentTile)
+        // console.log("current tile" , currentTile)
 
         currentTile.attr({'data-row': row})
         currentTile.attr({'data-col': col})
@@ -111,14 +109,8 @@ Game.prototype.moveTile = function(tiles, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-    this.moveTilesUp(tiles)
-    var col1 = [this.board['r0c0'], this.board['r1c0'], this.board['r2c0'], this.board['r3c0']]
-    // console.log("col1", col1)
-    var colProps = ['r0c0', 'r1c0', 'r2c0', 'r3c0']
-    // console.log("colProps", colProps)
-
-      console.log('up');
-      break;
+     this.moveTilesUp(tiles)
+    break;
     case 40: //down
       console.log('down');
       tile.attr({
@@ -159,7 +151,6 @@ Game.prototype.newTile = function() {
 
       var newTileDiv = "<div class='tile' data-row=" + row + " data-col=" + column + " data-val=" + this.board[property] + ">" + this.board[property] + "</div>"
       var newTile = $("#gameboard").append(newTileDiv);
-      console.log(this.board)
   }
 }
 
@@ -172,61 +163,12 @@ $(document).ready(function() {
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
-      var tiles = $('.tile');
-
-      game.moveTile(tiles, event.which);
-      game.display()
+      for (var i = 0; i < 3; i++) {
+        var tiles = $('.tile');
+       game.moveTile(tiles, event.which);
+       game.display()
+     }
     }
     game.newTile()
   });
 });
-
-
-// function separateMovementFunction(type, operand) {
-//   tile.each(function() {
-//     let num = parseInt(this.dataset[type][3])
-//     console.log(num)
-//     if (operand === "+")  {
-//       num += 1
-//     }
-//   })
-// }
-
-
-
-
-
-
-
-
-// for(var i = 1; i < 4; i++) {
-//   if (col1[i] != null) { //start with the second tile in the column, make sure something is there
-//     if (col1[i-1] === null) { // if there's nothing before it
-//       this.board[colProps[i-1]] = col1[i]  // replace upper tile with current tile
-//       this.board[colProps[i]] = null // replace current tile with null
-//       var row = /.{2}/.exec(colProps[i - 1])[0]
-//       console.log('row', row)
-//       var col = /.{2}$/.exec(colProps[i - 1])[0]
-//       var tileDiv = "<div class='tile' data-row=" + row + " data-col=" + col + " data-val=" + this.board[colProps[i-1]] + ">" + this.board[colProps[i-1]] + "</div>"
-//       var newTileyay = $("#gameboard").append(tileDiv);
-//       console.log("newTIle" , newTileyay)
-//       newTileyay.attr({
-//         // "data-val": "2048",
-//         "data-row": row    //make it show up on page
-//       })
-//     } else if (col1[i-1] === this.board[colProps[i]]) { // if tile before it is the same as current
-//       var value = Number(this.board[colProps[i]]) //collect value of tiles
-//       var newValue = String(value * 2) //double it and make it a string again
-//       this.board[colProps[i-1]] = newValue // assign it
-//       this.board[colProps[i]] = null // null out old one
-//       var row = /.{2}/.exec(colProps[i - 1])[0]
-//       var col = /.{2}$/.exec(colProps[i - 1])[0]
-//       var newTile = $(g.getTile(row, col))[0]
-//
-//       newTile.attr({
-//         "data-row": row,  //make it show up on page
-//         "data-val": newValue
-//       })
-//       newTile.text(newValue)
-//     }
-//   }
