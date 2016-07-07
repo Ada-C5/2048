@@ -31,7 +31,41 @@ Game.prototype.sortAndMoveUp = function(tiles) {
   })
 
   for (var i = 0; i < tiles.length; i++) {
-    $(tiles[i]).attr('data-row', 'r' + i)
+
+    // checks only on the first 3 indexes, otherwise we'll run off the end of the array
+    // if ( i < 3 && $(tiles[i]).attr('data-val') === $(tiles[i+1]).attr('data-val')) {
+
+    //jquery has a "remove" function to remove from the dom
+    // you can delete from the array using the splice method
+
+    //the index marks how close you are to the destination.
+    // A lower index is closer to the destination.
+
+    var sourceTile = $(tiles[i + 1])
+    var destinationTile = $(tiles[i])
+
+    if (sourceTile && sourceTile.attr('data-val') === destinationTile.attr('data-val')) {
+
+      //replace value and text of destinationTile with sum of both tiles
+      var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
+      destinationTile.attr('data-val', sumOfValues)
+      destinationTile.text(sumOfValues)
+
+      //delete sourceTile from the array
+      tiles.splice(i + 1, 1)
+
+      //remove it from the DOM using jQuery remove, after the CSS transition is complete
+      var transitionEvents = "transitionend webkitTransitionEnd oTransitionEnd"
+      sourceTile.on(transitionEvents, function(e) {
+        $(this).remove()
+        $(this).off(e);
+      });
+
+      sourceTile.attr('data-row', 'r' + i)
+    }
+
+    destinationTile.attr('data-row', 'r' + i)
+
   }
 }
 
@@ -69,6 +103,10 @@ Game.prototype.sortAndMoveRight = function(tiles) {
   for (var i = 0; i < tiles.length; i++) {
     $(tiles[i]).attr('data-col', 'c' + (3 - i))
   }
+}
+
+Game.prototype.combineSame = function() {
+
 }
 
 Game.prototype.moveTile = function(tiles, direction) {
