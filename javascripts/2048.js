@@ -25,9 +25,9 @@ var Game = function () {
       while (newTile === null) {
         for (let i = 0; i < tiles.length; i++) {
           if (tiles[i].row !== randRow || tiles[i].col !== randCol) {
-            console.log('coords: ', randRow)
-            console.log('coords: ', randCol)
-            console.log('val: ', randVal)
+            // console.log('coords: ', randRow)
+            // console.log('coords: ', randCol)
+            // console.log('val: ', randVal)
             newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
           } else {
             randRow = 'row' + randomSpace()
@@ -73,42 +73,85 @@ var Game = function () {
   }
 }
 
-function upSort() {
-
+function upSort(arr) {
+  return arr.sort(ascending)
 }
-function downSort() {
 
+function downSort(arr) {
+  return arr.sort(descending)
 }
-function leftSort() {
 
+function leftSort(arr) {
+  return arr.sort(ascending)
 }
-function rightSort() {
 
+function rightSort(arr) {
+  return arr.sort(descending)
+}
+
+function ascending(a, b) {
+  console.log('a1: ', a.dataset.col[3])
+  console.log('b1: ', b.dataset.col[3])
+  if (a.dataset.col[3] < b.dataset.col[3]) {
+    return -1
+  } else if (a.dataset.col[3] > b.dataset.col[3]) {
+    return 1
+  }
+  return 0
+}
+
+function descending(a, b) {
+  console.log('a1: ', a.dataset.col[3])
+  console.log('b1: ', b.dataset.col[3])
+  if (a.dataset.col[3] > b.dataset.col[3]) {
+    return -1
+  } else if (a.dataset.col[3] < b.dataset.col[3]) {
+    return 1
+  }
+  return 0
 }
 
 Game.prototype.moveTile = function (tile, direction) {
   // Game method here
-  let sortedArray = null
+  let arrayTiles = null
+  let sortedTiles = null
+
+  let arrayRows = [$('.tile[data-row=row0]'), $('.tile[data-row=row1]'),
+  $('.tile[data-row=row2]'), $('.tile[data-row=row3]')]
+  // gets all the tiles in the second row
+
   switch(direction) {
     case 38: //up
-      sortedArray = upSort() // => array
+      arrayTiles = $('.tile[data-col=col2]')
+      sortedTiles = upSort(arrayTiles) // => array
       console.log('up')
-      seperateMovementFunction('row', '-', sortedArray)
+      console.log('arr', arrayTiles)
+      console.log('sort', sortedTiles)
+      seperateMovementFunction('row', '-', sortedTiles)
       break;
     case 40: //down
-      sortedArray = downSort() // => array
+      arrayTiles = $('.tile[data-col=col2]')
+      sortedTiles = downSort(arrayTiles) // => array
       console.log('down')
-      seperateMovementFunction('row', '+', sortedArray)
+      console.log('arr', arrayTiles)
+      console.log('sort', sortedTiles)
+      seperateMovementFunction('row', '+', sortedTiles)
       break;
     case 37: //left
-      sortedArray = leftSort() // => array
+      arrayTiles = $('.tile[data-row=row1]')
+      sortedTiles = leftSort(arrayTiles) // => array
       console.log('left')
-      seperateMovementFunction('col', '-', sortedArray)
+      console.log('arr', arrayTiles)
+      console.log('sort', sortedTiles)
+      seperateMovementFunction('col', '-', sortedTiles)
       break;
     case 39: //right
-      sortedArray = rightSort() // => array
+      arrayTiles = $('.tile[data-row=row1]')
+      sortedTiles = rightSort(arrayTiles) // => array
       console.log('right')
-      seperateMovementFunction('col', '+', sortedArray)
+      console.log('arr', arrayTiles)
+      console.log('sort', sortedTiles)
+      seperateMovementFunction('col', '+', sortedTiles)
       break;
   }
 
