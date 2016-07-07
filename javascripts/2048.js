@@ -4,30 +4,13 @@ var Game = function() {
 };
 
 
-gameBoard = [
-"r0 c0",
- "r0 c1",
- "r0 c2",
- "r0 c3",
- "r1 c0",
- "r1 c1",
- "r1 c2",
- "r1 c3",
- "r2 c0",
- "r2 c1",
- "r2 c2",
- "r2 c3",
- "r3 c0",
- "r3 c1",
- "r3 c2",
- "r3 c4"]
-
- tiles = [
-
- ]
 
 
 
+var board = {
+
+
+}
 
 
 Game.prototype.newTile = function(newTile){
@@ -37,20 +20,67 @@ return $('#gameboard').append("<div class='tile' data-row='r" + ( Math.floor(Mat
 
 
 
-Game.prototype.spotAlreadytaken = function(tile){
-
-
-
-}
-
 
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      console.log('up');
-        $('.tile').attr("data-row", "r0")
+
+     $('.tile[data-row="r3"]').each(function(index){
+       var col = $(this).attr("data-col")
+       var row = $(this).attr("data-row")
+       var colnum = parseInt(col[1])
+       var rownum = parseInt(row[1])-1
+       var previousRow =  $('.tile[data-row="r'+rownum+'"][data-col="'+col+'"]')
+       if(previousRow.length == 0){
+         $(this).attr("data-row", 'r' + rownum)
+
+       }
+
+    })
+
+
+
+
+    var col03 = $('.tile[data-row="r3"][data-col="c0"]')
+    col03.attr('data-row', 'r2')
+
+
+
+
+    //  $('.tile[data-row="r3"]').each(function(index){
+    //   $(this).attr("data-row", "r2")
+    // })
+    //
+    // $('.tile[data-row="r2"]').each(function(index){
+    //  $(this).attr("data-row", "r1")
+    //
+    //  $('.tile[data-row="r1"]').each(function(index){
+    //   $(this).attr("data-row", "r0")
+    // })
+
+
+
+    //   var row3 = $('.tile[data-row="r3"]')//selected all the tiles on row three
+    //  row3.attr("data-row", "r2")
+    //  var row2 = $('.tile[data-row="r2"]')
+    //  console.log(row2)
+    //  row2.attr("data-row", "r1")
+    //  var row1 = $('.tile[data-row="r1"]')
+    //  row1.attr("data-row","r0")
+
+
+      // console.log('up');
+      //   var data = $('.tile[data-row="r3"]')
+      //   var row2 = data[0].dataset.row = "r2"
+      //
+      //
+      //$('.tile').attr("data-row", "r0")
+      //
+      //   console.log(data[0].dataset.row)
+
+
 
       break;
     case 40: //down
