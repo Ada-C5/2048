@@ -2,6 +2,41 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+.banner {
+  height: 200px;
+}
+
+.btn {
+  text-align: center;
+  display: block;
+}
+
+.banner h1.title {
+    font-size: 100px;
+    font-weight: bold;
+    display: block;
+    margin: 1rem auto;
+    position: relative;
+    color: #776e65;
+    text-align: center;
+}
+
+.new_game_button {
+  display: inline-block;
+  background: #776e65;
+  border-radius: 3px;
+  /*padding: 0 20px;*/
+  padding-bottom: 60px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #f9f6f2;
+  height: 40px;
+  width: 140px;
+  line-height: 60px;
+  cursor: pointer;
+  text-align: center;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
