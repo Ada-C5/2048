@@ -1,5 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
+  this.score = 0
 };
 
 Game.prototype.moveTile = function(tiles, direction) {
@@ -55,6 +56,7 @@ Game.prototype.addTile = function () {
 
 
 Game.prototype.legit = function (direction) { // if left or right use rows ||  if up or down use col
+  var self = this
   if (direction === "left") {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
@@ -66,6 +68,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             next.attr("data-col", curr.attr("data-col"))
+            self.scoring(total)
             setTimeout(function () {
               curr.attr("data-val", total).html(total)
               next.remove()
@@ -93,6 +96,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
           var next = $(current[i - 1])
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
+            self.scoring(total)
             next.attr("data-col", curr.attr("data-col"))
             // setTimeout(function () {
               curr.attr("data-val", total).html(total)
@@ -123,6 +127,12 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
     $(".tile").attr("data-row", "r3")
 
   }
+}
+
+Game.prototype.scoring = function(value){
+  console.log("in it")
+  this.score += value
+  $("p").text('Your Score is:'+this.score)
 }
 
 $(document).ready(function() {
