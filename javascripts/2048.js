@@ -8,49 +8,27 @@ var Game = function() {
   // ]
 };
 
-Game.prototype.moveAll = function(tile, dataValue, num, reverse) {
+Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
 
   var matrix = []
   var matrixValues = []
 
-  // if (num % 2 == 0) {
-    this.createMatrix(tile, dataValue, matrix, reverse)
-  // } else if (num % 2 == 1) {
-  //   this.createMatrix(tile, 'data-row', matrix)
-  // }
-
-          // console.log("i: ", i)
-          // console.log("MATRIX: ", matrix)
-          // console.log("MATRIcesss: ", $(matrix))
-          // console.log("str1: ", $(matrix[j][i3]).text().toString())
-          // console.log("str2: ", $(matrix[j][i+1]).text().toString())
-
-        // console.log( "a", matrix[j][i].dataset)
-        // console.log( "b", matrix[j][i].dataset['val'] = value)
-        // console.log( "c", matrix[j][i].dataset)
-
-  // console.log("OUTSIDE: ", matrix[0])
-  // console.log("OUTSIDE: ", matrix[1])
-  // console.log("AHHHHHHHHHHHH")
-  // console.log("LENGTH: ", matrix.length)
-
-  // if (num === 2) {
+    this.createMatrix(tile, dataValue, dataValue2, matrix, reverse)
     this.moveTiles(tile, matrix, num, dataValue)
-  // }
-  // console.log(matrix)
+
 }
 
-Game.prototype.createMatrix = function(tile, data, matrix, reverse) {
+Game.prototype.createMatrix = function(tile, data1, data2, matrix, reverse) {
   // var col = $(matrix[j][0]).data("col")
 
   for (let i = 0; i < 4; i++){
-    var queryStr = '.tile[' + data +'=' + i +']'
+    var queryStr = '.tile[' + data1 +'=' + i +']'
     console.log("query ", queryStr)
     let row = $(queryStr).sort(function (a, b) {
       if (reverse == 'true') {
-        return +b.getAttribute('data-row') - +a.getAttribute('data-row');
+        return +b.getAttribute(data2) - +a.getAttribute(data2);
       } else {
-        return +a.getAttribute('data-row') - +b.getAttribute('data-row');
+        return +a.getAttribute(data2) - +b.getAttribute(data2);
       }
     })
     console.log("row ", row)
@@ -134,7 +112,6 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
   }
     $(matrix[j][i3+1]).remove();
     matrix[j].splice(i3,1)
-    // console.log("SPLICE: ", matrix[j])
 
   } else {
     if (data == 'data-col') {
@@ -154,24 +131,24 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log(tile);
       // for (let i = 0; i < tile.length; i++)
       // tile.attr({ "data-row": "0" });
-      this.moveAll(tile, 'data-col', 2, 'false')
+      this.moveAll(tile, 'data-col', 'data-row', 2, 'false')
       break;
 
     case 40: //down
       console.log('down');
-      this.moveAll(tile, 'data-col', 4, 'true')
+      this.moveAll(tile, 'data-col', 'data-row', 4, 'true')
       break;
 
     case 37: //left
       console.log('left')
-      this.moveAll(tile, 'data-row', 1, 'false')
+      this.moveAll(tile, 'data-row', 'data-col', 1, 'false')
       // console.log('left');
       break;
 
 
     case 39: //right
       console.log('right');
-      this.moveAll(tile, 'data-row', 3, 'true')
+      this.moveAll(tile, 'data-row','data-col', 3, 'true')
       break;
   }
 };
