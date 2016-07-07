@@ -56,13 +56,13 @@ Game.prototype.collide = function (spaceOne, spaceTwo) {
 
 Game.prototype.moveLeft = function () {
   for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 3; j++) {
       for (let k = j; k >= 0; k--) {
         console.log('K')
         let newValue = this.collide(this._board[i][k], this._board[i][k + 1])
         if (newValue !== false) {
           this._board[i][k] = newValue
-          if (k < 3) { this._board[i][k + 1] = null }
+          this._board[i][k + 1] = null
         } else if (newValue === false) {
           // does a thing ever happen here?
         }
@@ -79,7 +79,7 @@ Game.prototype.moveRight = function () {
         let newValue = this.collide(this._board[i][k], this._board[i][k - 1])
         if (newValue !== false) {
           this._board[i][k] = newValue
-          if (k > 0) { this._board[i][k - 1] = null }
+          this._board[i][k - 1] = null
         } else if (newValue === false) {
           // does a thing ever happen here?
         }
@@ -90,13 +90,13 @@ Game.prototype.moveRight = function () {
 
 Game.prototype.moveDown = function () {
   for (let i = 0; i < 4; i++) {
-    for (let j = 3; j >= 0; j--) {
+    for (let j = 3; j > 0; j--) {
       for (let k = j; k <= 3; k++) {
         console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k - 1][i])
         if (newValue !== false) {
           this._board[k][i] = newValue
-          if (k > 0) { this._board[k - 1][i] = null }
+          this._board[k - 1][i] = null
         } else if (newValue === false) {
           // does a thing ever happen here?
         }
@@ -107,18 +107,17 @@ Game.prototype.moveDown = function () {
 
 Game.prototype.moveUp = function () {
   for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 3; j++) {
       for (let k = j; k >= 0; k--) {
-        if (k !== 3) {
         console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k + 1][i])
         if (newValue !== false) {
           this._board[k][i] = newValue
-          if (k > 0) { this._board[k + 1][i] = null }
+          this._board[k + 1][i] = null
         } else if (newValue === false) {
           // does a thing ever happen here?
         }
-      }}
+      }
     }
   }
 }
