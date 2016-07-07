@@ -73,21 +73,42 @@ var Game = function () {
   }
 }
 
+function upSort() {
+
+}
+function downSort() {
+
+}
+function leftSort() {
+
+}
+function rightSort() {
+
+}
+
 Game.prototype.moveTile = function (tile, direction) {
   // Game method here
+  let sortedArray = null
   switch(direction) {
     case 38: //up
+      sortedArray = upSort() // => array
       console.log('up')
+      seperateMovementFunction('row', '-', sortedArray)
       break;
     case 40: //down
+      sortedArray = downSort() // => array
       console.log('down')
+      seperateMovementFunction('row', '+', sortedArray)
       break;
     case 37: //left
+      sortedArray = leftSort() // => array
       console.log('left')
+      seperateMovementFunction('col', '-', sortedArray)
       break;
     case 39: //right
+      sortedArray = rightSort() // => array
       console.log('right')
-      seperateMovementFunction('col', '+')
+      seperateMovementFunction('col', '+', sortedArray)
       break;
   }
 
