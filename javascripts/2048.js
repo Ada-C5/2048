@@ -8,52 +8,55 @@ Game.prototype.moveTile = function(tiles, direction) {
     case 38: //up
       console.log('up');
       this.legit("up")
+      this.addTile()
       break;
     case 40: //down
       console.log('down');
       this.legit("down")
+      this.addTile()
       break;
     case 37: //left
       console.log('left');
       this.legit("left")
-      // this.addTile()
+      this.addTile()
       break;
     case 39: //right
       console.log('right');
       this.legit("right")
-      // this.addTile()
+      this.addTile()
       break;
   }
 };
 
 Game.prototype.moveBoard = function (direction) {
-  if (direction === "left") {
-
-  }
 }
 
-// Game.prototype.addTile = function () {
-//   var rows = ["r0", "r1", "r2", "r3"]
-//   var columns = ["c0", "c1", "c2", "c3"]
-//   var random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
-//   while (status) {
-//     var status = true
-//     var check = $("div[data-row=" + random[0] + "]")
-//     check.each(function (index, value) {
-//       current = $(value)
-//       if (current.attr("data-col") === random[1]){
-//         status = false
-//         random = [Math.floor(Math.random() * rows.length), Math.floor(Math.random() * columns.length)]
-//       }
-//     })
-//   }
-//   var thing = $(".tile").clone("<div></div>")
-//   console.log(random, "yeah", thing)
-//   thing.attr("data-row", random[0])
-//   thing.attr("data-col", random[1])
-//   thing.attr("data-val", "2").html("2")
-//   console.log(thing, "YAAAAY")
-// }
+
+Game.prototype.addTile = function () {
+  var tiles = $(".tile")
+  var rows = ["r0", "r1", "r2", "r3"]
+  var columns = ["c0", "c1", "c2", "c3"]
+  var value = [2,4]
+  var randValue= value[Math.floor(Math.random() * value.length)]
+  var newTile = null
+  var random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
+  while (newTile === null) {
+    tiles.each(function(index, val){
+      if ($(val).attr("data-row") === random[0] && $(val).attr("data-col")){
+        random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
+        console.log("match", newTile)
+        newTile = null
+      } else {
+        newTile = $("<div>", {class: "tile", "data-row":random[0], "data-col":random[1], "data-val":randValue, text: randValue})
+      }
+    })
+  }
+  console.log(newTile,"YAAY")
+  $(".cells").after(newTile)
+  console.log(randValue)
+  newTile = null
+}
+
 
 Game.prototype.legit = function (direction) { // if left or right use rows ||  if up or down use col
   if (direction === "left") {
