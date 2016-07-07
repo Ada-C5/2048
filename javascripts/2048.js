@@ -46,6 +46,11 @@ Game.prototype.updateBoard = function() {
   }
 }
 
+Game.prototype.newTile = function () {
+  // select random index of available tiles to use for new square
+  let newIndex = Math.floor(Math.random() * (3 - 0 + 1)) + 0
+}
+
 Game.prototype.collide = function (spaceOne, spaceTwo) {
   // spaces specified hold values
   if (spaceOne === spaceTwo) {
@@ -68,8 +73,6 @@ Game.prototype.moveLeft = function () {
         if (newValue !== false) {
           this._board[i][k] = newValue
           this._board[i][k + 1] = null
-        } else if (newValue === false) {
-          // does a thing ever happen here?
         }
       }
     }
@@ -85,8 +88,6 @@ Game.prototype.moveRight = function () {
         if (newValue !== false) {
           this._board[i][k] = newValue
           this._board[i][k - 1] = null
-        } else if (newValue === false) {
-          // does a thing ever happen here?
         }
       }
     }
@@ -102,8 +103,6 @@ Game.prototype.moveDown = function () {
         if (newValue !== false) {
           this._board[k][i] = newValue
           this._board[k - 1][i] = null
-        } else if (newValue === false) {
-         // does a thing ever happen here?
         }
       }
     }
@@ -119,8 +118,6 @@ Game.prototype.moveUp = function () {
         if (newValue !== false) {
           this._board[k][i] = newValue
           this._board[k + 1][i] = null
-        } else if (newValue === false) {
-          // does a thing ever happen here?
         }
       }
     }
