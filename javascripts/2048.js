@@ -36,7 +36,7 @@ Game.prototype.addTile = function () {
   var rows = ["r0", "r1", "r2", "r3"]
   var columns = ["c0", "c1", "c2", "c3"]
   var random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
-  while (status) {
+  while (newTile === null) {
     var status = true
     var check = $("div[data-row=" + random[0] + "]")
     check.each(function (index, value) {
@@ -47,7 +47,7 @@ Game.prototype.addTile = function () {
       }
     })
   }
-  var thing = $(".tile").clone("<div></div>")
+  var thing = $(".cells").after("<div></div>")
   console.log(random, "yeah", thing)
   thing.attr("data-row", random[0])
   thing.attr("data-col", random[1])
