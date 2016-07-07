@@ -21,7 +21,7 @@ var Game = function () {
     if (tiles[0] === undefined) {
       newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
     } else {
-      console.log(newTile)
+      // console.log(newTile)
       while (newTile === null) {
         for (let i = 0; i < tiles.length; i++) {
           if (tiles[i].row !== randRow || tiles[i].col !== randCol) {
@@ -90,8 +90,6 @@ function rightSort(arr) {
 }
 
 function ascending(a, b) {
-  console.log('a1: ', a.dataset.col[3])
-  console.log('b1: ', b.dataset.col[3])
   if (a.dataset.col[3] < b.dataset.col[3]) {
     return -1
   } else if (a.dataset.col[3] > b.dataset.col[3]) {
@@ -101,8 +99,6 @@ function ascending(a, b) {
 }
 
 function descending(a, b) {
-  console.log('a1: ', a.dataset.col[3])
-  console.log('b1: ', b.dataset.col[3])
   if (a.dataset.col[3] > b.dataset.col[3]) {
     return -1
   } else if (a.dataset.col[3] < b.dataset.col[3]) {
@@ -113,85 +109,70 @@ function descending(a, b) {
 
 Game.prototype.moveTile = function (tile, direction) {
   // Game method here
-  let arrayTiles = null
-  let sortedTiles = null
-
-  let arrayRows = [$('.tile[data-row=row0]'), $('.tile[data-row=row1]'),
-  $('.tile[data-row=row2]'), $('.tile[data-row=row3]')]
-  // gets all the tiles in the second row
-
   switch(direction) {
     case 38: //up
-      arrayTiles = $('.tile[data-col=col2]')
-      sortedTiles = upSort(arrayTiles) // => array
-      console.log('up')
-      console.log('arr', arrayTiles)
-      console.log('sort', sortedTiles)
-      seperateMovementFunction('row', '-', sortedTiles)
+      seperateMovementFunction('row', '-')
       break;
     case 40: //down
-      arrayTiles = $('.tile[data-col=col2]')
-      sortedTiles = downSort(arrayTiles) // => array
-      console.log('down')
-      console.log('arr', arrayTiles)
-      console.log('sort', sortedTiles)
-      seperateMovementFunction('row', '+', sortedTiles)
+      seperateMovementFunction('row', '+')
       break;
     case 37: //left
-      arrayTiles = $('.tile[data-row=row1]')
-      sortedTiles = leftSort(arrayTiles) // => array
-      console.log('left')
-      console.log('arr', arrayTiles)
-      console.log('sort', sortedTiles)
-      seperateMovementFunction('col', '-', sortedTiles)
+      seperateMovementFunction('col', '-')
       break;
     case 39: //right
-      arrayTiles = $('.tile[data-row=row1]')
-      sortedTiles = rightSort(arrayTiles) // => array
-      console.log('right')
-      console.log('arr', arrayTiles)
-      console.log('sort', sortedTiles)
-      seperateMovementFunction('col', '+', sortedTiles)
+      seperateMovementFunction('col', '+')
       break;
   }
 
   function seperateMovementFunction(type, operand) {
+    var arrayTiles = []
 
-    // tile.each(function() {
-    //   let num = parseInt(this.dataset[type][3])
-    //   if (operand === '+') {
-    //     num = num + 1
-    //   } else if (operand === '-') {
-    //     num = num - 1
-    //   }
-    // })
+      if (type === "col" && operand === '+' ) {
+        console.log(rightSort($('.tile[data-row=row0]')).length);
+        arrayTiles.push(rightSort($('.tile[data-row=row0]')))
+        arrayTiles.push(rightSort($('.tile[data-row=row1]')))
+        arrayTiles.push(rightSort($('.tile[data-row=row2]')))
+        arrayTiles.push(rightSort($('.tile[data-row=row3]')))
+      } else if (type === "col" && operand === '-') {
+        arrayTiles.push(leftSort($('.tile[data-row=row0]')))
+        arrayTiles.push(leftSort($('.tile[data-row=row1]')))
+        arrayTiles.push(leftSort($('.tile[data-row=row2]')))
+        arrayTiles.push(leftSort($('.tile[data-row=row3]')))
+      } else if (type === "row" && operand === '-') {
+        arrayTiles.push(upSort($('.tile[data-col=col0]')))
+        arrayTiles.push(upSort($('.tile[data-col=col1]')))
+        arrayTiles.push(upSort($('.tile[data-col=col2]')))
+        arrayTiles.push(upSort($('.tile[data-col=col3]')))
+      } else if (type === "row" && operand === '+') {
+        arrayTiles.push(downSort($('.tile[data-col=col0]')))
+        arrayTiles.push(downSort($('.tile[data-col=col1]')))
+        arrayTiles.push(downSort($('.tile[data-col=col2]')))
+        arrayTiles.push(downSort($('.tile[data-col=col3]')))
+      }
 
-    // this.dataset[type] = type + num.toString()
-    //gets all the tiles in the second row
-      // arrayTiles = $('.tile[data-row=row1]')
+    moveAllTheWay(arrayTiles, type, operand)
 
-      // console.log(arrayTiles[2]);
-      arrayTiles = $('.tile')
+    collideIfSameValue(arrayTiles,type, operand)
 
-    moveAllTheWay(arrayTiles, type)
-
-    collideIfSameValue(arrayTiles,type)
-
-    moveAllTheWay(arrayTiles,  type)
-
+    moveAllTheWay(arrayTiles,  type, operand)
 
   }
 
-  function moveAllTheWay(arrayQuerys, type) {
-    $.each(arrayQuerys, function( index, value ) {
+  function moveAllTheWay(arrayQuerys, type, operand) {
+  for( line of arrayQuerys) {
+    $.each(line, function( index, value ) {
       //convert the colunm into an integer
-      let numRow = value.dataset["row"][3]
-      let num = parseInt(value.dataset["col"][3])
+      var num = parseInt(value.dataset[type][3])
       //defines the next colunm
-      var nextEle = num + 1
+      if (operand === "+") {
+        var nextEle = num + 1
+      } else {
+        var nextEle = num - 1
+      }
+
       var nextString = nextEle.toString()
       //interpolates the next element
-      var nextCol = '.tile[data-row=row'+ numRow + '][data-col=' + type + nextString + ']'
+      var nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
       var nextColEle = $(nextCol)
 
       //if it is not empty
@@ -199,7 +180,7 @@ Game.prototype.moveTile = function (tile, direction) {
       while (nextEle < 4) {
         let nextString = nextEle.toString()
         //interpolates the next element
-        let nextCol = '.tile[data-row=row'+ numRow + '][data-col=' + type + nextString + ']'
+        let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
         let nextColEle = $(nextCol)
 
         //check if next tile is empty,
@@ -211,17 +192,23 @@ Game.prototype.moveTile = function (tile, direction) {
       }
     });
   }
+  }
 
-  function collideIfSameValue(arrayTiles,type) {
-    $.each(arrayTiles, function( index, value ) {
+  function collideIfSameValue(arrayQuerys,type, operand) {
+    for( line of arrayQuerys) {
+    $.each(line, function( index, value ) {
 
-      let numRow = value.dataset["row"][3]
-      let num = parseInt(value.dataset["col"][3])
+      var num = parseInt(value.dataset[type][3])
       //defines the next colunm
-      let nextEle = num + 1
+      if (operand === "+") {
+        var nextEle = num + 1
+      } else {
+        var nextEle = num - 1
+      }
+
       let nextString = nextEle.toString()
       //interpolates the next element
-      let nextCol = '.tile[data-row=row'+ numRow + '][data-col=' + type + nextString + ']'
+      let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
       let nextColEle = $(nextCol)
 
           //if it is the same value, sum and keep moving
@@ -238,16 +225,13 @@ Game.prototype.moveTile = function (tile, direction) {
             }
     });
   }
-  thisGame.newTile()
+  }
 
-  console.log(thisGame);
+  thisGame.newTile()
       // call gameOver() before every move
       // call addScore() for every combination
 
 }
-
-
-
 
 
 $(document).ready(function () {
