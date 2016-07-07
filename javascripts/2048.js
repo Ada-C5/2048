@@ -200,7 +200,9 @@ $(document).ready(function() {
       var tile = $('.tile');
 
       let available = game.moveTile(tile, event.which);
-      game.new_tiles(available);
+      setTimeout(function(){
+        game.new_tiles(available);
+      }, 1200);
     }
   });
 });
