@@ -75,55 +75,47 @@ var Game = function () {
 }
 
 function upSort(arr) {
-  return arr.sort(row_ascending)
+  return arr.sort(function row_ascending(a, b) {
+    if (a.dataset.row[3] < b.dataset.row[3]) {
+      return -1
+    } else if (a.dataset.row[3] > b.dataset.row[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 function downSort(arr) {
-  return arr.sort(row_descending)
+  return arr.sort(function row_descending(a, b) {
+    if (a.dataset.row[3] > b.dataset.row[3]) {
+      return -1
+    } else if (a.dataset.row[3] < b.dataset.row[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 function leftSort(arr) {
-  return arr.sort(col_ascending)
+  return arr.sort(function col_ascending(a, b) {
+    if (a.dataset.col[3] < b.dataset.col[3]) {
+      return -1
+    } else if (a.dataset.col[3] > b.dataset.col[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 function rightSort(arr) {
-  return arr.sort(col_descending)
-}
-
-function row_ascending(a, b) {
-  if (a.dataset.row[3] < b.dataset.row[3]) {
-    return -1
-  } else if (a.dataset.row[3] > b.dataset.row[3]) {
-    return 1
-  }
-  return 0
-}
-
-function row_descending(a, b) {
-  if (a.dataset.row[3] > b.dataset.row[3]) {
-    return -1
-  } else if (a.dataset.row[3] < b.dataset.row[3]) {
-    return 1
-  }
-  return 0
-}
-
-function col_ascending(a, b) {
-  if (a.dataset.col[3] < b.dataset.col[3]) {
-    return -1
-  } else if (a.dataset.col[3] > b.dataset.col[3]) {
-    return 1
-  }
-  return 0
-}
-
-function col_descending(a, b) {
-  if (a.dataset.col[3] > b.dataset.col[3]) {
-    return -1
-  } else if (a.dataset.col[3] < b.dataset.col[3]) {
-    return 1
-  }
-  return 0
+  return arr.sort(function col_descending(a, b) {
+    if (a.dataset.col[3] > b.dataset.col[3]) {
+      return -1
+    } else if (a.dataset.col[3] < b.dataset.col[3]) {
+      return 1
+    }
+    return 0
+  })
 }
 
 Game.prototype.moveTile = function (tile, direction) {
@@ -184,7 +176,8 @@ Game.prototype.moveTile = function (tile, direction) {
     for(line of arrayQuerys) {
       if (line.length > 0) {
         $.each(line, function( index, value ) {
-          console.log('row/col: ', line.selector + " contains: " + line.length);
+          // console.log(line.selector.slice(15, 19) + " contains: " + line.length);
+          // console.log('value: ', value);
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
             var nextEle = num + 1
@@ -195,13 +188,15 @@ Game.prototype.moveTile = function (tile, direction) {
           }
           var nextCol = '.tile[data-' + type + '=' + type + nextEle.toString() + ']'
           var nextColEle = $(nextCol)
+          // console.log('next: ', nextEle);
+
           if (wall === 4) {
             while (nextEle < wall) {
               let nextString = nextEle.toString()
               let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
               let nextColEle = $(nextCol)
 
-              if (nextColEle.length == 0) {
+              if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
               }
               nextEle++;
@@ -209,12 +204,12 @@ Game.prototype.moveTile = function (tile, direction) {
           } else if (wall === 0) {
             while (nextEle >= wall) {
               let nextString = nextEle.toString()
-            //interpolates the next element
+              //interpolates the next element
               let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
               let nextColEle = $(nextCol)
 
               //check if next tile is empty,
-              if (nextColEle.length == 0) {
+              if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
               }
               nextEle--;
@@ -226,7 +221,7 @@ Game.prototype.moveTile = function (tile, direction) {
   }
 
   function collideIfSameValue(arrayQuerys,type, operand) {
-    for( line of arrayQuerys) {
+    for(line of arrayQuerys) {
       $.each(line, function( index, value ) {
         var num = parseInt(value.dataset[type][3])
         //defines the next colunm
@@ -261,8 +256,8 @@ Game.prototype.moveTile = function (tile, direction) {
 
   // spawn a new tile after each move
   // console.log('new: ', thisGame.newTile())
-      // call gameOver() before every move
-      // call addScore() for every combination
+    // call gameOver() before every move
+    // call addScore() for every combination
 
 }
 
