@@ -16,25 +16,24 @@ var Game = function() {
   // $("gameboard").append($elem)
 
   this.lost = function() {
-    for (let c = 0; c < 4; c++) {
-      let col_array = $(".tile[data-col=c" + c + "]");
-      for (let i = 0; i < col_array.length; i++) {
-        if (col_array[i+1] && $(col_array)[i].dataset.val === $(col_array)[i+1].dataset.val) {
-          return false;
-        }
-      }
-    }
-
-    for (let r = 0; r < 4; r++) {
-      let row_array = $(".tile[data-row=r" + r + "]");
-      for (let i = 0; i < row_array.length; i++) {
-        if (row_array[i+1] && $(row_array)[i].dataset.val === $(row_array)[i+1].dataset.val) {
-          return false;
-        }
-      }
+    if (axis_loss("col") === false || axis_loss("row") === false) {
+      return false;
     }
 
     return true;
+  }
+
+  function axis_loss(axis) {
+    for (let n = 0; n < 4; n++) {
+      array = $(".tile[data-" + axis + "=" + axis[0] + n + "]");
+      for (let i = 0; i < array.length; i++) {
+        if (array[i+1] && $(array)[i].dataset.val === $(array)[i+1].dataset.val) {
+          console.log(array[i]);
+          console.log(array[i+1]);
+          return false;
+        }
+      }
+    }
   }
 };
 
@@ -47,7 +46,7 @@ Game.prototype.moveTile = function(tile, direction) {
 
   switch(direction) {
     case 38: //up
-      console.log('up');
+      // console.log('up');
       available = [];
       axis = "row";
       for (let n = 0; n < 4; n++) {
@@ -70,7 +69,7 @@ Game.prototype.moveTile = function(tile, direction) {
       return available;
 
     case 40: //down
-      console.log('down');
+      // console.log('down');
       available = [];
       axis = "row";
       // tile.attr({ "data-row": "r2" });
@@ -93,7 +92,7 @@ Game.prototype.moveTile = function(tile, direction) {
       return available;
 
     case 37: //left
-      console.log('left');
+      // console.log('left');
       available = [];
       axis = "col";
       // axis = "data-col";
@@ -118,7 +117,7 @@ Game.prototype.moveTile = function(tile, direction) {
       return available;
 
     case 39: //right
-      console.log('right');
+      // console.log('right');
       available = [];
       axis = "col";
       for (let n = 0; n < 4; n++) {
@@ -195,6 +194,7 @@ function slide_tile(array, axis_index, i, axis) {
 }
 
 Game.prototype.new_tiles = function(available) {
+  if (available.length === 0) {return;}
   let tile = available[Math.floor(Math.random()*available.length)];
   let val = Math.random() < 0.9 ? 2 : 4;
 
@@ -222,9 +222,10 @@ $(document).ready(function() {
 
       let available = game.moveTile(tile, event.which);
       let num_tiles = $('.tile').length;
-      if (num_tiles == 16) {
-        game.lost();
-      } else {
+      if (num_tiles === 16) {
+        let lost = game.lost();
+        console.log(lost);
+      } else if (available) {
         setTimeout(function(){
           game.new_tiles(available);
         }, 200);
