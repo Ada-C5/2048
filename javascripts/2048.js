@@ -16,7 +16,7 @@ Game.prototype.moveTile = function(tiles, direction) {
     case 37: //left
       console.log('left');
       this.legit("left")
-      this.addTile()
+      // this.addTile()
       break;
     case 39: //right
       console.log('right');
@@ -32,35 +32,34 @@ Game.prototype.moveBoard = function (direction) {
   }
 }
 
-Game.prototype.addTile = function () {
-  var rows = ["r0", "r1", "r2", "r3"]
-  var columns = ["c0", "c1", "c2", "c3"]
-  var random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
-  while (status) {
-    var status = true
-    var check = $("div[data-row=" + random[0] + "]")
-    check.each(function (index, value) {
-      current = $(value)
-      if (current.attr("data-col") === random[1]){
-        status = false
-        random = [Math.floor(Math.random() * rows.length), Math.floor(Math.random() * columns.length)]
-      }
-    })
-  }
-  var thing = $(".tile").clone("<div></div>")
-  console.log(random, "yeah", thing)
-  thing.attr("data-row", random[0])
-  thing.attr("data-col", random[1])
-  thing.attr("data-val", "2").html("2")
-  console.log(thing, "YAAAAY")
-}
+// Game.prototype.addTile = function () {
+//   var rows = ["r0", "r1", "r2", "r3"]
+//   var columns = ["c0", "c1", "c2", "c3"]
+//   var random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
+//   while (status) {
+//     var status = true
+//     var check = $("div[data-row=" + random[0] + "]")
+//     check.each(function (index, value) {
+//       current = $(value)
+//       if (current.attr("data-col") === random[1]){
+//         status = false
+//         random = [Math.floor(Math.random() * rows.length), Math.floor(Math.random() * columns.length)]
+//       }
+//     })
+//   }
+//   var thing = $(".tile").clone("<div></div>")
+//   console.log(random, "yeah", thing)
+//   thing.attr("data-row", random[0])
+//   thing.attr("data-col", random[1])
+//   thing.attr("data-val", "2").html("2")
+//   console.log(thing, "YAAAAY")
+// }
 
 Game.prototype.legit = function (direction) { // if left or right use rows ||  if up or down use col
-
-
   if (direction === "left") {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
+      console.log(current);
       current.each(function (i, val) {
         if (current[i + 1]) { // edge case, if next thing is not null, go on
           var curr = $(val)
@@ -84,9 +83,32 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
       }
     }
 
-
   } else if (direction === "right") {
-    $(".tile").attr("data-col", "c3")
+    for (var row = 3; row > 0; row--) {
+      var current = $("div[data-row=r" + row + "]")
+      current.each(function (i, val) {
+        if (current[i + 1]) { // edge case, if next thing is not null, go on
+          var curr = $(val)
+          console.log(curr);
+          var next = $(current[i + 1])
+          if (curr.attr("data-val") === next.attr("data-val")) {
+            var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
+            next.attr("data-col", curr.attr("data-col"))
+            setTimeout(function () {
+              curr.attr("data-val", total).html(total)
+              next.remove()
+            }, 925)
+            current.splice([i + 1], 1)
+          }
+        }
+      })
+      if (current.length > 0) {
+        for (var j = 0; j < current.length; j++) {
+          var space = $(current[j])
+          space.attr("data-col", "c" + j)
+        }
+      }
+    }
 
   } else if (direction === "up") {
     $(".tile").attr("data-row", "r0")
