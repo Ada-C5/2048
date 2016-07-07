@@ -3,24 +3,42 @@ var Game = function() {
 };
 
 Game.prototype.moveTile = function(tile, direction) {
+  var up_array = [],
+      down_array = [],
+      left_array = [],
+      right_array = [],
+
+    // tiles by column
+      c0 = $(tile).filter("[data-col=c0]").toArray(),
+      c1 = $(tile).filter("[data-col=c1]").toArray(),
+      c2 = $(tile).filter("[data-col=c2]").toArray(),
+      c3 = $(tile).filter("[data-col=c3]").toArray(),
+    // tiles by row
+      r0 = $(tile).filter("[data-row=r0]").toArray(),
+      r1 = $(tile).filter("[data-row=r1]").toArray(),
+      r2 = $(tile).filter("[data-row=r2]").toArray(),
+      r3 = $(tile).filter("[data-row=r3]").toArray()
+
+  up_array.push(c0, c1, c2, c3)
+  down_array.push(c0, c1, c2, c3)
+  left_array.push(r0, r1, r2, r3)
+  right_array.push(r0, r1, r2, r3)
+
   // Game method here
   switch(direction) {
     case 38: //up
       console.log('up');
 
-      var c0 = $(tile).filter("[data-col=c0]")
-      var c1 = $(tile).filter("[data-col=c1]")
-      var c2 = $(tile).filter("[data-col=c2]")
-      var c3 = $(tile).filter("[data-col=c3]")
+      for (var column of up_array) {
+        column.sort(function(a,b) {
+          valA = parseInt($(a).attr("data-row").substring(1))
+          valB = parseInt($(b).attr("data-row").substring(1))
 
-      var array = []
+          return (valA - valB)
+        })
+      }
 
-      array.push(c0)
-      array.push(c1)
-      array.push(c2)
-      array.push(c3)
-
-      $.each(array, function(i, column) {
+      $.each(up_array, function(i, column) {
         $.each(column, function(index, value) {
           if ($(value).attr("data-val") === ($(column[index+1]).attr("data-val"))) {
             $(value).attr('data-val', (($(value).attr('data-val')) * 2))
@@ -48,22 +66,16 @@ Game.prototype.moveTile = function(tile, direction) {
     case 40: //down
       console.log('down');
 
-      var c0 = $(tile).filter("[data-col=c0]").toArray().reverse()
-      var c1 = $(tile).filter("[data-col=c1]").toArray().reverse()
-      var c2 = $(tile).filter("[data-col=c2]").toArray().reverse()
-      var c3 = $(tile).filter("[data-col=c3]").toArray().reverse()
+      for (var column of down_array) {
+        column.sort(function(a,b) {
+          valA = parseInt($(a).attr("data-row").substring(1))
+          valB = parseInt($(b).attr("data-row").substring(1))
 
-      var array = []
+          return (valB - valA)
+        })
+      }
 
-      array.push(c0)
-      array.push(c1)
-      array.push(c2)
-      array.push(c3)
-
-      // "reverse each" through the array so you are looking at the bottom-est first,
-      // and comparing it to the bottom-est possible index... thing...
-
-      $.each(array, function(i, column) {
+      $.each(down_array, function(i, column) {
         $.each(column, function(index, value) {
 
           if ($(value).attr("data-val") === ($(column[index+1]).attr("data-val"))) {
@@ -76,15 +88,13 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         })
 
-        last = 3
         $.each(column, function(index, moving) {
           row = $(moving).attr('data-row')
-          thing = ('r' + last)
+          thing = ('r' + (3-index))
 
           if (row !== thing) {
             let changed = $(moving).attr('data-row', thing)
           }
-          last--
         })
       })
 
@@ -93,19 +103,16 @@ Game.prototype.moveTile = function(tile, direction) {
     case 37: //left
       console.log('left');
 
-      var r0 = $(tile).filter("[data-row=r0]")
-      var r1 = $(tile).filter("[data-row=r1]")
-      var r2 = $(tile).filter("[data-row=r2]")
-      var r3 = $(tile).filter("[data-row=r3]")
+      for (var column of left_array) {
+        column.sort(function(a,b) {
+          valA = parseInt($(a).attr("data-col").substring(1))
+          valB = parseInt($(b).attr("data-col").substring(1))
 
-      var array = []
+          return (valA - valB)
+        })
+      }
 
-      array.push(r0)
-      array.push(r1)
-      array.push(r2)
-      array.push(r3)
-
-      $.each(array, function(i, column) {
+      $.each(left_array, function(i, column) {
         $.each(column, function(index, value) {
           if ($(value).attr("data-val") === ($(column[index+1]).attr("data-val"))) {
             $(value).attr('data-val', (($(value).attr('data-val')) * 2))
@@ -121,10 +128,7 @@ Game.prototype.moveTile = function(tile, direction) {
           col = $(moving).attr('data-col')
           thing = ('c' + index)
 
-          console.log(tile)
-
-          console.log($(tile).attr(thing))
-          if ((col !== thing) && (($(tile).attr(thing)) !== null)) {
+          if (col !== thing) {
             let changed = $(moving).attr('data-col', thing)
           }
         })
@@ -132,27 +136,19 @@ Game.prototype.moveTile = function(tile, direction) {
 
       break;
 
-    case 39: //RIGHT RIGHT RIGHT! DO THIS ONE!
+    case 39: //right
       console.log('right');
 
-      var r0 = $(tile).filter("[data-row=r0]").toArray().reverse()
-      var r1 = $(tile).filter("[data-row=r1]").toArray().reverse()
-      var r2 = $(tile).filter("[data-row=r2]").toArray().reverse()
-      var r3 = $(tile).filter("[data-row=r3]").toArray().reverse()
+      for (var column of right_array) {
+        column.sort(function(a,b) {
+          valA = parseInt($(a).attr("data-col").substring(1))
+          valB = parseInt($(b).attr("data-col").substring(1))
 
-      console.log("first element")
-      console.log(r1[0])
-      console.log("second element")
-      console.log(r1[1])
+          return (valB - valA)
+        })
+      }
 
-      var array = []
-
-      array.push(r0)
-      array.push(r1)
-      array.push(r2)
-      array.push(r3)
-
-      $.each(array, function(i, row) {
+      $.each(right_array, function(i, row) {
         $.each(row, function(index, value) {
 
           if ($(value).attr("data-val") === ($(row[index+1]).attr("data-val"))) {
@@ -165,15 +161,13 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         })
 
-        last = 3
         $.each(row, function(index, moving) {
           col = $(moving).attr('data-col')
-          thing = ('c' + last)
+          thing = ('c' + (3-index))
 
           if (col !== thing) {
             let changed = $(moving).attr('data-col', thing)
           }
-          last--
         })
       })
 
