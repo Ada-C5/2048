@@ -37,7 +37,8 @@ var Game = function () {
       }
     }
     $(".cells").after(newTile)
-    newTile = null
+    // newTile = null
+    return newTile
   }
 
   function randomSpace() {
@@ -74,22 +75,40 @@ var Game = function () {
 }
 
 function upSort(arr) {
-  return arr.sort(ascending)
+  return arr.sort(row_ascending)
 }
 
 function downSort(arr) {
-  return arr.sort(descending)
+  return arr.sort(row_descending)
 }
 
 function leftSort(arr) {
-  return arr.sort(ascending)
+  return arr.sort(col_ascending)
 }
 
 function rightSort(arr) {
-  return arr.sort(descending)
+  return arr.sort(col_descending)
 }
 
-function ascending(a, b) {
+function row_ascending(a, b) {
+  if (a.dataset.row[3] < b.dataset.row[3]) {
+    return -1
+  } else if (a.dataset.row[3] > b.dataset.row[3]) {
+    return 1
+  }
+  return 0
+}
+
+function row_descending(a, b) {
+  if (a.dataset.row[3] > b.dataset.row[3]) {
+    return -1
+  } else if (a.dataset.row[3] < b.dataset.row[3]) {
+    return 1
+  }
+  return 0
+}
+
+function col_ascending(a, b) {
   if (a.dataset.col[3] < b.dataset.col[3]) {
     return -1
   } else if (a.dataset.col[3] > b.dataset.col[3]) {
@@ -98,7 +117,7 @@ function ascending(a, b) {
   return 0
 }
 
-function descending(a, b) {
+function col_descending(a, b) {
   if (a.dataset.col[3] > b.dataset.col[3]) {
     return -1
   } else if (a.dataset.col[3] < b.dataset.col[3]) {
@@ -126,8 +145,7 @@ Game.prototype.moveTile = function (tile, direction) {
 
   function seperateMovementFunction(type, operand) {
     function sortArrays(type, operand) {
-
-    var arrayTiles = []
+      var arrayTiles = []
 
       if (type === "col" && operand === '+' ) {
         arrayTiles.push(rightSort($('.tile[data-row=row0]')))
@@ -162,16 +180,16 @@ Game.prototype.moveTile = function (tile, direction) {
   }
 
   function moveAllTheWay(arrayQuerys, type, operand) {
-    console.log(arrayQuerys);
-    for( line of arrayQuerys) {
-      console.log(line);
+    // console.log('arr: ',arrayQuerys);
+    for(line of arrayQuerys) {
       if (line.length > 0) {
         $.each(line, function( index, value ) {
+          console.log('row/col: ', line.selector + " contains: " + line.length);
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
             var nextEle = num + 1
             var wall = 4
-          } else if (operand === "-"){
+          } else if (operand === "-") {
             var nextEle = num - 1
             var wall = 0
           }
@@ -209,38 +227,40 @@ Game.prototype.moveTile = function (tile, direction) {
 
   function collideIfSameValue(arrayQuerys,type, operand) {
     for( line of arrayQuerys) {
-    $.each(line, function( index, value ) {
-      var num = parseInt(value.dataset[type][3])
-      //defines the next colunm
-      if (operand === "+") {
-        var nextEle = num + 1
-      } else {
-        var nextEle = num - 1
-      }
+      $.each(line, function( index, value ) {
+        var num = parseInt(value.dataset[type][3])
+        //defines the next colunm
+        if (operand === "+") {
+          var nextEle = num + 1
+        } else {
+          var nextEle = num - 1
+        }
 
-      let nextString = nextEle.toString()
-      //interpolates the next element
-      let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
-      let nextColEle = $(nextCol)
+        let nextString = nextEle.toString()
+        //interpolates the next element
+        let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
+        let nextColEle = $(nextCol)
 
-          //if it is the same value, sum and keep moving
-            //elseif is different, grab that one and star looking for next empty tile
-            if (nextColEle.length > 0) {
-              //chek if value is the same than current tile
-              if (value.dataset.val === nextColEle[0].dataset.val) {
-                value.dataset[type] = type + nextString
-                value.dataset.val = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
-                setTimeout(function(){
-                  $(value).text(value.dataset.val)
-                }, 240);
-                nextColEle[0].remove()
-              }
-            }
-    });
+        //if it is the same value, sum and keep moving
+        //elseif is different, grab that one and star looking for next empty tile
+        if (nextColEle.length > 0) {
+          //check if value is the same than current tile
+          if (value.dataset.val === nextColEle[0].dataset.val) {
+            value.dataset[type] = type + nextString
+            value.dataset.val = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
+            setTimeout(function(){
+              $(value).text(value.dataset.val)
+            }, 240);
+            // delete the one of the tiles that combined
+            $(value).remove()
+          }
+        }
+      });
+    }
   }
-  }
 
-  thisGame.newTile()
+  // spawn a new tile after each move
+  // console.log('new: ', thisGame.newTile())
       // call gameOver() before every move
       // call addScore() for every combination
 
