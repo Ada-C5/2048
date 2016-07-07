@@ -26,6 +26,11 @@ var Game = function() {
   function axis_loss(axis) {
     for (let n = 0; n < 4; n++) {
       let array = $(".tile[data-" + axis + "=" + axis[0] + n + "]");
+      if (axis === "col") {
+        sort_things(array, "data-row", "up");
+      } else {
+        sort_things(array, "data-col", "left");
+      }
       for (let i = 0; i < array.length; i++) {
         if (array[i+1] && $(array)[i].dataset.val === $(array)[i+1].dataset.val) {
           return false;
@@ -288,7 +293,7 @@ $(document).ready(function() {
       let num_tiles = $('.tile').length;
       if (num_tiles === 16) {
         let lost = game.lost();
-        console.log(lost);
+        if (lost) {$('.outcome').text("YOU LOSE!")}
       } else if (available) {
         setTimeout(function(){
           game.new_tiles(available);
