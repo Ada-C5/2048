@@ -169,6 +169,7 @@ function render(game) {
      tilex[i].dataset.val = game.matrix[i]['val']
      tilex[i].innerHTML = game.matrix[i]['val']
   }
+  checkWin(game)
 //
 }
 
@@ -191,8 +192,13 @@ function checkLose() {
 }
 
 
-function checkWin() {
-
+function checkWin(game) {
+  game.matrix.forEach( function (object) {
+    var x = object.prop1 + 2;
+    if (object['val'] == 8) {
+      console.log("you win!!!")
+    };
+  });
 }
 
 function updateScore() {
