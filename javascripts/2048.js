@@ -107,7 +107,7 @@ function descending(a, b) {
   return 0
 }
 
-Game.prototype.moveTile = function (tile, direction) {
+Game.prototype.moveTile = function (direction) {
   // Game method here
   switch(direction) {
     case 38: //up
@@ -162,25 +162,33 @@ Game.prototype.moveTile = function (tile, direction) {
   }
 
   function moveAllTheWay(arrayQuerys, type, operand) {
-    console.log(arrayQuerys);
+    // console.log(arrayQuerys);
     for( line of arrayQuerys) {
       console.log(line);
       if (line.length > 0) {
         $.each(line, function( index, value ) {
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
+            // debugger
             var nextEle = num + 1
             var wall = 4
           } else if (operand === "-"){
             var nextEle = num - 1
             var wall = 0
           }
-          var nextCol = '.tile[data-' + type + '=' + type + nextEle.toString() + ']'
+          if (type === "col") {
+            var type2 = "row"
+            var type2Number = value.dataset[type2][3]
+          } else if (type === "row") {
+            type2 = "col"
+            var type2Number = value.dataset[type2][3]
+          }
+          var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
           var nextColEle = $(nextCol)
           if (wall === 4) {
             while (nextEle < wall) {
               let nextString = nextEle.toString()
-              let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
+              var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
               let nextColEle = $(nextCol)
 
               if (nextColEle.length == 0) {
@@ -191,8 +199,8 @@ Game.prototype.moveTile = function (tile, direction) {
           } else if (wall === 0) {
             while (nextEle >= wall) {
               let nextString = nextEle.toString()
-            //interpolates the next element
-              let nextCol = '.tile[data-' + type + '=' + type + nextString + ']'
+              //interpolates the next element
+              var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
               let nextColEle = $(nextCol)
 
               //check if next tile is empty,
@@ -261,9 +269,7 @@ $(document).ready(function () {
     if (!game.gameOver) {
       var arrows = [37, 38, 39, 40];
       if (arrows.indexOf(event.which) > -1) {
-        var tile = $('.tile')
-
-        game.moveTile(tile, event.which)
+        game.moveTile(event.which)
         updateScore()
       }
     }
