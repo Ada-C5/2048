@@ -53,7 +53,9 @@ Game.prototype.moveTile = function(tile, direction) {
       var c2 = $(tile).filter("[data-col=c2]").toArray().reverse()
       var c3 = $(tile).filter("[data-col=c3]").toArray().reverse()
 
+      console.log("first element")
       console.log(c0[0])
+      console.log("second element")
       console.log(c0[1])
 
       var array = []
@@ -79,13 +81,15 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         })
 
+        last = 3
         $.each(column, function(index, moving) {
           row = $(moving).attr('data-row')
-          thing = ('r' + index)
+          thing = ('r' + last)
 
           if (row !== thing) {
             let changed = $(moving).attr('data-row', thing)
           }
+          last--
         })
       })
 
