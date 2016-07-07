@@ -59,11 +59,11 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
   if (direction === "left") {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
-      console.log(current);
       current.each(function (i, val) {
         if (current[i + 1]) { // edge case, if next thing is not null, go on
           var curr = $(val)
           var next = $(current[i + 1])
+          console.log(current);
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             next.attr("data-col", curr.attr("data-col"))
@@ -84,28 +84,31 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
     }
 
   } else if (direction === "right") {
-    for (var row = 3; row > 0; row--) {
+    for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
-      current.each(function (i, val) {
-        if (current[i + 1]) { // edge case, if next thing is not null, go on
-          var curr = $(val)
-          console.log(curr);
-          var next = $(current[i + 1])
+      var length = current.length - 1
+      for (var i = length; i >= 0; i--) {
+        if (current[i - 1]) {
+          var curr = $(current[i])
+          var next = $(current[i - 1])
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             next.attr("data-col", curr.attr("data-col"))
-            setTimeout(function () {
+            // setTimeout(function () {
               curr.attr("data-val", total).html(total)
               next.remove()
-            }, 925)
-            current.splice([i + 1], 1)
+            // }, 925)
+            current.splice([i - 1], 1)
           }
         }
-      })
+      }
       if (current.length > 0) {
-        for (var j = 0; j < current.length; j++) {
+        var k = 3
+        console.log(current.length);
+        for (var j = current.length - 1; j >= 0; j--) {
           var space = $(current[j])
-          space.attr("data-col", "c" + j)
+          space.attr("data-col", "c" + k)
+          k--
         }
       }
     }
