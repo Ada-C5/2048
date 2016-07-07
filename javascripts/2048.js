@@ -27,6 +27,7 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
+      available = [];
       axis = "row";
       for (let n = 0; n < 4; n++) {
         axis_index = 0;
@@ -36,11 +37,20 @@ Game.prototype.moveTile = function(tile, direction) {
           slide_tile(array, axis_index, i, axis);
           axis_index++;
         }
+        // 4 - tiles.count - how many spaces available
+        let available_count = 4 - array.length;
+        // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
+        for (let i = 0; i < available_count; i++) {
+          let col = 3 - i;
+          // when looping through all rows, change the row value
+          available.push(['c' + n, 'r' + col]);
+        }
       }
       break;
 
     case 40: //down
       console.log('down');
+      available = [];
       axis = "row";
       // tile.attr({ "data-row": "r2" });
       for (let n = 0; n < 4; n++) {
@@ -50,6 +60,14 @@ Game.prototype.moveTile = function(tile, direction) {
         for (let i = 0; i < 4; i++) {
           slide_tile(array, axis_index, i, axis);
           axis_index--;
+        }
+        // 4 - tiles.count - how many spaces available
+        let available_count = 4 - array.length;
+        // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
+        for (let i = 0; i < available_count; i++) {
+          let col = 3 - i;
+          // when looping through all rows, change the row value
+          available.push(['c' + n, 'r' + col]);
         }
       }
       break;
@@ -68,21 +86,20 @@ Game.prototype.moveTile = function(tile, direction) {
           slide_tile(array, axis_index, i, axis)
           axis_index++
         }
-
         // 4 - tiles.count - how many spaces available
         let available_count = 4 - array.length;
         // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
         for (let i = 0; i < available_count; i++) {
           let col = 3 - i;
           // when looping through all rows, change the row value
-          available.push(['r2', 'c' + col]);
+          available.push(['r' + n, 'c' + col]);
         }
       }
-      console.log(available);
       break;
 
     case 39: //right
       console.log('right');
+      available = [];
       axis = "col";
       for (let n = 0; n < 4; n++) {
         axis_index = 3;
@@ -92,6 +109,14 @@ Game.prototype.moveTile = function(tile, direction) {
           slide_tile(array, axis_index, i, axis);
           console.log(axis_index);
           axis_index--;
+        }
+        // 4 - tiles.count - how many spaces available
+        let available_count = 4 - array.length;
+        // array of arrays [['r0', 'c0'], ['r0', 'c1']] and then rando this to get next tile spot
+        for (let i = 0; i < available_count; i++) {
+          let col = 3 - i;
+          // when looping through all rows, change the row value
+          available.push(['r' + n, 'c' + col]);
         }
       }
       break;
@@ -132,7 +157,7 @@ function slide_tile(array, axis_index, i, axis) {
     if (axis === "col") {
       $(array[i+1]).attr({ "data-col": "c" + axis_index });
     } else {
-      $(array[i+1]).attr({ "data-row": "r" + axis_index });      
+      $(array[i+1]).attr({ "data-row": "r" + axis_index });
     }
     // double the value stored in data-val
     $(array[i]).attr({"data-val": $(array)[i].dataset.val * 2});
