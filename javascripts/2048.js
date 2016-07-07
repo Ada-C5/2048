@@ -175,16 +175,30 @@ function render(game) {
 function randomTile(game) {
   availableSquares = game.matrix.filter(function(x) {return x['val'] == ""})
   if (availableSquares.length == 0) {
-    console.log("You lost!")
-  }
+    console.log("Can't add a random tile")
+    checkLose
+  } else {
   var emptySquare = availableSquares[Math.floor(Math.random()*availableSquares.length)];
-
-  console.log(emptySquare)
-
   const initialValues = [2, 4]
   emptySquare['val'] = initialValues[Math.floor(Math.random()*initialValues.length)];
   // console.log(initialSquare)
+  console.log(emptySquare)
+  }
 }
+
+function checkLose() {
+
+}
+
+
+function checkWin() {
+
+}
+
+function updateScore() {
+
+}
+
 
 $(document).ready(function() {
   console.log("ready to go!");
