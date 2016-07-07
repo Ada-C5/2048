@@ -55,22 +55,30 @@ function Game() {
   switch(direction) {
     case 38: //up
       console.log('up');
-      self.moveAll( {row: 1, column: 0} )
+      var row = 1
+      var column = 0 
+      self.moveAll(row, column)
       self.newTile();
       break;
     case 40: //down
       console.log('down');
-      self.moveAll( {row: -1, column: 0} )
+      var row = -1
+      var column = 0 
+      self.moveAll(row, column)
       self.newTile();
       break;
     case 37: //left
       console.log('left');
-      self.moveAll( {row: 0, column: -1} )
+      var row = 0
+      var column = -1 
+      self.moveAll(row, column)
       self.newTile();
       break;
     case 39: //right
       console.log('right');
-      self.moveAll( {row: 0, column: 1} )
+      var row = 0
+      var column = 1 
+      self.moveAll(row, column)
       self.newTile();
       break;
     }
@@ -78,12 +86,24 @@ function Game() {
 
   this.moveAll = function(row, column) {
     // get all of the tiles on the board
-    allTiles = $('div.tile[data-val !=""]')
+    var allFilledTiles = $('div.tile[data-val !=""]')
+    // maybe do some comparison with this
+    var allEmptyTiles = $('div.tile[data-val=""]')
 
     $.each(allTiles, function(index, value) {
       //coordinates omg 
       console.log($(value).attr('data-col')[1])
       console.log($(value).attr('data-row')[1])
+      if (row === 1 && column === 0) {
+        console.log('I am up')
+      } else if (row === -1 && column === 0) {
+        console.log('I am down')
+      } else if (row === 0 && column === -1) {
+        console.log('I am left')
+      } else {
+        console.log('I am right')
+      }
+
       // if up
         // check to see if the adjacent cell is empty or not
         // subtract off of the row, do nothing to the column 
