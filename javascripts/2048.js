@@ -29,18 +29,20 @@ function Game() {
 
     var id = (randoRow * 4) + randoCol
     var randoTile = $('#' + id)
-    // if that tile already has a value, skip and call new tile
-    // var emptyList = $('div.tile[data-val=""]')
-    // if randoTile !== // one of the empty cells
-      // call new tile
-    // else 
-    // do everything below 
+    var emptyList = $('div.tile[data-val=""]')
 
-    // actually update the div view 
-    randoTile.attr('data-row', "r" + randoRow);
-    randoTile.attr('data-col', "c" + randoCol);
-    randoTile.attr('data-val', randoVal);
-    randoTile.text(randoVal); 
+    // if id is in empty list, assign it to the board
+    // this loop needs to happen AFTER emptyList gets assigned
+    $.each(emptyList, function(index, value) {
+      if ($(value).attr('#id') === $(randoTile).attr('#id')) {
+        randoTile.attr('data-row', "r" + randoRow);
+        randoTile.attr('data-col', "c" + randoCol);
+        randoTile.attr('data-val', randoVal);
+        randoTile.text(randoVal); 
+        emptyList.splice(index, 1)
+        return; 
+      } 
+    })
   }
 
   // Thinking in vectors 
@@ -54,6 +56,7 @@ function Game() {
   switch(direction) {
     case 38: //up
       console.log('up');
+      self.moveAll()
       self.newTile();
       break;
     case 40: //down
@@ -70,19 +73,17 @@ function Game() {
       break;
     }
   }
+
+  this.moveAll = function() {
+    allTiles = $('div.tile[data-val !=""]')
+    $.each(allTiles, function(index, value) {
+      console.log($(value).attr('data-col', 'data-row'))
+      // console.log($(value).attr('data-row'))
+    })
+  }
 }
 
-// this.moveAll = function() {
 
-// }
-
-// $(document).ready(function() {
-//   console.log("ready to go!");
-//     $('.new-game').on('click', function(event) {
-//     $('.tile').text('')
-//     $('.tile').css('background', 'rgba(238, 228, 218, 0.35)')
-//     var game = new Game(); 
-//   })
 
 // this gets the column position of the tile
 // var tileC0 = $('.tile')[0]
