@@ -2,56 +2,59 @@ function Game() {
   var self = this; 
 
   this.gameOver = null;
-  this.container = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0]
-  ]
+  this.container = null; 
 
   this.initialize = function(selector) {
+    self.container = $(selector);
     self.newTile(); 
     $('body').keydown(function(event){
       var arrows = [37, 38, 39, 40]
       if (arrows.indexOf(event.which) > -1) {
-        var tiles = $('.tile')
-        self.moveTile(tiles, event.which)
+        var tile = $('.tile')
+        self.moveTile(tile, event.which)
       }
     }) 
   }
 
   // generates a new tile anywhere on the board 
   this.newTile = function() {
-    // get random col and row 
+
+    // get random col and row number 
     var randoCol = Math.floor((Math.random() * (4 - 0) + 0));
     var randoRow = Math.floor((Math.random() * (4 - 0) + 0));
-
-    // get a random 2 or 4 
-    var newVal = [2, 4];
+    
+    // get a random 2 or 4, 2s are more common than 4s  
+    var newVal = [2, 2, 2, 2, 4];
     var randoVal = newVal[Math.floor(Math.random() * newVal.length)]
 
-    if (self.container[randoRow][randoCol] === 0) {
-      self.container[randoRow][randoCol] = randoVal
-    } else {
-      self.newTile()
-    }
-    // get div id
-
-    // update div info
     var id = (randoRow * 4) + randoCol
     var randoTile = $('#' + id)
+    // if that tile already has a value, skip and call new tile
+    // var emptyList = $('div.tile[data-val=""]')
+    // if randoTile !== // one of the empty cells
+      // call new tile
+    // else 
+    // do everything below 
+
+    // actually update the div view 
     randoTile.attr('data-row', "r" + randoRow);
     randoTile.attr('data-col', "c" + randoCol);
     randoTile.attr('data-val', randoVal);
     randoTile.text(randoVal); 
   }
+
+  // Thinking in vectors 
+  // R0, C0 is top left (start)
+  // Up is 1, 0 
+  // down is -1, 0 
+  // left is 0, -1
+  // right is 0, 1 
  
  this.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
       self.newTile();
-      // check tiles
       break;
     case 40: //down
       console.log('down');
@@ -68,6 +71,10 @@ function Game() {
     }
   }
 }
+
+// this.moveAll = function() {
+
+// }
 
 // $(document).ready(function() {
 //   console.log("ready to go!");
