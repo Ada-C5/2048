@@ -10,6 +10,7 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
+      this.moveUp()
       break;
     case 40: //down
       console.log('down');
@@ -58,7 +59,7 @@ Game.prototype.moveLeft = function () {
         if (newValue !== false) {
           this._board[i][k] = newValue
           if (k < 3) { this._board[i][k + 1] = null }
-        } if (newValue === false) {
+        } else if (newValue === false) {
           // does a thing ever happen here?
         }
       }
@@ -75,7 +76,7 @@ Game.prototype.moveRight = function () {
         if (newValue !== false) {
           this._board[i][k] = newValue
           if (k > 0) { this._board[i][k - 1] = null }
-        } if (newValue === false) {
+        } else if (newValue === false) {
           // does a thing ever happen here?
         }
       }
@@ -92,7 +93,7 @@ Game.prototype.moveDown = function () {
         if (newValue !== false) {
           this._board[k][i] = newValue
           if (k > 0) { this._board[k - 1][i] = null }
-        } if (newValue === false) {
+        } else if (newValue === false) {
           // does a thing ever happen here?
         }
       }
@@ -103,13 +104,13 @@ Game.prototype.moveDown = function () {
 Game.prototype.moveUp = function () {
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
-      for (let k = j; k >= 0; k--) {
+      for (let k = i; k >= 0; k--) {
         console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k + 1][i])
         if (newValue !== false) {
           this._board[k][i] = newValue
           if (k > 0) { this._board[k + 1][i] = null }
-        } if (newValue === false) {
+        } else if (newValue === false) {
           // does a thing ever happen here?
         }
       }
