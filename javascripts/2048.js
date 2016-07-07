@@ -13,6 +13,8 @@ Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
 
   this.createMatrix(tile, dataValue, dataValue2, matrix, reverse)
   this.moveTiles(tile, matrix, num, dataValue)
+  let self = this
+  setTimeout(function(){self.createTile()}, 0.3*1000)
 
 }
 
@@ -85,7 +87,7 @@ Game.prototype.unoccupiedSpaces = function() {
 
 Game.prototype.createTile = function() {
   let availableSpaces = this.unoccupiedSpaces()
-  var tileLocation = availableSpaces[Math.floor(Math.random() * availableSpaces.length)][0];
+  let tileLocation = availableSpaces[Math.floor(Math.random() * availableSpaces.length)][0];
   $('#gameboard').append("<div class=tile data-row=" + tileLocation.charAt(0) + " data-col=" + tileLocation.charAt(1) + " data-val=2>2</div>")
 }
 
