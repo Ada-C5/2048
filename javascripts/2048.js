@@ -123,6 +123,8 @@ Game.prototype.moveSingleTileDown = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
+  this.collideDown(tile, row, col, val)
+  this.display()
 }
 
 Game.prototype.moveSingleTileLeft = function(tile, row, col, val) {
@@ -147,6 +149,8 @@ Game.prototype.moveSingleTileLeft = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
+  this.collideLeft(tile, row, col, val)
+  this.display()
 }
 
 Game.prototype.moveSingleTileRight = function(tile, row, col, val) {
@@ -171,6 +175,8 @@ Game.prototype.moveSingleTileRight = function(tile, row, col, val) {
         this.board[row + col] = null
       }
     }
+  this.collideRight(tile, row, col, val)
+  this.display()
 }
 
 Game.prototype.collideUp = function(tile, row, col, val) {
@@ -197,6 +203,74 @@ Game.prototype.collideUp = function(tile, row, col, val) {
     }
 }
 
+Game.prototype.collideDown = function(tile, row, col, val) {
+  if (row === 'r2') {
+    var lower_row = 'r3'
+    if (this.board[lower_row + col] === this.board[row + col]) {
+      this.board[lower_row + col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+
+  } else if (row === 'r1') {
+    var lower_row = 'r2'
+    if (this.board[lower_row + col] === this.board[row + col]) {
+      this.board[lower_row + col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+
+  }  else if (row === 'r0') {
+      var lower_row = 'r1'
+      if (this.board[lower_row + col] === this.board[row + col]) {
+        this.board[lower_row + col] = String(Number(val) * 2)
+        this.board[row + col] = null
+      }
+    }
+}
+
+Game.prototype.collideLeft = function(tile, row, col, val) {
+  if (col === 'c1') {
+    var leftier_col = 'c0'
+    if (this.board[row + leftier_col] === this.board[row + col]) {
+      this.board[row + leftier_col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+  } else if (col === 'c2') {
+    var leftier_col = 'c1'
+    if (this.board[row + leftier_col] === this.board[row + col]) {
+      this.board[row + leftier_col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+  }  else if (col === 'c3') {
+      var leftier_col = 'c2'
+      if (this.board[row + leftier_col] === this.board[row + col]) {
+        this.board[row + leftier_col] = String(Number(val) * 2)
+        this.board[row + col] = null
+      }
+    }
+}
+
+Game.prototype.collideRight = function(tile, row, col, val) {
+  if (col === 'c2') {
+    var rightier_col = 'c3'
+    if (this.board[row + rightier_col] === this.board[row + col]) {
+      this.board[row + rightier_col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+  } else if (col === 'c1') {
+    var rightier_col = 'c2'
+    if (this.board[row + rightier_col] === this.board[row + col]) {
+      this.board[row + rightier_col] = String(Number(val) * 2)
+      this.board[row + col] = null
+    }
+  }  else if (col === 'c0') {
+      var rightier_col = 'c1'
+      if (this.board[row + rightier_col] === this.board[row + col]) {
+        this.board[row + rightier_col] = String(Number(val) * 2)
+        this.board[row + col] = null
+      }
+    }
+}
+
 Game.prototype.display = function() {
   g = this
   for (var tile in this.board) {
@@ -216,12 +290,11 @@ Game.prototype.display = function() {
       } else {
         var newTileDiv = "<div class='tile' data-row=" + row + " data-col=" + col + " data-val=" + this.board[position] + ">" + this.board[position] + "</div>"
         var newTile = $("#gameboard").append(newTileDiv);
-        // debugger
-        console.log("position", position, this.board[position], this.board)
-        console.log(this.board["r1c2"])
-        console.log(position)
-        // newTile.text('ha')
-
+        // // debugger
+        // console.log("position", position, this.board[position], this.board)
+        // console.log(this.board["r1c2"])
+        // console.log(position)
+        // // newTile.text('ha')
       }
     } else {
       var currentTile = $('.tile[data-row="' + row + '"][data-col="' + col + '"]')
