@@ -197,15 +197,17 @@ Game.prototype.new_game = function() {
     console.log(r_num)
     let c_num = Math.floor(Math.random() * (3 + 1) + 0);
     console.log(c_num)
+    let vals = [2, 2, 2, 2, 2, 2, 4]
+    var val = vals[Math.floor(Math.random() * vals.length)];
 
     let $elem = $("<div/>")
     .attr({
       "data-col": "c" + c_num,
       "data-row": "r" + r_num,
-      "data-val": 2
+      "data-val": val
     })
     .addClass("tile")
-    .html("2")
+    .html(val)
     console.log($elem)
 
     $("#gameboard").append($elem)
