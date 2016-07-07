@@ -53,11 +53,6 @@ Game.prototype.moveTile = function(tile, direction) {
       var c2 = $(tile).filter("[data-col=c2]").toArray().reverse()
       var c3 = $(tile).filter("[data-col=c3]").toArray().reverse()
 
-      console.log("first element")
-      console.log(c0[0])
-      console.log("second element")
-      console.log(c0[1])
-
       var array = []
 
       array.push(c0)
@@ -96,6 +91,44 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 37: //left
       console.log('left');
+
+      var r0 = $(tile).filter("[data-row=r0]")
+      var r1 = $(tile).filter("[data-row=r1]")
+      var r2 = $(tile).filter("[data-row=r2]")
+      var r3 = $(tile).filter("[data-row=r3]")
+
+      var array = []
+
+      array.push(r0)
+      array.push(r1)
+      array.push(r2)
+      array.push(r3)
+
+      $.each(array, function(i, column) {
+        $.each(column, function(index, value) {
+          if ($(value).attr("data-val") === ($(column[index+1]).attr("data-val"))) {
+            $(value).attr('data-val', (($(value).attr('data-val')) * 2))
+            $(value).text($(value).attr('data-val'))
+
+            $(column[index+1]).remove()
+
+            column.splice((index + 1), 1)
+          }
+        })
+
+        $.each(column, function(index, moving) {
+          col = $(moving).attr('data-col')
+          thing = ('c' + index)
+
+          console.log(tile)
+
+          console.log($(tile).attr(thing))
+          if ((col !== thing) && (($(tile).attr(thing)) !== null)) {
+            let changed = $(moving).attr('data-col', thing)
+          }
+        })
+      })
+
       break;
     case 39: //right
       console.log('right');
