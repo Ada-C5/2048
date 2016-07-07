@@ -95,8 +95,8 @@ Game.prototype.moveRight = function () {
 
 Game.prototype.moveDown = function () {
   for (let i = 0; i < 4; i++) {
-    for (let j = 3; j > 0; j--) {
-      for (let k = j; k <= 3; k++) {
+    for (let j = 3; j >= 0; j--) {
+      for (let k = j; k < 4; k++) {
         console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k - 1][i])
         if (newValue !== false) {
