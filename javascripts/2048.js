@@ -32,7 +32,8 @@ Game.prototype.updateBoard = function() {
     for (j = 0; j < 4; j++) {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
       // console.log(slot)
-      if (this._board[i][j] === null || this._board[i][j] === 0 || this._board[i][j] === NaN || typeof this._board[i][j] === 'undefined') {
+      if (this._board[i][j] === null || this._board[i][j] === 0 || isNaN(this._board[i][j]) || typeof this._board[i][j] === 'undefined') {
+        this._board[i][j] = 0
         $('div[id='+ slot + ']').html(0)
       } else {
       $('div[id='+ slot + ']').html(this._board[i][j])
@@ -44,7 +45,7 @@ Game.prototype.collide = function (spaceOne, spaceTwo) {
   // spaces specified hold values
   if (spaceOne === spaceTwo) {
     spaceOne += spaceTwo
-  } else if (spaceOne === null || spaceOne === 0 || typeof spaceOne === 'undefined') {
+  } else if (spaceOne === null || spaceOne === 0 || typeof spaceOne === 'undefined' || isNaN(spaceOne)) {
     spaceOne = spaceTwo
   } else {
     return false
@@ -89,7 +90,7 @@ Game.prototype.moveRight = function () {
 
 Game.prototype.moveDown = function () {
   for (let i = 0; i < 4; i++) {
-    for (let j = 3; j > 0; j--) {
+    for (let j = 3; j >= 0; j--) {
       for (let k = j; k <= 3; k++) {
         console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k - 1][i])
@@ -97,7 +98,7 @@ Game.prototype.moveDown = function () {
           this._board[k][i] = newValue
           if (k > 0) { this._board[k - 1][i] = null }
         } else if (newValue === false) {
-         x // does a thing ever happen here?
+          // does a thing ever happen here?
         }
       }
     }
@@ -107,7 +108,8 @@ Game.prototype.moveDown = function () {
 Game.prototype.moveUp = function () {
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 4; j++) {
-      for (let k = i; k >= 0; k--) {
+      for (let k = j; k >= 0; k--) {
+        if (k !== 3) {
         console.log('K')
         let newValue = this.collide(this._board[k][i], this._board[k + 1][i])
         if (newValue !== false) {
@@ -116,7 +118,7 @@ Game.prototype.moveUp = function () {
         } else if (newValue === false) {
           // does a thing ever happen here?
         }
-      }
+      }}
     }
   }
 }
@@ -125,14 +127,14 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
+  game.updateBoard()
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      console.log(game._board)
-      game.updateBoard()
       game.moveTile(tile, event.which);
+      console.log(game._board)
       game.updateBoard()
     }
   });
