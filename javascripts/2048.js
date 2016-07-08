@@ -58,9 +58,11 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
   if (direction === "left") {
     for (var row = 0; row < 4; row++) {
       var current = $("div[data-row=r" + row + "]")
-      current.each(function (i, val) {
+      var length = current.length - 1
+
+      for (var i = 0; i < length; i++) {
         if (current[i + 1]) { // edge case, if next thing is not null, go on
-          var curr = $(val)
+          var curr = $(current[i])
           var next = $(current[i + 1])
           console.log(current);
           if (curr.attr("data-val") === next.attr("data-val")) {
@@ -73,7 +75,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
             current.splice([i + 1], 1)
           }
         }
-      })
+      }
       if (current.length > 0) {
         for (var j = 0; j < current.length; j++) {
           var space = $(current[j])
@@ -117,9 +119,11 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
   } else if (direction === "up") {
     for (var col = 0; col < 4; col++) {
       var current = $("div[data-col=c" + col + "]")
-      current.each(function (i, val) {
-        if (current[i + 1]) { // edge case, if next thing is not null, go on
-          var curr = $(val)
+      var length = current.length - 1
+      for (var i = 0; i < length; i++) {
+      // current.each(function (i, val) {
+        if (current[i + 1]) {
+          var curr = $(current[i])
           var next = $(current[i + 1])
           console.log(current);
           if (curr.attr("data-val") === next.attr("data-val")) {
@@ -132,7 +136,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
             current.splice([i + 1], 1)
           }
         }
-      })
+      }
       if (current.length > 0) {
         for (var j = 0; j < current.length; j++) {
           var space = $(current[j])
@@ -149,7 +153,9 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
       for (var i = length; i >= 0; i--) {
         if (current[i - 1]) {
           var curr = $(current[i])
+          console.log("curr ", curr);
           var next = $(current[i - 1])
+          console.log("next ", next);
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             next.attr("data-row", curr.attr("data-row"))
@@ -163,7 +169,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
       }
       if (current.length > 0) {
         var k = 3
-        console.log(current.length);
+        // console.log(current.length);
         for (var j = current.length - 1; j >= 0; j--) {
           var space = $(current[j])
           space.attr("data-row", "r" + k)
