@@ -153,9 +153,13 @@ $(document).ready(function() {
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
+    var border = $('#flash-background')
+    var directions = ['left', 'up', 'right', 'down']
     if (arrows.indexOf(event.which) > -1) {
+      var direction = arrows.indexOf(event.which)
       var tile = $('.tile');
-      game.moveTile(tile, event.which, game.addTile());
+      game.moveTile(tile, event.which, game.addTile())
+      $('#flash-background').removeClass('up-background right-background left-background down-background').addClass(directions[direction] + '-background')
       console.log(game._board)
       game.boardCleaner()
       game.updateBoard()

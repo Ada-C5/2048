@@ -21,7 +21,32 @@ html {
 }
 
 #flash-background {
-  background-image: none;
+
+}
+
+.up-background {
+  background-image: url('../assets/move-up.svg');
+  background-size: 10%;
+  background-repeat: repeat;
+  padding: 2rem;
+}
+
+.down-background {
+  background-image: url('../assets/move-down.svg');
+  background-size: 10%;
+  background-repeat: repeat;
+  padding: 2rem;
+}
+
+.right-background {
+  background-image: url('../assets/move-right.svg');
+  background-size: 10%;
+  background-repeat: repeat;
+  padding: 2rem;
+}
+
+.left-background {
+  background-image: url('../assets/move-left.svg');
   background-size: 10%;
   background-repeat: repeat;
   padding: 2rem;
