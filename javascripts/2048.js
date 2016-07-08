@@ -10,11 +10,13 @@ Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
 
   var matrix = []
   var matrixValues = []
+  var move = 0;
 
   this.createMatrix(tile, dataValue, dataValue2, matrix, reverse)
-  this.moveTiles(tile, matrix, num, dataValue)
+  this.moveTiles(tile, matrix, num, dataValue, move)
   // let self = this
-  setTimeout(() => this.createTile(), 0.22*1000)
+
+  {setTimeout((move) => this.createTile(), 0.21*1000)}
   console.log("MATRIX AFTER: ", matrix)
 
 }
@@ -96,15 +98,17 @@ Game.prototype.unoccupiedSpaces = function() {
 }
 
 Game.prototype.createTile = function() {
-  let availableSpaces = this.unoccupiedSpaces()
-  console.log("-->available spaces:  ", availableSpaces)
-  // Math.floor(Math.random() * 7)
-  console.log(availableSpaces.length)
-  let tileLocation = availableSpaces[Math.floor(Math.random() * (availableSpaces.length))];
-  console.log("new tile: ", tileLocation)
-  console.log("a:", tileLocation.charAt(0) + " b:", tileLocation.charAt(1))
+  if(move > 0){
+    let availableSpaces = this.unoccupiedSpaces()
+    console.log("-->available spaces:  ", availableSpaces)
+    // Math.floor(Math.random() * 7)
+    console.log(availableSpaces.length)
+    let tileLocation = availableSpaces[Math.floor(Math.random() * (availableSpaces.length))];
+    console.log("new tile: ", tileLocation)
+    console.log("a:", tileLocation.charAt(0) + " b:", tileLocation.charAt(1))
 
-  $('#gameboard').append("<div class=tile data-row=" + tileLocation.charAt(0) + " data-col=" + tileLocation.charAt(1) + " data-val=2>2</div>")
+    $('#gameboard').append("<div class=tile data-row=" + tileLocation.charAt(0) + " data-col=" + tileLocation.charAt(1) + " data-val=2>2</div>")
+  }
 }
 
 
@@ -120,7 +124,7 @@ Game.prototype.gameOver = function(){
 
 
 
-Game.prototype.moveTiles = function(tile, matrix, direction, data) {
+Game.prototype.moveTiles = function(tile, matrix, direction, data, move) {
 
   var i2 = 0;
   for (let j = 0; j < matrix.length ; j++) {
@@ -129,26 +133,27 @@ Game.prototype.moveTiles = function(tile, matrix, direction, data) {
       for (let i = 0; i < matrix[j].length; i++) {
         i2 = i + 1;
         i3 = i;
-        this.moveDirection(j,i, i2, i3, matrix, data)
+        this.moveDirection(j,i, i2, i3, matrix, data, move)
       }
     } else if (direction === 3 || direction === 4) {
       for (let i = 3; i > (3-matrix[j].length); i--) {
         k = i+1;
         i2 = i
-        this.moveDirection(j, i, i2, i3, matrix, data)
+        this.moveDirection(j, i, i2, i3, matrix, data, move)
         i3 = i3+1;
       }
     }
   }
 }
 
-Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
+Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data, move) {
 
   if ($(matrix[j][i3]).text().toString() === $(matrix[j][i3+1]).text().toString()) {
     // CHANGES VAL AND DATA
     var value = $(matrix[j][i3]).text()*2;
     $(matrix[j][i3]).attr({ "data-val": value.toString() });
     $(matrix[j][i3]).text(value);
+    move ++
 
     // DELETES
     if (data === 'data-col') {
@@ -162,9 +167,13 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
 
   } else {
     if (data == 'data-col') {
-      $(matrix[j][i3]).attr({ 'data-row' : i.toString()});
+      if($(matrix[j][i3]).data('row') != i.toString()){
+        $(matrix[j][i3]).attr({ 'data-row' : i.toString()});
+        move++ }
     } else {
-      $(matrix[j][i3]).attr({ 'data-col' : i.toString()});
+      if($(matrix[j][i3]).data('col') != i.toString()){
+        $(matrix[j][i3]).attr({ 'data-col' : i.toString()});
+        move++ }
     }
   }
 }
