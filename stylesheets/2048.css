@@ -1,5 +1,50 @@
+
 html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+h1.title {
+  color: #776e65;
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 1rem auto;
+  position: relative;
+  text-align: center;
+}
+
+.banner {
+  width: 100%;
+  float: none;
+}
+
+.score {
+  background: #faf8ef;
+  border-radius: .1rem;
+  border: solid #776e65;
+  color: #776e65;
+  display: block;
+  font-size: 1rem;
+  text-align: center;
+  width: 15%;
+  height: 1.5rem;
+  padding-top: .6rem;
+  margin: 0 auto;
+}
+
+.new_game_button {
+  background: #776e65;
+  border-radius: .1rem;
+  color: #f9f6f2;
+  display: block;
+  font-size: 1rem;
+  text-align: center;
+  width: 15%;
+  height: 2rem;
+  border: none;
+  margin: 0 auto;
+  margin-bottom: 1.6rem;
+  cursor: pointer;
 }
 
 #gameboard {
@@ -21,21 +66,24 @@ html {
 }
 
 .tile {
-  position: absolute;
-  top: 0; left: 0;
-  transition: all 0.2s ease-in-out;
-
-  color: #f9f6f2;
   background: #000;
-
   border-radius: 0.5rem;
+  color: #f9f6f2;
   font-size: 1.5rem;
   font-weight: bold;
-  line-height: 4rem;
   height: 4rem;
+  line-height: 4rem;
   margin: 0.5rem 0 0 0.5rem ;
+  position: absolute;
   text-align: center;
+  top: 0; left: 0;
+  transition: all 0.2s ease-in-out;
   width: 4rem;
+}
+
+.outcome {
+  font-size: 2rem;
+  text-align: center;
 }
 
 .tile[data-row=r0] { top: 0; }
@@ -48,6 +96,7 @@ html {
 .tile[data-col=c2] { left: 9rem; }
 .tile[data-col=c3] { left: 13.5rem; }
 
+/*.tile[data-val=""]     { display: none; }*/
 .tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
 .tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
 .tile[data-val="8"]    { background-color: #f2b179; }
