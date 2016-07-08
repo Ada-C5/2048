@@ -23,7 +23,7 @@ html {
 .tile {
   position: absolute;
   top: 0; left: 0;
-  transition: all 0.2s ease-in-out;
+  transition: all 1s ease-in-out;
 
   color: #f9f6f2;
   background: #000;
@@ -59,3 +59,15 @@ html {
 .tile[data-val="512"]  { background: #edc850; }
 .tile[data-val="1024"] { background: #edc53f; }
 .tile[data-val="2048"] { background: #edc22e; }
+
+h1 {
+  color: #776e65;
+  font-weight: bold;
+  margin-left: 30%;
+}
+
+p {
+  color: #776e65;
+  font-weight: bold;
+  margin-left: 30%;
+}

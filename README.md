@@ -17,14 +17,32 @@ Recreate as much of the original game as is reasonable in the one week we have a
 ### Project Baseline
 - Play a couple games of [2048](http://gabrielecirulli.github.io/2048/). Think about everything that's likely happening in the code to support what's happening on the screen. Once you've got a feel for the game, talk with your pair and answer the following questions:
   1. How does scoring work?
+   point are equivalent to the final tile value
+
   1. When do tiles enter the game?
+  after you move a certain direction
+
   1. How do you know if you've won?
+  have one tile that has a value of 2048
+
   1. How do you know if you've lost?
+  if all of the slots have tiles, and no collisions can happen.
+
   1. What makes tiles move?
+  the arrow button
+
   1. What happens when they move?
+  if two tiles' values match when going in the direction of the 'move', they will combine values and make one tile. If there are three tiles with matching values, the combination will happen to the two tiles in the opposite direction of the 'move'.(ex: if you click right, the two tiles on the left will combine). Tiles that don't match will move into an empty slot in the direction of the 'move'
+
   1. How would you know how far a tile should move?
+  It should move over until there's no empty slot in the direction of the 'move'. It will not move if there is no empty slot.
+
   1. How would you know if tiles would collide?
+  if the tile's values are the same
+
   1. What happens when tiles collide?
+  they turn into one tile, and add together their values. It also adds the final value as points to the player.
+
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
