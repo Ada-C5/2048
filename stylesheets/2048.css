@@ -20,6 +20,13 @@ html {
   width: 4rem;
 }
 
+#flash-background {
+  background-image: none;
+  background-size: 10%;
+  background-repeat: repeat;
+  padding: 2rem;
+}
+
 .tile {
   position: absolute;
   top: 0; left: 0;
