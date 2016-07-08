@@ -11,6 +11,13 @@ Game.prototype.checkWin = function (tileValue) {
   // if there are any tiles with the value 2048, you win
   if ($('.tile[data-val=2048]').length > 0) {
     console.log("YOU WIN!!")
+
+    // because setTimeout can't understand "this" or "game"
+    var gameRef = this
+    setTimeout(function() {
+      gameRef.restart()
+    }, 3000)
+
   }
 }
 
@@ -20,6 +27,7 @@ Game.prototype.restart = function() {
   // reset score
 
   // clear tiles
+  $('.tile').remove()
 
   this.newTile()
 }
@@ -207,10 +215,6 @@ Game.prototype.sortAndMoveRight = function(tiles) {
   }
 }
 
-Game.prototype.combineSame = function() {
-
-}
-
 Game.prototype.moveTile = function(tiles, direction) {
   // Game method here
   //filters from all the tiles
@@ -269,8 +273,8 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   console.log(game)
-  var restartButton = $('button')
 
+  var restartButton = $('button')
   $('button').on('click', function () {
     game.restart()
   })
@@ -283,7 +287,7 @@ $(document).ready(function() {
 
       game.checkWin()
 
-      //stolen from charles but I had a similar idea... just more... magic number-y
+      //stolen from charles but I had a similar idea... mine was just more magic number-y
       var delay = Number.parseFloat($(".tile").css("transition-duration")) * 1000
       // makes sure that the new tile won't appear until after the transition completes. tried promise() and other stuff but this was the only way we could get working.
       setTimeout(function() {
