@@ -32,15 +32,14 @@ Game.prototype.addTile = function () {
   var newTile = null
   var random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
   while (newTile === null) {
-    tiles.each(function(index, val){
-      if ($(val).attr("data-row") === random[0] && $(val).attr("data-col") === random[1]){
+    var exists = $(".tile[data-row=" + random[0] + "][data-col=" + random[1] + "]")
+      if (exists.length !== 0) {
         random = [rows[Math.floor(Math.random() * rows.length)], columns[Math.floor(Math.random() * columns.length)]]
-        newTile = null
       } else {
         newTile = $("<div>", {class: "tile", "data-row":random[0], "data-col":random[1], "data-val":randValue, text: randValue})
       }
-    })
   }
+  console.log("this is random ", random);
   $(".cells").after(newTile)
   newTile = null
 }
