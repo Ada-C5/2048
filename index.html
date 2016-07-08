@@ -3,15 +3,23 @@
   <head>
     <title>2048</title>
     <link rel="stylesheet" media="all" href="stylesheets/2048.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
-    <h1>2048</h1>
-    <button id="newgame">New Game</button>
-    <div>
-      <h2>Score</h2>
-      <p id="score">0<p>
+    <div class="title-header">
+      <div class="wrap">
+        <h1>2048</h1>
+      </div>
+      <div class="wrap">
+        <button class="new" id="newgame">New Game</button>
+      </div>
+      <div class="score-wrap">
+        <p>Score</p>
+        <p id="score">0<p>
+      </div>
     </div>
     <div id="gameboard">
       <div class="cells">

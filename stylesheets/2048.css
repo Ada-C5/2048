@@ -3,7 +3,7 @@ html {
 }
 
 #gameboard {
-  background: #bbada0;
+  background: #07A970;
   border-radius: 0.5rem;
   height: 18.5rem;
   margin: 1rem auto;
@@ -59,3 +59,53 @@ html {
 .tile[data-val="512"]  { background: #edc850; }
 .tile[data-val="1024"] { background: #edc53f; }
 .tile[data-val="2048"] { background: #edc22e; }
+
+
+.title-header {
+  width: 19rem;
+  height: 4rem;
+  margin: auto;
+}
+
+h1 {
+  width: 5rem;
+  height: 3rem;
+  color: #FB9130;
+  padding-top: 1rem;
+  margin: 0;
+  transform:scale(1,2);
+  -webkit-transform:scale(1,2);
+  margin-left: .4rem;
+}
+
+.score-wrap {
+  text-align: center;
+  font-family: 'Bangers', cursive;
+  color: #FB3079;
+  font-size: 1.4rem;
+}
+.wrap, .score-wrap {
+  width: 6.1rem;
+  height: 4rem;
+  display: inline-block;
+  float: left;
+  text-align: center;
+}
+
+.new {
+  width: 5rem;
+  height: 3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #F7F16A;
+  color: #404040;
+  border-width: 3px;
+  border-style:dashed;
+  border-radius: 6%;
+  font-family: 'Shadows Into Light', cursive;
+  margin: .5rem .3rem ;
+}
+
+p {
+  line-height: 20%;
+}
