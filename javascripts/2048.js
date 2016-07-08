@@ -207,7 +207,8 @@ function slide_tile(array, axis_index, i, axis) {
       // check for win
       let val = tile[0].dataset.val;
       if (val === "2048") {
-        console.log("YOU WIN")
+        console.log("YOU WIN");
+        $('.outcome').text("YOU WIN!");
       };
       // double the number that shows on the tile
       curr.text((array)[i].dataset.val);
@@ -272,6 +273,7 @@ $(document).ready(function() {
 
   $("button.new_game_button").bind("click",function() {
     game.new_game()
+    $('.outcome').text("")
   });
 
   $("body").keydown(function(event){
