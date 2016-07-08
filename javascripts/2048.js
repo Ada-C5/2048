@@ -4,6 +4,8 @@ Array.prototype.diff = function(a) {
 
 var Game = function() {
   this.move = 0;
+  this.win = false;
+  this.score = 0;
   // Game logic and initialization here
 };
 
@@ -16,8 +18,11 @@ Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
   this.moveTiles(tile, matrix, num, dataValue)
   // let self = this
 
-  {setTimeout(() => this.createTile(), 0.21*1000)}
-  console.log("MATRIX AFTER: ", matrix)
+  {setTimeout(() => this.createTile(), 0.25*1000)}
+  if (this.win) {
+    console.log("WINNER")
+  }
+  // console.log("MATRIX AFTER: ", matrix)
 
 }
 
@@ -98,7 +103,7 @@ Game.prototype.unoccupiedSpaces = function() {
 }
 
 Game.prototype.createTile = function(move) {
-    console.log("MOVE NOW? ", this.move)
+    // console.log("MOVE NOW? ", this.move)
 
   if( this.move > 0){
     let availableSpaces = this.unoccupiedSpaces()
@@ -154,7 +159,12 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
     var value = $(matrix[j][i3]).text()*2;
     $(matrix[j][i3]).attr({ "data-val": value.toString() });
     $(matrix[j][i3]).text(value);
+    this.score += value
+    $('.score').text(this.score);
     this.move++
+    if (value == 2048) {
+      this.win = true;
+    }
 
     // DELETES
     if (data === 'data-col') {
@@ -163,14 +173,17 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
       $(matrix[j][i3]).attr({ 'data-col' : i.toString() });
     }
 
-    $(matrix[j][i3+1]).remove();
-    matrix[j].splice(i3,1)
+    // {setTimeout(() => Del(), 0.1*1000)}
+    // function Del() {
+      $(matrix[j][i3+1]).remove();
+      matrix[j].splice(i3,1);
+    // }
 
   } else {
     if (data == 'data-col') {
-      console.log("ROW: ", $(matrix[j][i3])[0].attributes["data-row"].nodeValue + " i: ", i)
+      // console.log("ROW: ", $(matrix[j][i3])[0].attributes["data-row"].nodeValue + " i: ", i)
 
-      console.dir($(matrix[j][i3]))
+      // console.dir($(matrix[j][i3]))
       // console.dir($(matrix[j][i3])[0].attributes["data-row"])
       if($(matrix[j][i3])[0].attributes["data-row"].nodeValue != i.toString()){
         $(matrix[j][i3]).attr({ 'data-row' : i.toString()});
@@ -178,17 +191,17 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
          console.log("MEOW")
       }
     } else {
-            console.log("COL: ", $(matrix[j][i3])[0].attributes["data-col"].nodeValue + " i: ", i)
-            console.dir($(matrix[j][i3]))
+            // console.log("COL: ", $(matrix[j][i3])[0].attributes["data-col"].nodeValue + " i: ", i)
+            // console.dir($(matrix[j][i3]))
             // console.log(($(matrix[j][i3])[0].attributes[3]).nodeValue)
 
       if($(matrix[j][i3])[0].attributes["data-col"].nodeValue != i.toString()) {
         $(matrix[j][i3]).attr({ 'data-col' : i.toString()});
         this.move++
-       console.log("WOOF")
+      //  console.log("WOOF")
       }
     }
-    console.log("MOVE: ", this.move)
+    // console.log("MOVE: ", this.move)
     // return this.move;
   }
 }

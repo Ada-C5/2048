@@ -4,11 +4,48 @@ html {
 
 #gameboard {
   background: #bbada0;
-  border-radius: 0.5rem;
-  height: 18.5rem;
+  border-radius: 0.3rem;
+  height: 25.5rem;
   margin: 1rem auto;
   position: relative;
   width: 18.5rem;
+}
+
+#score {
+  position: absolute;
+  margin-top: 590px;
+  margin-left: 35%;
+  display: block;
+  top: 10;
+  background: #362d2d;
+  border-radius: 0.5rem;
+  width: 6rem;
+  height: 4.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 4rem;
+  color: #f9f6f2;
+  text-align: center;
+}
+
+#score p {
+  margin: 0;
+  padding: 0;
+  margin-top: -30px;
+  letter-spacing: 2.8px;
+}
+
+.score {
+  margin-top: -66px;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 4rem;
+  color: #f9f6f2;
+  text-align: center;
+  letter-spacing: 2px;
+  transition: all 0.1s ease-in-out;
+
 }
 
 .cell {
@@ -18,12 +55,15 @@ html {
   height: 4rem;
   margin: 0.5rem 0 0 0.5rem ;
   width: 4rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+
 }
 
 .tile {
   position: absolute;
   top: 0; left: 0;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 
   color: #f9f6f2;
   background: #000;
@@ -49,7 +89,7 @@ html {
 .tile[data-col='3'] { left: 13.5rem; }
 
 .tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
-.tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
+.tile[data-val="4"]    { color: #776e65; background-color: #e8dabe; }
 .tile[data-val="8"]    { background-color: #f2b179; }
 .tile[data-val="16"]   { background-color: #f59563; }
 .tile[data-val="32"]   { background: #f67c5f; }
