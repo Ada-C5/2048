@@ -10,37 +10,79 @@ Game.prototype.addScore = function(value_to_add) {
   $('.score').text(this._score)
 }
 
-Game.prototype.addTile = function() {
-  
-}
+Game.prototype.getTiles = function(tile, direction) {
+  // set self variable to carry the scope of 'game' throughout method
+  var self = this
 
-Game.prototype.moveTile = function(tile, direction) {
-  // Setting variables that will be needed throughout the function (specifically self, so that I can preserve the scope of "game" throughout)
-  var self = this,
-      up_down_array = [],
-      left_right_array = [],
+  // If up/down get tiles by column
+  if (direction === 38 || direction === 40) {
+    var up_down_array = [],
 
     // tiles by column
-      c0 = $(tile).filter("[data-col=c0]").toArray(),
-      c1 = $(tile).filter("[data-col=c1]").toArray(),
-      c2 = $(tile).filter("[data-col=c2]").toArray(),
-      c3 = $(tile).filter("[data-col=c3]").toArray(),
+    c0 = $(tile).filter("[data-col=c0]").toArray(),
+    c1 = $(tile).filter("[data-col=c1]").toArray(),
+    c2 = $(tile).filter("[data-col=c2]").toArray(),
+    c3 = $(tile).filter("[data-col=c3]").toArray()
+
+    up_down_array.push(c0, c1, c2, c3)
+    self.moveTile(up_down_array, direction, tile)
+
+  // If left/right get tiles by row
+  } else if (direction === 37 || direction === 39) {
+    var left_right_array = [],
 
     // tiles by row
-      r0 = $(tile).filter("[data-row=r0]").toArray(),
-      r1 = $(tile).filter("[data-row=r1]").toArray(),
-      r2 = $(tile).filter("[data-row=r2]").toArray(),
-      r3 = $(tile).filter("[data-row=r3]").toArray()
+    r0 = $(tile).filter("[data-row=r0]").toArray(),
+    r1 = $(tile).filter("[data-row=r1]").toArray(),
+    r2 = $(tile).filter("[data-row=r2]").toArray(),
+    r3 = $(tile).filter("[data-row=r3]").toArray()
 
+    left_right_array.push(r0, r1, r2, r3)
+    self.moveTile(left_right_array, direction)
+  }
+}
 
-  up_down_array.push(c0, c1, c2, c3)
-  left_right_array.push(r0, r1, r2, r3)
+Game.prototype.addTile = function() {
+  var self = this,
+      tiles = $('.tile').toArray(),
+      values = [2, 2, 2, 2, 2, 2, 2, 2, 4],
+      vectors = ["c0r0", "c0r1", "c0r2", "c0r3", "c1r0", "c1r1", "c1r2", "c1r3", "c2r0", "c2r1", "c2r2", "c2r3", "c3r0", "c3r1", "c3r2", "c3r3"]
+
+  // get vector values of current tiles
+  $.each(tiles, function(index, tile) {
+    var row = $(tile).attr('data-row'),
+        col = $(tile).attr('data-col'),
+        taken = col + row
+
+    // remove current tile vectors from possible vectors for new tile
+    if (vectors.includes(taken)) {
+      vectors.splice((vectors.indexOf(taken)), 1)
+    }
+  })
+
+  if ($('.tile').length !== 16) {
+    // get random tile location and random value
+    var new_loc = vectors[Math.floor(Math.random()*vectors.length)],
+        new_val = values[Math.floor(Math.random()*values.length)],
+        new_col = new_loc.substring(0, 2),
+        new_row = new_loc.substring(2, 4)
+
+    // Make new div and put it in the tile box
+    $('.tile_box').append($("<div>").attr('class', 'tile').attr('data-row', new_row).attr('data-col', new_col).attr('data-val', new_val).text(new_val))
+  } else if ($('.tile').length === 16) {
+    // CALL LOSE?
+  }
+}
+
+Game.prototype.moveTile = function(array, direction) {
+  // set self variable to carry the scope of 'game' throughout method
+  var self = this
 
   // Game method here
   switch(direction) {
     case 38: //up
       // sort array of column arrays so the tiles are in row order
-      for (var column of up_down_array) {
+      for (var column of array) {
         column.sort(function(a,b) {
           valA = parseInt($(a).attr("data-row").substring(1))
           valB = parseInt($(b).attr("data-row").substring(1))
@@ -49,7 +91,7 @@ Game.prototype.moveTile = function(tile, direction) {
       }
 
       // Iterare through every column of tiles, combining tiles if needed
-      $.each(up_down_array, function(i, column) {
+      $.each(array, function(i, column) {
         $.each(column, function(index, value) {
           // If there is no div, return
           if (value === undefined) {return}
@@ -80,13 +122,12 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         })
       })
-
       break;
 
     case 40: //down
 
     // sort array of columns so they are in reversed row order
-      for (var column of up_down_array) {
+      for (var column of array) {
         column.sort(function(a,b) {
           valA = parseInt($(a).attr("data-row").substring(1))
           valB = parseInt($(b).attr("data-row").substring(1))
@@ -95,7 +136,7 @@ Game.prototype.moveTile = function(tile, direction) {
       }
 
       // Iterare through every column of tiles, combining tiles if needed
-      $.each(up_down_array, function(i, column) {
+      $.each(array, function(i, column) {
         $.each(column, function(index, value) {
           // If there is no div, return
           if (value === undefined) {return}
@@ -131,7 +172,7 @@ Game.prototype.moveTile = function(tile, direction) {
 
     case 37: //left
       // sort array of column arrays so the tiles are in row order
-      for (var row of left_right_array) {
+      for (var row of array) {
         row.sort(function(a,b) {
           valA = parseInt($(a).attr("data-col").substring(1))
           valB = parseInt($(b).attr("data-col").substring(1))
@@ -140,7 +181,7 @@ Game.prototype.moveTile = function(tile, direction) {
       }
 
       // Iterare through every row of tiles, combining tiles if needed
-      $.each(left_right_array, function(i, row) {
+      $.each(array, function(i, row) {
         $.each(row, function(index, value) {
           // If there is no div, return
           if (value === undefined) {return}
@@ -176,7 +217,7 @@ Game.prototype.moveTile = function(tile, direction) {
 
     case 39: //right
       // sort array of column arrays so the tiles are in row order
-      for (var row of left_right_array) {
+      for (var row of array) {
         row.sort(function(a,b) {
           valA = parseInt($(a).attr("data-col").substring(1))
           valB = parseInt($(b).attr("data-col").substring(1))
@@ -185,7 +226,7 @@ Game.prototype.moveTile = function(tile, direction) {
       }
 
       // Iterare through every row of tiles, combining tiles if needed
-      $.each(left_right_array, function(i, row) {
+      $.each(array, function(i, row) {
         $.each(row, function(index, value) {
           // If there is no div, return
           if (value === undefined) {return}
@@ -232,7 +273,9 @@ $(document).ready(function() {
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
 
-      game.moveTile(tile, event.which);
+      game.getTiles(tile, event.which);
+
+      setTimeout(game.addTile, 200)
     }
   });
 });
