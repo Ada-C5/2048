@@ -2,8 +2,6 @@
 
 var Game = function() {
   // Game logic and initialization here
-
-  // an object with cell data
   this.score = 0
 };
 
@@ -11,20 +9,30 @@ Game.prototype.checkWin = function (tileValue) {
   // if there are any tiles with the value 2048, you win
   if ($('.tile[data-val=2048]').length > 0) {
     console.log("YOU WIN!!")
+    $('#message').text("YOU WIN!!!")
 
-    // because setTimeout can't understand "this" or "game"
-    var gameRef = this
+    // because setTimeout can't understand "this" or "game", we have to provide it the context we're talking about with 'bind'
     setTimeout(function() {
-      gameRef.restart()
-    }, 3000)
+      this.restart()
+    }.bind(this), 3000)
 
   }
 }
 
+Game.prototype.addScore = function (newPoints) {
+  this.score += newPoints
+
+  //update the view
+  $('#score').text(this.score)
+}
 
 Game.prototype.restart = function() {
 
+  // get rid of YOU WIN or YOU LOSE message
+  $('#message').text("")
   // reset score
+  this.score = 0
+  $('#score').text("0")
 
   // clear tiles
   $('.tile').remove()
@@ -57,6 +65,13 @@ Game.prototype.newTile = function() {
   // no possibilities left
   if (possibleCoordinates.length < 1) {
     console.log("YOU LOSE")
+    $('#message').text("YOU LOSE!!")
+
+    // because setTimeout can't understand "this" or "game", you have to provide it the context we're talking about. for another way to do this, see the checkWin method.
+    var gameRef = this
+    setTimeout(function() {
+      gameRef.restart()
+    }, 3000)
   }
 
   // if there is at least one possible coordinate, pick a random one from the array and set that to tileLocation
@@ -88,6 +103,9 @@ Game.prototype.sortAndMoveUp = function(tiles) {
       var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
       destinationTile.attr('data-val', sumOfValues)
       destinationTile.text(sumOfValues)
+
+      //add this amount to the current score
+      this.addScore(sumOfValues)
 
       //delete sourceTile from the array
       tiles.splice(i + 1, 1)
@@ -126,6 +144,9 @@ Game.prototype.sortAndMoveDown = function(tiles) {
       destinationTile.attr('data-val', sumOfValues)
       destinationTile.text(sumOfValues)
 
+      //add this amount to the current score
+      this.addScore(sumOfValues)
+
       //delete sourceTile from the array
       tiles.splice(i + 1, 1)
 
@@ -163,6 +184,9 @@ Game.prototype.sortAndMoveLeft = function(tiles) {
       destinationTile.attr('data-val', sumOfValues)
       destinationTile.text(sumOfValues)
 
+      //add this amount to the current score
+      this.addScore(sumOfValues)
+
       //delete sourceTile from the array
       tiles.splice(i + 1, 1)
 
@@ -197,6 +221,9 @@ Game.prototype.sortAndMoveRight = function(tiles) {
       var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
       destinationTile.attr('data-val', sumOfValues)
       destinationTile.text(sumOfValues)
+
+      //add this amount to the current score
+      this.addScore(sumOfValues)
 
       //delete sourceTile from the array
       tiles.splice(i + 1, 1)
