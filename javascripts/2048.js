@@ -203,7 +203,7 @@ function checkWin(game) {
   game.matrix.forEach( function (object) {
     var x = object.prop1 + 2;
     if (object['val'] == 2048) {
-      console.log("you win!!!")
+      showWin(game)
     };
   });
 }
@@ -211,6 +211,10 @@ function checkWin(game) {
 function updateScore(game, pointsToAdd) {
   game.score = game.score + pointsToAdd
   showScore(game)
+}
+
+function showWin(game) {
+  document.getElementById("youwin").innerHTML = "YOU WIN!!!";
 }
 
 function showScore(game) {
