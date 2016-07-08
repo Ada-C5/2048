@@ -76,7 +76,7 @@ var Game = function () {
   this.hasLost = function () {
     // checks if the board is full
     // needs to check if there are no more valid moves
-    if ($('.tiles').length >= 16) {
+    if ($('.tile').length >= 16) {
 
       if (!checkNeighbors()) {
         console.log("lost");
@@ -90,7 +90,8 @@ var Game = function () {
 }
 
 function checkNeighbors() {
-  let tiles = $('.tiles')
+  let tiles = $('.tile')
+  let x = 0
   $.each(tiles, function( index, value ) {
     let val = value.dataset.val
     var colNum = value.dataset["col"][3] ///0,1,2,3
@@ -101,20 +102,31 @@ function checkNeighbors() {
     var nextCol = parseInt(value.dataset["col"][3]) + 1
     var previousCol = parseInt(value.dataset["col"][3]) - 1
 
+
     var left = $('.tile[data-row=row' + rowNum + '][data-col=col' + previousCol.toString() + ']')
     var right = $('.tile[data-row=row' + rowNum +'][data-col=col' + nextCol.toString() + ']')
     var above = $('.tile[data-col=col' +colNum + '][data-row=row' + previousRow.toString() + ']')
     var below = $('.tile[data-col=col' +colNum + '][data-row=row' + nextRow.toString() + ']')
 
-    let array = [left, right, above, below ]
+    var array = [left[0], right[0], above[0], below[0] ]
+    console.log("array", left);
 
     for (let tile of array){
-      if (tile.dataset.val === val){
-        return true
+      if (tile !== undefined) {
+        if (tile.dataset.val === val){
+          x += 1
+          console.log("true for eqaul value neigh");
+        }
       }
     }
   })
-  return false
+  console.log("x", x);
+  if (x > 0) {
+    return true
+  } else {
+    return false
+  }
+  console.log("no true at all");
 }
 
 function upSort(arr) {
@@ -163,9 +175,10 @@ function rightSort(arr) {
 
 Game.prototype.moveTile = function (direction) {
   // Game method here
+  thisGame.hasLost()
   if (!thisGame.gameOver) {
     console.log($(".tile").length);
-    console.log(thisGame.validCollision);
+    // console.log(thisGame.validCollision);
 
     switch(direction) {
       case 38: //up
@@ -301,7 +314,6 @@ Game.prototype.moveTile = function (direction) {
             value.dataset.val = newVal
             thisGame.addScore(newVal)
             thisGame.hasWon(newVal)
-            thisGame.hasLost()
             setTimeout(function(){
               $(value).text(value.dataset.val)
               $(value).attr('id', 'combineTile')
