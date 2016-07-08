@@ -42,7 +42,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       for (let c = 0; c<4; c++) {
         let modTiles = []
         var this_col = matrix.filter(function(x) {return x['col'] == c})
-        console.log(this_col) //works!!
+        // console.log(this_col) //works!!
         for (var r = 1; r < 4; r++) {
           if (this_col[r]["val"] != "") { //do this whenver you find a tile with a number
             let currentTile = this_col[r]["val"]
@@ -51,12 +51,11 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
                 this_col[s]["val"] = currentTile
                 this_col[s+1]["val"] = ""
               } else if (this_col[s]["val"] == this_col[s+1]["val"] && modTiles.includes(this_col[s+1]) == false) {
-                console.log("1")
                 this_col[s]["val"] = currentTile * 2
                 updateScore(game, (currentTile * 2))
                 this_col[s+1]["val"] = ""
                 modTiles.push(this_col[s])
-                console.log(modTiles)
+                // console.log(modTiles)
               }
             }
           }
@@ -72,7 +71,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       for (let c = 0; c<4; c++) { //doing it for each column
         let modTiles = []
         var this_col = matrix.filter(function(x) {return x['col'] == c})
-        console.log(this_col) //works!!
+        // console.log(this_col) //works!!
         for (var r = 2; r > -1 ; r--) {
           if (this_col[r]["val"] != "") { //do this whenver you find a tile with a number
             let currentTile = this_col[r]["val"]
@@ -85,7 +84,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
                 updateScore(game, (currentTile * 2))
                 this_col[s-1]["val"] = ""
                 modTiles.push(this_col[s])
-                console.log(modTiles)
+                // console.log(modTiles)
               }
             }
           }
@@ -102,7 +101,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       for (let r = 0; r<4; r++) { //doing it for each column
         let modTiles = []
         var this_row = matrix.filter(function(x) {return x['row'] == r})
-        console.log(this_row) //works!!
+        // console.log(this_row) //works!!
         for (var c = 2; c > -1 ; c--) {
           if (this_row[c]["val"] != "") { //do this whenver you find a tile with a number
             let currentTile = this_row[c]["val"]
@@ -111,12 +110,12 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
                 this_row[s]["val"] = currentTile
                 this_row[s-1]["val"] = ""
               } else if (this_row[s]["val"] == this_row[s-1]["val"] && modTiles.includes(this_row[s-1]) == false) {
-                console.log("1")
+                // console.log("1")
                 this_row[s]["val"] = currentTile * 2
                 updateScore(game, (currentTile * 2))
                 this_row[s-1]["val"] = ""
                 modTiles.push(this_row[s])
-                console.log(modTiles)
+                // console.log(modTiles)
               }
             }
           }
@@ -132,7 +131,7 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       for (let r = 0; r<4; r++) {
         let modTiles = []
         var this_row = matrix.filter(function(x) {return x['row'] == r})
-        console.log(this_row) //works!!
+        // console.log(this_row) //works!!
         for (var c = 1; c < 4; c++) {
           if (this_row[c]["val"] != "") { //do this whenver you find a tile with a number
             let currentTile = this_row[c]["val"]
@@ -141,12 +140,12 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
                 this_row[s]["val"] = currentTile
                 this_row[s+1]["val"] = ""
               } else if (this_row[s]["val"] == this_row[s+1]["val"] && modTiles.includes(this_row[s+1]) == false) {
-                console.log("1")
+                // console.log("1")
                 this_row[s]["val"] = currentTile * 2
                 updateScore(game, (currentTile * 2))
                 this_row[s+1]["val"] = ""
                 modTiles.push(this_row[s])
-                console.log(modTiles)
+                // console.log(modTiles)
               }
             }
           }
@@ -156,9 +155,6 @@ Game.prototype.moveTile = function(tile, direction, matrix, game) {
       render(game)
       break;
   }
-
-
-
 
 };
 
@@ -184,7 +180,9 @@ function randomTile(game) {
   availableSquares = game.matrix.filter(function(x) {return x['val'] == ""})
   if (availableSquares.length == 0) {
     console.log("Can't add a random tile")
-    checkLose
+    if (checkLose(game) == true) {
+      console.log("YOU LOST!!")
+    }
   } else {
   var emptySquare = availableSquares[Math.floor(Math.random()*availableSquares.length)];
   const initialValues = [2, 4]
@@ -194,8 +192,35 @@ function randomTile(game) {
   }
 }
 
-function checkLose() {
+function checkLose(game) {
+  // Check all the ROWS
+  for (let r = 0; r<4; r++) {
+    var this_row = game.matrix.filter(function(x) {return x['row'] == r})
+    // console.log("Checking Row:", r)
+    for (var c = 0; c < 3; c++) { //index for each of the tiles in the row
+      if (this_row[c]["val"] == this_row[c+1]["val"]) {
+        console.log("You can still collide some tiles, haven't lost")
+        return false
+      }
+    }
+  }
 
+  // Check all COLUMNS
+  for (let c = 0; c<4; c++) {
+    var this_col = game.matrix.filter(function(x) {return x['col'] == c})
+    // console.log("Checking Col:", c)
+    for (var r = 0; r < 3; r++) { //index for each of the tiles in the row
+      // console.log("Comparing", this_col[r]["val"], "against", this_col[r+1]["val"])
+      if (this_col[r]["val"] == this_col[r+1]["val"]) {
+        console.log("You can still collide some tiles, haven't lost")
+        return false
+      }
+    }
+  }
+
+  //If it never returned false, then you lost the game: return true
+  console.log("You cannot collide any more tiles...")
+  return true
 }
 
 
