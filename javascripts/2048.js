@@ -210,7 +210,11 @@ function checkWin(game) {
 
 function updateScore(game, pointsToAdd) {
   game.score = game.score + pointsToAdd
-  console.log(game.score)
+  showScore(game)
+}
+
+function showScore(game) {
+  document.getElementById("score").innerHTML =game.score;
 }
 
 
