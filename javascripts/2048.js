@@ -3,10 +3,11 @@ Array.prototype.diff = function(a) {
 };
 
 var Game = function() {
+  // Game logic and initialization here
   this.move = 0;
   this.win = false;
   this.score = 0;
-  // Game logic and initialization here
+  this.bestScore = 0;
 };
 
 Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
@@ -16,23 +17,16 @@ Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
 
   this.createMatrix(tile, dataValue, dataValue2, matrix, reverse)
   this.moveTiles(tile, matrix, num, dataValue)
-  // let self = this
 
   {setTimeout(() => this.createTile(), 0.25*1000)}
 
   if (this.win) {
-    $('#win').text('YOU')
-    $('#wins').text('WON!')
-
-    console.log("WINNER")
+    $('#win').text('YOU WON!')
   }
-  // console.log("MATRIX AFTER: ", matrix)
 
 }
 
 Game.prototype.createMatrix = function(tile, data1, data2, matrix, reverse) {
-//.tile, data1 = data-row or data-col
-// up --> (.tile, 'data-col', 'data-row', matrixUp, false)
   for (let i = 0; i < 4; i++){
     var queryStr = '.tile[' + data1 +'=' + i +']'
     let row = $(queryStr).sort(function (a, b) {
@@ -55,14 +49,13 @@ Game.prototype.availableMoves = function() {
   var matrixLeft = []
 
   var tile = $('.tile')
-  createMatrix(tile, 'data-col', 'data-row', matrixUp, "false")
-  createMatrix(tile, 'data-row', 'data-col', matrixRight, "false")
+  this.createMatrix(tile, 'data-col', 'data-row', matrixUp, "false")
+  this.createMatrix(tile, 'data-row', 'data-col', matrixLeft, "false")
 
   matrixUp = matrixUp.map(function() { return $(this).data('value')})
   matrixLeft = matrixLeft.map(function() { return $(this).data('value')})
 
-  return (checkMatrix(matrixUp) && checkMatrix(matrixLeft))
-
+  return (this.checkMatrix(matrixUp) && this.checkMatrix(matrixLeft))
 }
 
 Game.prototype.checkMatrix = function(matrix) {
@@ -71,9 +64,9 @@ Game.prototype.checkMatrix = function(matrix) {
   if (matrix.length < 4){result = false}
 
   // else check mataches
-  for (let row=0; row<matrix.length; row++) {
+  for (var row=0; row<matrix.length; row++) {
     if(matrix[row].length < 4) {result = false}
-    for (let col=0; col<matrix[row].length; col++) {
+    for (var col=0; col<matrix[row].length; col++) {
       if (matrix[row][col] == matrix[row][col+1]) {
         result = false
       }
@@ -83,49 +76,34 @@ Game.prototype.checkMatrix = function(matrix) {
 }
 
 Game.prototype.unoccupiedSpaces = function() {
-// function creates a matrix from current by creating a matrix with row and col values
   var allSpaces = []
   var array = ["0","1", "2", "3"]
   array.map(function(x) { allSpaces.push(x+"0"); allSpaces.push(x+"1"); allSpaces.push(x+"2"); allSpaces.push(x+"3")});
-  // console.log("all", allSpaces)
   var occupiedSpaces = []
-  // board of spaces that are occupied ["00","04"]
-  // console.log("ALL TILES PLS: ", $('.tile'))
+
   var x = $('.tile')
   for (let i = 0; i < x.length; i++) {
-    // console.log("THIS DATA? ", x[i].dataset)
     occupiedSpaces.push(x[i].dataset.row+x[i].dataset.col)
   }
-  // $('.tile').map(function() {
-  //   console.log($(this).data())
-  //  occupiedSpaces.push($(this).data('row').toString()+$(this).data('col').toString())});
-  // console.log("occupied: ", occupiedSpaces)
-  unoccupiedSpaces = allSpaces.diff(occupiedSpaces)
-  // console.log("unoccupied: ", unoccupiedSpaces)
 
+  unoccupiedSpaces = allSpaces.diff(occupiedSpaces)
   return unoccupiedSpaces
 }
 
 Game.prototype.createTile = function(move) {
-    // console.log("MOVE NOW? ", this.move)
-
+  // console.log("MOVE NOW? ", this.move)
   if( this.move > 0){
     let availableSpaces = this.unoccupiedSpaces()
-    // console.log("-->available spaces:  ", availableSpaces)
-    // Math.floor(Math.random() * 7)
-    // console.log(availableSpaces.length)
     let tileLocation = availableSpaces[Math.floor(Math.random() * (availableSpaces.length))];
-    // console.log("new tile: ", tileLocation)
-    // console.log("a:", tileLocation.charAt(0) + " b:", tileLocation.charAt(1))
-
-    $('#gameboard').append("<div class=tile data-row=" + tileLocation.charAt(0) + " data-col=" + tileLocation.charAt(1) + " data-val=2>2</div>")
+    var tileValueArray = ["2","4"]
+    var tileValue = tileValueArray[Math.floor(Math.random() * (tileValueArray.length))];
+    $('#gameboard').append("<div class=tile data-row=" + tileLocation.charAt(0) + " data-col=" + tileLocation.charAt(1) + " data-val=2>" + tileValue +"</div>")
   }
 }
 
 
 
 Game.prototype.gameOver = function(){
-
   if(this.unoccupiedSpaces().length === 0){
     return this.availableMoves()
   }else {
@@ -176,37 +154,23 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
     } else {
       $(matrix[j][i3]).attr({ 'data-col' : i.toString() });
     }
-
-    // {setTimeout(() => Del(), 0.1*1000)}
-    // function Del() {
       $(matrix[j][i3+1]).remove();
       matrix[j].splice(i3,1);
-    // }
-
   } else {
     if (data == 'data-col') {
-      // console.log("ROW: ", $(matrix[j][i3])[0].attributes["data-row"].nodeValue + " i: ", i)
 
-      // console.dir($(matrix[j][i3]))
-      // console.dir($(matrix[j][i3])[0].attributes["data-row"])
       if($(matrix[j][i3])[0].attributes["data-row"].nodeValue != i.toString()){
         $(matrix[j][i3]).attr({ 'data-row' : i.toString()});
          this.move++
          console.log("MEOW")
       }
     } else {
-            // console.log("COL: ", $(matrix[j][i3])[0].attributes["data-col"].nodeValue + " i: ", i)
-            // console.dir($(matrix[j][i3]))
-            // console.log(($(matrix[j][i3])[0].attributes[3]).nodeValue)
 
       if($(matrix[j][i3])[0].attributes["data-col"].nodeValue != i.toString()) {
         $(matrix[j][i3]).attr({ 'data-col' : i.toString()});
         this.move++
-      //  console.log("WOOF")
       }
     }
-    // console.log("MOVE: ", this.move)
-    // return this.move;
   }
 }
 
@@ -238,13 +202,34 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-  $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40];
-    if (arrows.indexOf(event.which) > -1) {
-      var tile = $('.tile');
-      // console.log(tile)
-      game.moveTile(tile, event.which);
+  var reset = $('.reset button')
+    $('body').keydown(function(event){
+      if(game.gameOver() === false){
+        console.log("game.over: ", game.gameOver)
+        console.log("initial game over check")
+        var arrows = [37, 38, 39, 40];
+        if (arrows.indexOf(event.which) > -1) {
+          var tile = $('.tile');
+          game.moveTile(tile, event.which);
+        }
+      }else {
+        console.log("YOU LOST")
+        $('.win').text("GAME OVER");
+        if(game.bestScore < game.score){
+          game.bestScore = game.score
+          $('.best').text(game.bestScore);
+        }
+      }
+    });
+  reset.on('click',function(event){
+    if(game.bestScore < game.score){
+      game.bestScore = game.score
+      $('.best').text(game.bestScore);
     }
+    $('.tile').remove();
+    game.score = 0;
+    $('.score').text(game.score);
+    game.createTile();
   });
 });
 

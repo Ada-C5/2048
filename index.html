@@ -7,6 +7,17 @@
     <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
+    <div id="totalScore">
+      <div id="score">
+        <p>Score</p>
+        <div class="score">0</div>
+      </div>
+      <div id="best">
+        <p>Best</p>
+        <div class="best">0</div>
+      </div>
+    </div>
+
     <div id="gameboard">
       <div class="cells">
         <div class="cell"></div>
@@ -47,18 +58,9 @@
       <div class="tile" data-row="1", data-col="3" data-val="8">8</div>
       <div class="tile" data-row="2", data-col="3" data-val="2">2</div>
       <div class="tile" data-row="3", data-col="3" data-val="16">16</div> -->
-      <div id="win">
-      </div>
-      <div id="wins">
-      </div>
-      <div id="score">
-        <p>
-          Score
-        </p>
-        <div class="score">
-
-        </div>
-      </div>
+      <div class="reset">
+        <button id="reset">RESET</button>
+        <div id="win"></div>
     </div>
   </body>
 </html>

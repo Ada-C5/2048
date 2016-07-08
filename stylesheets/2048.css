@@ -11,66 +11,75 @@ html {
   width: 18.5rem;
 }
 
-#score {
-  position: absolute;
-  margin-top: 590px;
-  margin-left: 33.5%;
-  display: block;
+#score, #best {
+  margin: auto;
   top: 10;
-  background: #362d2d;
+  background: #FF9839;
   border-radius: 0.5rem;
-  width: 6rem;
+  width: 9rem;
   height: 4.5rem;
   font-size: 1.1rem;
   font-weight: bold;
-  line-height: 4rem;
+  line-height: 2rem;
   color: #f9f6f2;
   text-align: center;
+  display: inline-block;
+  margin: auto;
 }
 
-#score p {
+#score p, #best p {
   margin: 0;
   padding: 0;
-  margin-top: -30px;
+  margin-top: 0;
   letter-spacing: 2.8px;
 }
 
-.score {
-  margin-top: -66px;
+.score .best {
+  margin: auto;
+  top: 10;
+  background: #FF9839;
   border-radius: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 4rem;
+  width: 9rem;
+  height: 4.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 2rem;
   color: #f9f6f2;
   text-align: center;
-  letter-spacing: 2px;
-  transition: all 0.1s ease-in-out;
+  display: inline-block;
+  margin: auto;
 
+}
+
+#totalScore{
+  margin-top: 58px;
+  width: 100%;
+  text-align: center;
 }
 
 #win{
   font-size: 1.5rem;
   font-weight: 600;
-  line-height: 4rem;
   color: #f9f6f2;
   margin: 0;
   padding: 0;
-  position: absolute;
-  margin-top: 600px;
-  margin-left: 40px;
+   margin-top: 20px;
 
 }
+.reset{
+  height: 4rem;
+  display: inline-block;
+  width: 100%;
+  margin-top: 0.5rem;
+  text-align: center;
+}
 
-#wins{
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 4rem;
+#reset{
+  background: rgba(128, 94, 49, 0.56);
+  border-radius: 0.5rem;
+  width: 9rem;
+  height: 4rem;
   color: #f9f6f2;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  margin-top: 600px;
-  margin-left: 400px;
 }
 
 .cell {
@@ -82,7 +91,6 @@ html {
   width: 4rem;
   font-size: 1.5rem;
   font-weight: bold;
-
 }
 
 .tile {
