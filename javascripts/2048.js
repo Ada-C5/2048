@@ -152,7 +152,7 @@ Game.prototype.moveTile = function (direction) {
       return type2 + '=' + type2 + type2Number
     }
   }
-  
+
   function seperateMovementFunction(type, operand) {
     function sortArrays(type, operand) {
       var arrayTiles = []
@@ -194,13 +194,13 @@ Game.prototype.moveTile = function (direction) {
           $(value).removeAttr('id')
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
-            // debugger
             var nextEle = num + 1
             var wall = 4
           } else if (operand === "-") {
             var nextEle = num - 1
             var wall = 0
           }
+
           let textTointepolate = defineType2(value, type)
 
           var nextCol = '.tile[data-' + textTointepolate + '][data-' + type + '=' + type + nextEle.toString() + ']'
@@ -220,11 +220,9 @@ Game.prototype.moveTile = function (direction) {
           } else if (wall === 0) {
             while (nextEle >= wall) {
               let nextString = nextEle.toString()
-              //interpolates the next element
               var nextCol = '.tile[data-' + textTointepolate + '][data-' + type + '=' + type + nextEle.toString() + ']'
               let nextColEle = $(nextCol)
 
-              //check if next tile is empty,
               if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
               }
