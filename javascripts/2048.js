@@ -20,10 +20,44 @@ Game.prototype.addScore = function(sumScore){
 }
 
 
-Game.prototype.newTile = function(newTile){
+Game.prototype.newTile = function(){
+  var coordinates = [
+    [0,0],
+    [0,1],
+    [0,2],
+    [0,3],
+    [1,0],
+    [1,1],
+    [1,2],
+    [1,3],
+    [2,0],
+    [2,1],
+    [2,2],
+    [2,3],
+    [3,0],
+    [3,1],
+    [3,2],
+    [3,3]
+  ]
 
-//return $('#gameboard').append("<div class='tile' data-row='r" + ( Math.floor(Math.random() * 1) + 0) + "', data-col='c" + ( Math.floor(Math.random() * 1) + 0) + "' data-val='2'>2</div>")
+for(var index = coordinates.length -1; index >= 0; index --){
+  var coordinatesIndividual = coordinates[index]
+
+  if($('.tile[data-row=r' + coordinatesIndividual[0] + '][ data-col=c' + coordinatesIndividual[1] + ']').length > 0){
+    coordinates.splice(index,1)
+  }
+
+
+
+
+  }
+  var tileLocation = coordinates[Math.floor(Math.random()*coordinates.length)]
+  $('#gameboard').append("<div class='tile' data-row='r" + tileLocation[0] + "' data-col='c" +  tileLocation[1] + "' data-val='2'>2</div>")
+
 }
+
+
+
 
 Game.prototype.sortUpMoveTiles = function(tilesArray){
 
@@ -65,6 +99,7 @@ Game.prototype.sortDownMoveTiles = function(tilesArray){
         tilesArray.splice(i + 1, 1)
         $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
         $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
+          this.won(Number($(tilesArray[i]).attr('data-val')))
          this.addScore( Number($(tilesArray[i]).attr('data-val')) )
       }
 
@@ -89,6 +124,7 @@ Game.prototype.sortMoveLeftTiles = function(tilesArray){
         tilesArray.splice(i + 1, 1)
         $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
         $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
+          this.won(Number($(tilesArray[i]).attr('data-val')))
          this.addScore( Number($(tilesArray[i]).attr('data-val')) )
       }
 
@@ -116,6 +152,7 @@ for (var i = 0; i < tilesArray.length; i++) {
           tilesArray.splice(i + 1, 1)
           $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
           $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
+            this.won(Number($(tilesArray[i]).attr('data-val')))
            this.addScore( Number($(tilesArray[i]).attr('data-val')) )
         }
 
@@ -193,10 +230,14 @@ $(document).ready(function() {
       var tiles = $('.tile');
 
       game.moveTile(tiles, event.which);// event.which means which key
+      setTimeout(function(){
+        game.newTile()
+
+      }, 1000)
     }
   });
-    $('body').keyup(function(event){
-      game.newTile()
-    })
+    // $('body').keyup(function(event){
+    //   game.newTile()
+    // })
 
 });
