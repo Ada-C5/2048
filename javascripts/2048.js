@@ -15,21 +15,37 @@ var Game = function () {
     let tiles = $('.tile')
     let randRow = 'row' + randomSpace()
     let randCol = 'col' + randomSpace()
+    let randCoords = randRow + randCol
     let randVal = randomVal({4:0.3, 2:0.7})
     var newTile = null
+    var same = false
 
-    if (tiles[0] === undefined) {
+    if (tiles.length === 0) {
       newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
     } else {
+      let tileCoords = Array.from(tiles.map(function() {
+        return this.dataset.row + this.dataset.col
+      }))
       while (newTile === null) {
-        for (let i = 0; i < tiles.length; i++) {
-          if (tiles[i].dataset.row !== randRow || tiles[i].dataset.col !== randCol) {
-            newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
-          } else {
-            randRow = 'row' + randomSpace()
-            randCol = 'col' + randomSpace()
+        console.log(tileCoords)
+        // debugger
+        for (let coords of tileCoords) {
+          console.log('1: ', coords)
+          console.log('2: ', randCoords)
+          // console.log('same: ', coords === randCoords)
+          if (coords === randCoords) {
+            same = true
           }
         }
+        console.log(!same)
+        if (!same) {
+          newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
+        } else {
+          randRow = 'row' + randomSpace()
+          randCol = 'col' + randomSpace()
+          randCoords = randRow + randCol
+        }
+        same = false
         tiles = $('.tile')
       }
     }
@@ -268,12 +284,6 @@ Game.prototype.moveTile = function (direction) {
       });
     }
   }
-
-  // spawn a new tile after each move
-  thisGame.newTile()
-  // console.log('new: ', thisGame.newTile())
-    // call gameOver() before every move
-    // call addScore() for every combination
 }
 
 $(document).ready(function () {
@@ -292,8 +302,11 @@ $(document).ready(function () {
       if (arrows.indexOf(event.which) > -1) {
         game.moveTile(event.which)
         updateScore()
+        // spawn a new tile after each move
+        thisGame.newTile()
       }
     }
+
   })
 
   $('#newgame').click(function() {

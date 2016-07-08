@@ -23,7 +23,6 @@ html {
 .tile {
   position: absolute;
   top: 0; left: 0;
-  /*transition:  0.2s ease-in-out;*/
   transition: all 0.2s ease-in-out;
 
   color: #f9f6f2;
