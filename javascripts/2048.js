@@ -220,6 +220,7 @@ function checkLose(game) {
 
   //If it never returned false, then you lost the game: return true
   console.log("You cannot collide any more tiles...")
+  showLose(game)
   return true
 }
 
@@ -236,6 +237,10 @@ function checkWin(game) {
 function updateScore(game, pointsToAdd) {
   game.score = game.score + pointsToAdd
   showScore(game)
+}
+
+function showLose(game) {
+  document.getElementById("youlose").innerHTML = "YOU LOSE!!!";
 }
 
 function showWin(game) {
