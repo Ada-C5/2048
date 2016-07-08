@@ -1,5 +1,5 @@
 var Game = function() {
-
+  this.score = 0;
   this.lost = function() {
     if (axis_loss("col") === false || axis_loss("row") === false) {
       return false;
@@ -42,7 +42,7 @@ Game.prototype.moveTile = function(tile, direction) {
       array = $(".tile[data-col=c" + n + "]");
       sort_things(array, "data-row", "up");
       for (let i = 0; i < 4; i++) {
-        if (slide_tile(array, axis_index, i, axis)) {
+        if (slide_tile(array, axis_index, i, axis, this)) {
           moved = true;
         }
         axis_index++;
@@ -72,7 +72,7 @@ Game.prototype.moveTile = function(tile, direction) {
       array = $(".tile[data-col=c" + n + "]");
       sort_things(array, "data-row", "down");
       for (let i = 0; i < 4; i++) {
-        if (slide_tile(array, axis_index, i, axis)) {
+        if (slide_tile(array, axis_index, i, axis, this)) {
           moved = true;
         }
         axis_index--;
@@ -102,7 +102,7 @@ Game.prototype.moveTile = function(tile, direction) {
       array = $(".tile[data-row=r" + n + "]");
       sort_things(array, "data-col", "left");
       for (let i = 0; i < array.length; i++) {
-        if (slide_tile(array, axis_index, i, axis)) {
+        if (slide_tile(array, axis_index, i, axis, this)) {
           moved = true;
         }
         axis_index++
@@ -131,7 +131,7 @@ Game.prototype.moveTile = function(tile, direction) {
       array = $(".tile[data-row=r" + n + "]");
       sort_things(array, "data-col", "right");
       for (let i = 0; i < array.length; i++) {
-        if (slide_tile(array, axis_index, i, axis)) {
+        if (slide_tile(array, axis_index, i, axis, this)) {
           moved = true;
         }
         axis_index--;
@@ -175,7 +175,7 @@ function sort_things(tile_array, sort_by, direction) {
   });
 }
 
-function slide_tile(array, axis_index, i, axis) {
+function slide_tile(array, axis_index, i, axis, game) {
   let altered = false;
   if (axis === "col") {
     if (array[i] && $(array[i]).attr("data-col") !== "c" + axis_index) {
@@ -206,6 +206,8 @@ function slide_tile(array, axis_index, i, axis) {
       let tile = curr.attr({"data-val": $(array)[i].dataset.val * 2});
       // check for win
       let val = tile[0].dataset.val;
+      game.score += Number(val);
+      console.log(game.score);
       if (val === "2048") {
         console.log("YOU WIN");
         $('.outcome').text("YOU WIN!");
