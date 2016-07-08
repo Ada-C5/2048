@@ -1,9 +1,9 @@
 html {
-  font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font: normal normal 30px/1 "Comic Sans MS", cursive, sans-serif;
 }
 
 #gameboard {
-  background: #bbada0;
+  background: purple;
   border-radius: 0.5rem;
   height: 18.5rem;
   margin: 1rem auto;
@@ -20,11 +20,8 @@ html {
   width: 4rem;
 }
 
-#flash-background {
-
-}
-
 .up-background {
+  background-color: deeppink;
   background-image: url('../assets/move-up.svg');
   background-size: 10%;
   background-repeat: repeat;
@@ -32,6 +29,7 @@ html {
 }
 
 .down-background {
+  background-color: green;
   background-image: url('../assets/move-down.svg');
   background-size: 10%;
   background-repeat: repeat;
@@ -39,6 +37,7 @@ html {
 }
 
 .right-background {
+  background-color: cyan;
   background-image: url('../assets/move-right.svg');
   background-size: 10%;
   background-repeat: repeat;
@@ -46,6 +45,7 @@ html {
 }
 
 .left-background {
+  background-color: orange;
   background-image: url('../assets/move-left.svg');
   background-size: 10%;
   background-repeat: repeat;
@@ -57,8 +57,8 @@ html {
   top: 0; left: 0;
   transition: all 0.2s ease-in-out;
 
-  color: #f9f6f2;
-  background: #000;
+  color: #000;
+  background: greenyellow;
 
   border-radius: 0.5rem;
   font-size: 1.5rem;
@@ -91,3 +91,5 @@ html {
 .tile[data-val="512"]  { background: #edc850; }
 .tile[data-val="1024"] { background: #edc53f; }
 .tile[data-val="2048"] { background: #edc22e; }
+
+.full { background-color: greenyellow; }

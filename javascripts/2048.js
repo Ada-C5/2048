@@ -41,10 +41,11 @@ Game.prototype.updateBoard = function() {
       slot = "\"[" + i.toString() + "][" + j.toString() + "]\""
       // console.log(slot)
       if (this._board === null || this._board[i][j] === 0 || isNaN(this._board[i][j]) || typeof this._board[i][j] === 'undefined') {
-        // $('div[id='+ slot + ']').html(null)
         this._board[i][j] = null
+        $('div[id='+ slot + ']').removeClass('full')
       } else {
       $('div[id='+ slot + ']').html(this._board[i][j])
+      $('div[id='+ slot + ']')
     }}
   }
 
