@@ -111,19 +111,19 @@ Game.prototype.moveTilesLeft = function(tiles) {
 }
 
 Game.prototype.moveTilesRight = function(tiles) {
-  tiles = $('.tile')
+  // tiles = $('.tile')
   g = this
-  tiles.each(function(){
-    for (var i = 0; i < 3; i++) {
+  // tiles.each(function(){
+
       var tile = $(this)[0]
       var row = tile.dataset['row']
       var col = tile.dataset['col']
       var val = tile.dataset['val']
       g.moveSingleTileRight(tile, row, col, val)
-      console.log(col)
-      g.display()
-    }
-  })
+
+      // console.log(col)
+  // })
+  g.display()
 }
 
 Game.prototype.moveSingleTileUp = function(tile, row, col, val) {
@@ -371,13 +371,18 @@ Game.prototype.moveTile = function(tiles, direction) {
     case 39: //right
       console.log('right');
     this.moveTilesRight(tiles)
+    this.moveTilesRight(tiles)
+    this.moveTilesRight(tiles)
     this.collideAllRight(tiles)
+    this.moveTilesRight(tiles)
+    this.moveTilesRight(tiles)
     this.moveTilesRight(tiles)
       break;
   }
 };
 
 Game.prototype.newTile = function() {
+  console.log('i made a new tile')
 
   if (this.unoccupied().length === 0) {
     console.log('game over')
