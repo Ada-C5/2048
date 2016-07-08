@@ -27,17 +27,11 @@ var Game = function () {
         return this.dataset.row + this.dataset.col
       }))
       while (newTile === null) {
-        console.log(tileCoords)
-        // debugger
         for (let coords of tileCoords) {
-          console.log('1: ', coords)
-          console.log('2: ', randCoords)
-          // console.log('same: ', coords === randCoords)
           if (coords === randCoords) {
             same = true
           }
         }
-        console.log(!same)
         if (!same) {
           newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
         } else {
@@ -81,14 +75,45 @@ var Game = function () {
   this.hasLost = function () {
     // checks if the board is full
     // needs to check if there are no more valid moves
-    if ($('.tiles').length >= 16 && thisGame.validCollision == false) {
-      console.log("lost");
-      $('#endgame').addClass('layer')
-      $('.win-text').text("LOOOSER!")
-      thisGame.gameOver = true
+    if ($('.tiles').length >= 16) {
+
+      if (!checkNeighbors()) {
+        console.log("lost");
+        $('#endgame').addClass('layer')
+        $('.win-text').text("LOOOSER!")
+        thisGame.gameOver = true
+      }
+
     }
-    // return false
   }
+}
+
+function checkNeighbors() {
+  let tiles = $('.tiles')
+  $.each(tiles, function( index, value ) {
+    let val = value.dataset.val
+    var colNum = value.dataset["col"][3] ///0,1,2,3
+    var rowNum = value.dataset["row"][3]
+
+    var nextRow = parseInt(value.dataset["row"][3]) + 1
+    var previousRow = parseInt(value.dataset["row"][3]) - 1
+    var nextCol = parseInt(value.dataset["col"][3]) + 1
+    var previousCol = parseInt(value.dataset["col"][3]) - 1
+
+    var left = $('.tile[data-row=row' + rowNum + '][data-col=col' + previousCol.toString() + ']')
+    var right = $('.tile[data-row=row' + rowNum +'][data-col=col' + nextCol.toString() + ']')
+    var above = $('.tile[data-col=col' +colNum + '][data-row=row' + previousRow.toString() + ']')
+    var below = $('.tile[data-col=col' +colNum + '][data-row=row' + nextRow.toString() + ']')
+
+    let array = [left, right, above, below ]
+
+    for (let tile of array){
+      if (tile.dataset.val === val){
+        return true
+      }
+    }
+  })
+  return false
 }
 
 function upSort(arr) {
@@ -200,6 +225,7 @@ Game.prototype.moveTile = function (direction) {
     moveAllTheWay(sortArrays(type, operand), type, operand)
     collideIfSameValue(sortArrays(type, operand),type, operand)
     moveAllTheWay(sortArrays(type, operand), type, operand)
+
   }
 
   function moveAllTheWay(arrayQuerys, type, operand) {
@@ -269,12 +295,12 @@ Game.prototype.moveTile = function (direction) {
 
         if (nextColEle.length > 0) {
           if (value.dataset.val === nextColEle[0].dataset.val) {
-            thisGame.validCollision = true
             value.dataset[type] = type + nextString
             let newVal = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
             value.dataset.val = newVal
             thisGame.addScore(newVal)
             thisGame.hasWon(newVal)
+            thisGame.hasLost()
             setTimeout(function(){
               $(value).text(value.dataset.val)
               $(value).attr('id', 'combineTile')
