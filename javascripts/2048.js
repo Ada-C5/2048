@@ -152,7 +152,7 @@ $(document).ready(function() {
 
 
   $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40, 86];
+    var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which, game.addTile());
