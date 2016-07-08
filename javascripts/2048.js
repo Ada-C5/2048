@@ -277,8 +277,9 @@ Game.prototype.moveTile = function (direction) {
             thisGame.hasWon(newVal)
             setTimeout(function(){
               $(value).text(value.dataset.val)
-            }, 240);
-            nextColEle[0].remove()
+              $(value).attr('id', 'combineTile')
+              nextColEle[0].remove()
+            }, 120);
           }
         }
       });
