@@ -130,7 +130,6 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
 }
 
 Game.prototype.scoring = function(value){
-  console.log("in it")
   this.score += value
   $("p").text('Your Score is:'+this.score)
 }
