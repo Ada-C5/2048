@@ -1,9 +1,7 @@
 var Game = function () {
-  // Game logic and initialization here
   thisGame = this
   this.gameOver = false
   this.score = 0
-  this.validCollision = null
 
   this.newGame = function () {
     // spawn 2 tiles in random spaces
@@ -66,7 +64,6 @@ var Game = function () {
 
   this.hasWon = function (tile) {
     if (tile === 2048) {
-      console.log('won!')
       $('#endgame').toggleClass('layer')
       $('.win-text').text("You Won!")
       thisGame.gameOver = true
@@ -74,17 +71,14 @@ var Game = function () {
   }
 
   this.hasLost = function () {
-    // checks if the board is full
-    // needs to check if there are no more valid moves
+    // check if the board is full
     if ($('.tile').length >= 16) {
-
+      // check if there are no more valid moves
       if (!checkNeighbors()) {
-        console.log("lost");
         $('#endgame').addClass('layer')
         $('.win-text').text("LOOOSER!")
         thisGame.gameOver = true
       }
-
     }
   }
 }
@@ -104,14 +98,14 @@ function checkNeighbors() {
 
     var left = $('.tile[data-row=row' + rowNum + '][data-col=col' + previousCol.toString() + ']')
     var right = $('.tile[data-row=row' + rowNum +'][data-col=col' + nextCol.toString() + ']')
-    var above = $('.tile[data-col=col' +colNum + '][data-row=row' + previousRow.toString() + ']')
-    var below = $('.tile[data-col=col' +colNum + '][data-row=row' + nextRow.toString() + ']')
+    var above = $('.tile[data-col=col' + colNum + '][data-row=row' + previousRow.toString() + ']')
+    var below = $('.tile[data-col=col' + colNum + '][data-row=row' + nextRow.toString() + ']')
 
-    var array = [left[0], right[0], above[0], below[0] ]
+    var array = [left[0], right[0], above[0], below[0]]
 
-    for (let tile of array){
+    for (let tile of array) {
       if (tile !== undefined) {
-        if (tile.dataset.val === val){
+        if (tile.dataset.val === val) {
           x += 1
         }
       }
@@ -122,7 +116,6 @@ function checkNeighbors() {
   } else {
     return false
   }
-  console.log("no true at all");
 }
 
 function upSort(arr) {
@@ -170,11 +163,7 @@ function rightSort(arr) {
 }
 
 Game.prototype.moveTile = function (direction) {
-  // Game method here
   if (!thisGame.gameOver) {
-    console.log($(".tile").length);
-    // console.log(thisGame.validCollision);
-
     switch(direction) {
       case 38: //up
         seperateMovementFunction('row', '-')
@@ -234,15 +223,15 @@ Game.prototype.moveTile = function (direction) {
     moveAllTheWay(sortArrays(type, operand), type, operand)
     collideIfSameValue(sortArrays(type, operand),type, operand)
     moveAllTheWay(sortArrays(type, operand), type, operand)
-
   }
 
   function moveAllTheWay(arrayQuerys, type, operand) {
-    for( line of arrayQuerys) {
+    for (let line of arrayQuerys) {
       if (line.length > 0) {
         $.each(line, function( index, value ) {
           // remove the 'newTile' id that was used to animate popping in
           $(value).removeAttr('id')
+
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
             var nextEle = num + 1
@@ -286,7 +275,7 @@ Game.prototype.moveTile = function (direction) {
   }
 
   function collideIfSameValue(arrayQuerys,type, operand) {
-    for( line of arrayQuerys) {
+    for (let line of arrayQuerys) {
     $.each(line, function( index, value ) {
       var num = parseInt(value.dataset[type][3])
       //defines the next colunm
@@ -323,8 +312,6 @@ Game.prototype.moveTile = function (direction) {
 }
 
 $(document).ready(function () {
-  console.log("ready to go!")
-  // Any interactive jQuery functionality
   startGame()
 
   function startGame() {
@@ -340,16 +327,16 @@ $(document).ready(function () {
         updateScore()
         // spawn a new tile after each move
         thisGame.newTile()
-        thisGame.hasLost()
+        // check if game lost
+        game.hasLost()
       }
     }
-
   })
 
   $('#newgame').click(function() {
-    // remove all tiles
     $('#endgame').removeClass('layer')
     $('.win-text').text('')
+    // remove all tiles
     $('.tile').each(function () {
       this.remove()
     })
