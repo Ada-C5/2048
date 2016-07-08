@@ -11,17 +11,13 @@ var Game = function () {
     this.newTile()
   }
 
-  this.newTile = function (numberOfTiles) {
+  this.newTile = function () {
     let tiles = $('.tile')
     let randRow = 'row' + randomSpace()
     let randCol = 'col' + randomSpace()
     let randVal = randomVal({4:0.3, 2:0.7})
     var newTile = null
 
-    console.log('row: ', randRow)
-    console.log('col: ', randCol)
-
-    console.log('first: ', tiles[0])
     if (tiles[0] === undefined) {
       newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
     } else {
@@ -35,8 +31,6 @@ var Game = function () {
           }
         }
         tiles = $('.tile')
-        console.log('i2: ', tiles.length)
-        console.log('i3 :', $('.tile'))
       }
     }
     $(".cells").after(newTile)
