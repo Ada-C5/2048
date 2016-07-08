@@ -2,6 +2,7 @@ var Game = function() {
   // Game logic and initialization here
 this.score = 0
 
+
 };
 
 
@@ -9,6 +10,14 @@ Game.prototype.won = function(tilesArray){
   if(tilesArray === 2048){
 
     $('p.won').text("You Won")
+  }
+}
+
+Game.prototype.lost = function(){
+  if (this.newTile() === false){
+
+        $('p.lost').text("You Lost")
+
   }
 }
 
@@ -50,9 +59,17 @@ for(var index = coordinates.length -1; index >= 0; index --){
 
 
 
+
+
   }
+  if(coordinates.length > 0){
+
   var tileLocation = coordinates[Math.floor(Math.random()*coordinates.length)]
   $('#gameboard').append("<div class='tile' data-row='r" + tileLocation[0] + "' data-col='c" +  tileLocation[1] + "' data-val='2'>2</div>")
+
+
+}
+
 
 }
 
@@ -72,6 +89,7 @@ Game.prototype.sortUpMoveTiles = function(tilesArray){
     if($(tilesArray[i]).attr('data-val') === $(tilesArray[i + 1]).attr('data-val')){
       console.log('trying to remove', $(tilesArray[i + 1]))
         $(tilesArray[i + 1]).remove()
+        //coordinates.push(  [Number$(tilesArray[i + 1]).attr('data-row'), $(tilesArray[i + 1]).attr('data-col')])
         tilesArray.splice(i + 1, 1)
         $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
         $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
@@ -233,11 +251,7 @@ $(document).ready(function() {
       setTimeout(function(){
         game.newTile()
 
-      }, 1000)
+      }, 100)
     }
   });
-    // $('body').keyup(function(event){
-    //   game.newTile()
-    // })
-
 });
