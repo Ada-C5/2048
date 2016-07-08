@@ -180,6 +180,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
       // this.addTile()
 
   }
+  this.addTile()
 }
 
 $(document).ready(function() {
