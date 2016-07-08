@@ -4,9 +4,15 @@
     <title>2048</title>
     <link rel="stylesheet" media="all" href="stylesheets/2048.css"/>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
+    <h1>2048</h1>
+    <div id="scoreboard">
+      <h2>Score:</h2>
+      <div class="score"></div>
+    </div>
     <div id="gameboard">
       <div class="cells">
         <div class="cell"></div>
@@ -26,7 +32,11 @@
         <div class="cell"></div>
         <div class="cell"></div>
       </div>
-      <div class="tile" data-row="r1", data-col="c1" data-val="2">2</div>
+
+    <div class="tile_box">
+      <div class="tile" data-row="r1" data-col="c2" data-val="1024">1024</div>
+      <div class="tile" data-row="r2" data-col="c2" data-val="1024">1024</div>
+    </div>
     </div>
   </body>
 </html>
