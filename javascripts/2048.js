@@ -86,7 +86,15 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
     }
   } else if (direction === "right") {
     for (var row = 0; row < 4; row++) {
-      var current = $("div[data-row=r" + row + "]")
+      var current = $("div[data-row=r" + row + "]").get().sort(function (div1, div2) {
+        if ($(div1).attr("data-col") < $(div2).attr("data-col")) {
+          return -1
+        } else if ($(div1).attr("data-col") === $(div2).attr("data-col")) {
+          return 0
+        } else {
+          return 1
+        }
+      })
       var length = current.length - 1
       for (var i = length; i >= 0; i--) {
         if (current[i - 1]) {
@@ -116,7 +124,15 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
     }
   } else if (direction === "up") {
     for (var col = 0; col < 4; col++) {
-      var current = $("div[data-col=c" + col + "]")
+      var current = $("div[data-col=c" + col + "]").get().sort(function (div1, div2) {
+        if ($(div1).attr("data-row") < $(div2).attr("data-row")) {
+          return -1
+        } else if ($(div1).attr("data-row") === $(div2).attr("data-row")) {
+          return 0
+        } else {
+          return 1
+        }
+      })
       var length = current.length - 1
       for (var i = 0; i < length; i++) {
       // current.each(function (i, val) {
@@ -145,7 +161,15 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
     }
   } else if (direction === "down") {
     for (var col = 0; col < 4; col++) {
-      var current = $("div[data-col=c" + col + "]")
+      var current = $("div[data-col=c" + col + "]").get().sort(function (div1, div2) {
+        if ($(div1).attr("data-row") < $(div2).attr("data-row")) {
+          return -1
+        } else if ($(div1).attr("data-row") === $(div2).attr("data-row")) {
+          return 0
+        } else {
+          return 1
+        }
+      })
       var length = current.length - 1
       for (var i = length; i >= 0; i--) {
         if (current[i - 1]) {
