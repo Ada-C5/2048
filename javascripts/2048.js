@@ -8,12 +8,12 @@ Game.prototype.moveTile = function(tiles, direction) {
     case 38: //up
       console.log('up');
       this.legit("up")
-      this.addTile()
+      // this.addTile()
       break;
     case 40: //down
       console.log('down');
       this.legit("down")
-      this.addTile()
+      // this.addTile()
       break;
     case 37: //left
       console.log('left');
@@ -66,10 +66,10 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             next.attr("data-col", curr.attr("data-col"))
-            setTimeout(function () {
+            // setTimeout(function () {
               curr.attr("data-val", total).html(total)
               next.remove()
-            }, 925)
+            // }, 925)
             current.splice([i + 1], 1)
           }
         }
@@ -81,7 +81,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
         }
       }
     }
-    this.addTile()
+    // this.addTile()
 
   } else if (direction === "right") {
     for (var row = 0; row < 4; row++) {
@@ -112,15 +112,66 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
         }
       }
     }
-    // setTimeout(function () {
-      this.addTile()
-    // }, 925)
+      // this.addTile()
 
   } else if (direction === "up") {
-    $(".tile").attr("data-row", "r0")
+    for (var col = 0; col < 4; col++) {
+      var current = $("div[data-col=c" + col + "]")
+      current.each(function (i, val) {
+        if (current[i + 1]) { // edge case, if next thing is not null, go on
+          var curr = $(val)
+          var next = $(current[i + 1])
+          console.log(current);
+          if (curr.attr("data-val") === next.attr("data-val")) {
+            var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
+            next.attr("data-row", curr.attr("data-row"))
+            // setTimeout(function () {
+              curr.attr("data-val", total).html(total)
+              next.remove()
+            // }, 925)
+            current.splice([i + 1], 1)
+          }
+        }
+      })
+      if (current.length > 0) {
+        for (var j = 0; j < current.length; j++) {
+          var space = $(current[j])
+          space.attr("data-row", "r" + j)
+        }
+      }
+    }
+    // this.addTile()
 
   } else if (direction === "down") {
-    $(".tile").attr("data-row", "r3")
+    for (var col = 0; col < 4; col++) {
+      var current = $("div[data-col=c" + col + "]")
+      var length = current.length - 1
+      for (var i = length; i >= 0; i--) {
+        if (current[i - 1]) {
+          var curr = $(current[i])
+          var next = $(current[i - 1])
+          if (curr.attr("data-val") === next.attr("data-val")) {
+            var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
+            next.attr("data-row", curr.attr("data-row"))
+            // setTimeout(function () {
+              curr.attr("data-val", total).html(total)
+              next.remove()
+            // }, 925)
+            current.splice([i - 1], 1)
+          }
+        }
+      }
+      if (current.length > 0) {
+        var k = 3
+        console.log(current.length);
+        for (var j = current.length - 1; j >= 0; j--) {
+          var space = $(current[j])
+          space.attr("data-row", "r" + k)
+          k--
+        }
+      }
+    }
+      // this.addTile()
 
   }
 }
