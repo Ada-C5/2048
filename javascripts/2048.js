@@ -36,6 +36,8 @@ var Game = function() {
     }
     return occupied
   }
+
+  this.score = 0
 };
 
 Game.prototype.collideAllRight = function(tiles) {
@@ -47,6 +49,7 @@ Game.prototype.collideAllRight = function(tiles) {
     var position = row + col
     var val = this.board[position]
     g.collideRight(row, col, val)
+
   }
 }
 
@@ -85,7 +88,6 @@ Game.prototype.collideAllLeft = function(tiles) {
     g.collideLeft(row, col, val)
   }
 }
-
 
 Game.prototype.moveTilesRight = function(tiles) {
   var sorted_tiles = tiles.sort().reverse()
@@ -166,7 +168,6 @@ Game.prototype.moveSingleTileLeft = function(row, col, val) {
       }
     }
 }
-
 
 Game.prototype.moveSingleTileRight = function(row, col, val) {
   if (col === 'c2') {
@@ -281,20 +282,26 @@ Game.prototype.collideRight = function(row, col, val) {
     if (this.board[row + rightier_col] === this.board[row + col]) {
       this.board[row + rightier_col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   } else if (col === 'c1') {
     var rightier_col = 'c2'
     if (this.board[row + rightier_col] === this.board[row + col]) {
       this.board[row + rightier_col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   }  else if (col === 'c0') {
       var rightier_col = 'c1'
       if (this.board[row + rightier_col] === this.board[row + col]) {
         this.board[row + rightier_col] = String(Number(val) * 2)
         this.board[row + col] = null
+        this.score += Number(val)*2
       }
     }
+
+    $('.score').text(this.score)
+    this.display()
 }
 
 Game.prototype.collideLeft = function(row, col, val) {
@@ -303,20 +310,25 @@ Game.prototype.collideLeft = function(row, col, val) {
     if (this.board[row + leftier_col] === this.board[row + col]) {
       this.board[row + leftier_col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   } else if (col === 'c2') {
     var leftier_col = 'c1'
     if (this.board[row + leftier_col] === this.board[row + col]) {
       this.board[row + leftier_col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   }  else if (col === 'c3') {
       var leftier_col = 'c2'
       if (this.board[row + leftier_col] === this.board[row + col]) {
         this.board[row + leftier_col] = String(Number(val) * 2)
         this.board[row + col] = null
+        this.score += Number(val)*2
       }
     }
+    $('.score').text(this.score)
+    this.display()
 }
 
 Game.prototype.collideDown = function(row, col, val) {
@@ -325,20 +337,25 @@ Game.prototype.collideDown = function(row, col, val) {
     if (this.board[lower_row + col] === this.board[row + col]) {
       this.board[lower_row + col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   } else if (row === 'r1') {
     var lower_row = 'r2'
     if (this.board[lower_row + col] === this.board[row + col]) {
       this.board[lower_row + col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   }  else if (row === 'r0') {
       var lower_row = 'c1'
       if (this.board[lower_row + col] === this.board[row + col]) {
         this.board[lower_row + col] = String(Number(val) * 2)
         this.board[row + col] = null
+        this.score += Number(val)*2
       }
     }
+    $('.score').text(this.score)
+    this.display()
 }
 
 Game.prototype.collideUp = function(row, col, val) {
@@ -347,24 +364,26 @@ Game.prototype.collideUp = function(row, col, val) {
     if (this.board[lower_row + col] === this.board[row + col]) {
       this.board[lower_row + col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   } else if (row === 'r2') {
     var lower_row = 'r1'
     if (this.board[lower_row + col] === this.board[row + col]) {
       this.board[lower_row + col] = String(Number(val) * 2)
       this.board[row + col] = null
+      this.score += Number(val)*2
     }
   }  else if (row === 'r3') {
       var lower_col = 'r2'
       if (this.board[lower_row + col] === this.board[row + col]) {
         this.board[lower_row + col] = String(Number(val) * 2)
         this.board[row + col] = null
+        this.score += Number(val)*2
       }
     }
+    $('.score').text(this.score)
+    this.display()
 }
-
-
-
 
 Game.prototype.display = function() {
   g = this
@@ -414,9 +433,8 @@ Game.prototype.moveTile = function(tiles, direction) {
     this.moveTilesLeft(this.occupied())
     this.collideAllLeft(this.occupied())
     this.moveTilesLeft(this.occupied())
-
-
       break;
+
     case 39: //right
       console.log('right');
     this.moveTilesRight(this.occupied())
@@ -427,7 +445,6 @@ Game.prototype.moveTile = function(tiles, direction) {
 };
 
 Game.prototype.newTile = function() {
-
   if (this.unoccupied().length === 0) {
     console.log('game over')
     //game over
@@ -445,6 +462,12 @@ Game.prototype.newTile = function() {
       var newTile = $("#gameboard").append(newTileDiv);
   }
 }
+
+// Game.prototype.hasWon = function(){
+//   if (this.score == 2048) {
+//
+//   })
+// }
 
 
 $(document).ready(function() {
