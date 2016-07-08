@@ -61,6 +61,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             next.attr("data-col", curr.attr("data-col"))
             self.scoring(total)
+            self.checkWin(total)
             // setTimeout(function () {
               curr.attr("data-val", total).html(total)
               next.remove()
@@ -87,6 +88,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             self.scoring(total)
+            self.checkWin(total)
             next.attr("data-col", curr.attr("data-col"))
             // setTimeout(function () {
               curr.attr("data-val", total).html(total)
@@ -117,6 +119,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             self.scoring(total)
+            self.checkWin(total)
             next.attr("data-row", curr.attr("data-row"))
             // setTimeout(function () {
               curr.attr("data-val", total).html(total)
@@ -144,6 +147,7 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
           if (curr.attr("data-val") === next.attr("data-val")) {
             var total = parseInt(curr.attr("data-val")) + parseInt(next.attr("data-val"))
             self.scoring(total)
+            self.checkWin(total)
             next.attr("data-row", curr.attr("data-row"))
             // setTimeout(function () {
               curr.attr("data-val", total).html(total)
@@ -168,8 +172,21 @@ Game.prototype.legit = function (direction) { // if left or right use rows ||  i
 
 Game.prototype.scoring = function(value){
   this.score += value
-  $("p").text('Your Score is:'+this.score)
+  $("p").text('Your Score is: '+this.score)
 }
+
+Game.prototype.checkWin = function(value){
+  if (value === 2048){
+    $("p").text('YOU WON!!')
+  }
+}
+
+// Game.prototype.checkLose = function(){
+//   var tiles = $(".tile")
+//   if (tiles.length === 16 &&) {
+
+//   }
+// }
 
 $(document).ready(function() {
   console.log("ready to go!");
