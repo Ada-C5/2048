@@ -18,10 +18,52 @@ Game.prototype.restart = function() {
 
 Game.prototype.newTile = function() {
 
-  // var tile_div = "<div class='tile' data-row='r" + (Math.floor(Math.random() * 3) + 0) +  "' data-col='c" + (Math.floor(Math.random() * 3) + 0) + "' data-val='2'>2</div>"
-  //
-  // $('#gameboard').append(tile_div)
+  //generate array of all possible coordinates
+  var possibleCoordinates = [
+    [0, 0], [0, 1], [0, 2], [0, 3],
+    [1, 0], [1, 1], [1, 2], [1, 3],
+    [2, 0], [2, 1], [2, 2], [2, 3],
+    [3, 0], [3, 1], [3, 2], [3, 3]
+  ]
+
+  //check if each coordinate is currently taken. if it is, remove from array.
+  for (var coordinates of possibleCoordinates) {
+    console.log(possibleCoordinates)
+
+    if ($('.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + ']').length > 0) {
+      var index = possibleCoordinates.indexOf(coordinates)
+      possibleCoordinates.splice(index, 1)
+      console.log(possibleCoordinates)
+      //then you can't put a tile there, so
+      //take it out of the array of possible coordinates
+    }
+  }
+
+  // if there is at least one possible coordinate, pick a random one from the array and set that to tileLocation
+  var tileLocation = possibleCoordinates[Math.floor(Math.random()*possibleCoordinates.length)]
+
+  ////
+  var tile_div = "<div class='tile' data-row='r" + tileLocation[0] +  "' data-col='c" + tileLocation[1] + "' data-val='2'>2</div>"
+
+  $('#gameboard').append(tile_div)
 }
+
+// Game.prototype.mergeTiles = function(sourceTile, destinationTile) {
+//   //replace value and text of destinationTile with sum of both tiles
+//   var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
+//   destinationTile.attr('data-val', sumOfValues)
+//   destinationTile.text(sumOfValues)
+//
+//   //delete sourceTile from the array
+//   tiles.splice(i + 1, 1)
+//
+//   //remove it from the DOM using jQuery remove, after the CSS transition is complete
+//   var transitionEvents = "transitionend webkitTransitionEnd oTransitionEnd"
+//   sourceTile.on(transitionEvents, function(e) {
+//     $(this).remove()
+//     $(this).off(e);
+//   });
+// }
 
 Game.prototype.sortAndMoveUp = function(tiles) {
   tiles = tiles.sort(function (a, b) {
@@ -32,19 +74,12 @@ Game.prototype.sortAndMoveUp = function(tiles) {
 
   for (var i = 0; i < tiles.length; i++) {
 
-    // checks only on the first 3 indexes, otherwise we'll run off the end of the array
-    // if ( i < 3 && $(tiles[i]).attr('data-val') === $(tiles[i+1]).attr('data-val')) {
-
-    //jquery has a "remove" function to remove from the dom
-    // you can delete from the array using the splice method
-
-    //the index marks how close you are to the destination.
-    // A lower index is closer to the destination.
-
     var sourceTile = $(tiles[i + 1])
     var destinationTile = $(tiles[i])
 
     if (sourceTile && sourceTile.attr('data-val') === destinationTile.attr('data-val')) {
+
+      // this.mergeTiles(sourceTile, destinationTile)
 
       //replace value and text of destinationTile with sum of both tiles
       var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
@@ -77,7 +112,32 @@ Game.prototype.sortAndMoveDown = function(tiles) {
   })
 
   for (var i = 0; i < tiles.length; i++) {
-    $(tiles[i]).attr('data-row', 'r' + (3 - i))
+
+    var sourceTile = $(tiles[i + 1])
+    var destinationTile = $(tiles[i])
+
+    if (sourceTile && sourceTile.attr('data-val') === destinationTile.attr('data-val')) {
+
+      //replace value and text of destinationTile with sum of both tiles
+      var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
+      destinationTile.attr('data-val', sumOfValues)
+      destinationTile.text(sumOfValues)
+
+      //delete sourceTile from the array
+      tiles.splice(i + 1, 1)
+
+      //remove it from the DOM using jQuery remove, after the CSS transition is complete
+      var transitionEvents = "transitionend webkitTransitionEnd oTransitionEnd"
+      sourceTile.on(transitionEvents, function(e) {
+        $(this).remove()
+        $(this).off(e);
+      });
+
+      sourceTile.attr('data-row', 'r' + (3 - i))
+    }
+
+    destinationTile.attr('data-row', 'r' + (3 - i))
+
   }
 }
 
@@ -89,7 +149,31 @@ Game.prototype.sortAndMoveLeft = function(tiles) {
   })
 
   for (var i = 0; i < tiles.length; i++) {
-    $(tiles[i]).attr('data-col', 'c' + i)
+
+    var sourceTile = $(tiles[i + 1])
+    var destinationTile = $(tiles[i])
+
+    if (sourceTile && sourceTile.attr('data-val') === destinationTile.attr('data-val')) {
+
+      //replace value and text of destinationTile with sum of both tiles
+      var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
+      destinationTile.attr('data-val', sumOfValues)
+      destinationTile.text(sumOfValues)
+
+      //delete sourceTile from the array
+      tiles.splice(i + 1, 1)
+
+      //remove it from the DOM using jQuery remove, after the CSS transition is complete
+      var transitionEvents = "transitionend webkitTransitionEnd oTransitionEnd"
+      sourceTile.on(transitionEvents, function(e) {
+        $(this).remove()
+        $(this).off(e);
+      });
+
+      sourceTile.attr('data-col', 'c' + i)
+    }
+
+    destinationTile.attr('data-col', 'c' + i)
   }
 }
 
@@ -101,7 +185,30 @@ Game.prototype.sortAndMoveRight = function(tiles) {
   })
 
   for (var i = 0; i < tiles.length; i++) {
-    $(tiles[i]).attr('data-col', 'c' + (3 - i))
+    var sourceTile = $(tiles[i + 1])
+    var destinationTile = $(tiles[i])
+
+    if (sourceTile && sourceTile.attr('data-val') === destinationTile.attr('data-val')) {
+
+      //replace value and text of destinationTile with sum of both tiles
+      var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
+      destinationTile.attr('data-val', sumOfValues)
+      destinationTile.text(sumOfValues)
+
+      //delete sourceTile from the array
+      tiles.splice(i + 1, 1)
+
+      //remove it from the DOM using jQuery remove, after the CSS transition is complete
+      var transitionEvents = "transitionend webkitTransitionEnd oTransitionEnd"
+      sourceTile.on(transitionEvents, function(e) {
+        $(this).remove()
+        $(this).off(e);
+      });
+
+      sourceTile.attr('data-col', 'c' + (3 - i))
+    }
+
+    destinationTile.attr('data-col', 'c' + (3 - i))
   }
 }
 
@@ -126,7 +233,6 @@ Game.prototype.moveTile = function(tiles, direction) {
     case 38: //up
       console.log('up');
 
-      // will DRY into separate method like this later...
       this.sortAndMoveUp(tilesc0)
       this.sortAndMoveUp(tilesc1)
       this.sortAndMoveUp(tilesc2)
