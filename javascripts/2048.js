@@ -57,7 +57,10 @@ var Game = function () {
   this.hasWon = function (tile) {
     if (tile === 2048) {
       console.log('won!')
-      $('#endgame').text("You Won!")
+      $('#endgame').toggleClass('layer')
+      // setTimeout(function(){
+        $('.win-text').text("You Won!")
+      // }, 300);
       thisGame.gameOver = true
     }
   }

@@ -109,3 +109,44 @@ h1 {
 p {
   line-height: 20%;
 }
+.layer {
+
+  margin-left: auto;
+  position: absolute;
+  z-index: 2;
+  /*left: 24%;*/
+  width: 18.5rem;
+  height: 18.5rem;
+  background-color: red;
+  opacity: 0.5;
+  filter: Alpha(opacity=50);
+}
+
+.win-text{
+  font-family: 'Bangers', cursive;
+  font-size: 3rem;
+  /*text-align: center;*/
+  color: purple;
+  position: relative;
+  -webkit-animation-name: example; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+  animation: example 2s infinite;
+  animation-delay: 1s;
+}
+
+@-webkit-keyframes example {
+    0%   {color:purple; left:0px; top:0px;}
+    25%  {color:yellow; left:240px; top:0px;}
+    50%  {color:blue; left:240px; top:240px;}
+    75%  {color:green; left:0px; top:240px;}
+    100% {color:purple; left:0px; top:0px;}
+}
+
+/* Standard syntax */
+@keyframes example {
+  0%   {color:purple; left:0px; top:0px;}
+  25%  {color:yellow; left:240px; top:0px;}
+  50%  {color:blue; left:240px; top:440px;}
+  75%  {color:green; left:0px; top:440px;}
+  100% {color:purple; left:0px; top:0px;}
+}
