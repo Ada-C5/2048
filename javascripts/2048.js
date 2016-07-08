@@ -19,7 +19,11 @@ Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
   // let self = this
 
   {setTimeout(() => this.createTile(), 0.25*1000)}
+
   if (this.win) {
+    $('#win').text('YOU')
+    $('#wins').text('WON!')
+
     console.log("WINNER")
   }
   // console.log("MATRIX AFTER: ", matrix)

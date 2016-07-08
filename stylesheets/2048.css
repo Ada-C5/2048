@@ -14,7 +14,7 @@ html {
 #score {
   position: absolute;
   margin-top: 590px;
-  margin-left: 35%;
+  margin-left: 33.5%;
   display: block;
   top: 10;
   background: #362d2d;
@@ -48,6 +48,31 @@ html {
 
 }
 
+#win{
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 4rem;
+  color: #f9f6f2;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  margin-top: 600px;
+  margin-left: 40px;
+
+}
+
+#wins{
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 4rem;
+  color: #f9f6f2;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  margin-top: 600px;
+  margin-left: 400px;
+}
+
 .cell {
   background: rgba(238, 228, 218, 0.35);
   border-radius: 0.5rem;
@@ -64,10 +89,8 @@ html {
   position: absolute;
   top: 0; left: 0;
   transition: all 0.1s ease-in-out;
-
   color: #f9f6f2;
   background: #000;
-
   border-radius: 0.5rem;
   font-size: 1.5rem;
   font-weight: bold;
