@@ -27,13 +27,12 @@ Game.prototype.newTile = function() {
   ]
 
   //check if each coordinate is currently taken. if it is, remove from array.
-  for (var coordinates of possibleCoordinates) {
-    console.log(possibleCoordinates)
+  //iterating through an array backwards is good for when you're deleting elements from the array as you go
+  for (var index = possibleCoordinates.length - 1; index >= 0; index--) {
+    var coordinates = possibleCoordinates[index]
 
-    if ($('.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + ']').length > 0) {
-      var index = possibleCoordinates.indexOf(coordinates)
+    if ($('.tile[data-row=r' + coordinates[0] + '][data-col=c' + coordinates[1] + ']').length > 0) {
       possibleCoordinates.splice(index, 1)
-      console.log(possibleCoordinates)
       //then you can't put a tile there, so
       //take it out of the array of possible coordinates
     }
@@ -47,23 +46,6 @@ Game.prototype.newTile = function() {
 
   $('#gameboard').append(tile_div)
 }
-
-// Game.prototype.mergeTiles = function(sourceTile, destinationTile) {
-//   //replace value and text of destinationTile with sum of both tiles
-//   var sumOfValues = Number(sourceTile.attr('data-val')) + Number(destinationTile.attr('data-val'))
-//   destinationTile.attr('data-val', sumOfValues)
-//   destinationTile.text(sumOfValues)
-//
-//   //delete sourceTile from the array
-//   tiles.splice(i + 1, 1)
-//
-//   //remove it from the DOM using jQuery remove, after the CSS transition is complete
-//   var transitionEvents = "transitionend webkitTransitionEnd oTransitionEnd"
-//   sourceTile.on(transitionEvents, function(e) {
-//     $(this).remove()
-//     $(this).off(e);
-//   });
-// }
 
 Game.prototype.sortAndMoveUp = function(tiles) {
   tiles = tiles.sort(function (a, b) {
@@ -289,9 +271,9 @@ $(document).ready(function() {
   });
 
   $('body').keyup(function(event) {
-
+  //
     game.newTile()
-
+  //
   });
 
 });
