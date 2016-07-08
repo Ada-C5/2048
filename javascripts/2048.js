@@ -26,18 +26,13 @@ var Game = function () {
       let tileCoords = Array.from(tiles.map(function() {
         return this.dataset.row + this.dataset.col
       }))
-      while (newTile === null) {
-        console.log(tileCoords)
-        // debugger
+      console.log("dd: ", $('.tile').length)
+      while (newTile === null && $('.tile').length < 16) {
         for (let coords of tileCoords) {
-          console.log('1: ', coords)
-          console.log('2: ', randCoords)
-          // console.log('same: ', coords === randCoords)
           if (coords === randCoords) {
             same = true
           }
         }
-        console.log(!same)
         if (!same) {
           newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
         } else {
