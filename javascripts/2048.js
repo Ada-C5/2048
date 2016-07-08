@@ -102,25 +102,21 @@ function checkNeighbors() {
     var nextCol = parseInt(value.dataset["col"][3]) + 1
     var previousCol = parseInt(value.dataset["col"][3]) - 1
 
-
     var left = $('.tile[data-row=row' + rowNum + '][data-col=col' + previousCol.toString() + ']')
     var right = $('.tile[data-row=row' + rowNum +'][data-col=col' + nextCol.toString() + ']')
     var above = $('.tile[data-col=col' +colNum + '][data-row=row' + previousRow.toString() + ']')
     var below = $('.tile[data-col=col' +colNum + '][data-row=row' + nextRow.toString() + ']')
 
     var array = [left[0], right[0], above[0], below[0] ]
-    console.log("array", left);
 
     for (let tile of array){
       if (tile !== undefined) {
         if (tile.dataset.val === val){
           x += 1
-          console.log("true for eqaul value neigh");
         }
       }
     }
   })
-  console.log("x", x);
   if (x > 0) {
     return true
   } else {
@@ -175,7 +171,6 @@ function rightSort(arr) {
 
 Game.prototype.moveTile = function (direction) {
   // Game method here
-  thisGame.hasLost()
   if (!thisGame.gameOver) {
     console.log($(".tile").length);
     // console.log(thisGame.validCollision);
@@ -345,6 +340,7 @@ $(document).ready(function () {
         updateScore()
         // spawn a new tile after each move
         thisGame.newTile()
+        thisGame.hasLost()
       }
     }
 
@@ -352,6 +348,8 @@ $(document).ready(function () {
 
   $('#newgame').click(function() {
     // remove all tiles
+    $('#endgame').removeClass('layer')
+    $('.win-text').text('')
     $('.tile').each(function () {
       this.remove()
     })
