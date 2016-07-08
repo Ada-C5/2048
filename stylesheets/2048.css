@@ -63,9 +63,22 @@ html {
   color: #f9f6f2;
   margin: 0;
   padding: 0;
-   margin-top: 20px;
-
+  margin-top: 20px;
 }
+
+#lose{
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: black;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.lost{
+  opacity: 0.6;
+}
+
 .reset{
   height: 4rem;
   display: inline-block;
@@ -108,6 +121,7 @@ html {
   text-align: center;
   width: 4rem;
 }
+
 
 .tile[data-row='0'] { top: 0; }
 .tile[data-row='1'] { top: 4.5rem; }

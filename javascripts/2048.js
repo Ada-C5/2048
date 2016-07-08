@@ -52,19 +52,32 @@ Game.prototype.availableMoves = function() {
   this.createMatrix(tile, 'data-col', 'data-row', matrixUp, "false")
   this.createMatrix(tile, 'data-row', 'data-col', matrixLeft, "false")
 
-  matrixUp = matrixUp.map(function() { return $(this).data('value')})
-  matrixLeft = matrixLeft.map(function() { return $(this).data('value')})
+  console.log("matrixUp: ", matrixUp)
+  console.log("matrixLeft: ", matrixLeft)
+
+  // matrixUp = matrixUp.map(function() { return $(this).data('value')})
+  // matrixLeft = matrixLeft.map(function() { return $(this).data('value')})
+  // console.log("matrixUp: ", matrixUp)
+  // console.log("matrixLeft: ", matrixLeft)
 
   return (this.checkMatrix(matrixUp) && this.checkMatrix(matrixLeft))
 }
 
 Game.prototype.checkMatrix = function(matrix) {
+
+  matrix = matrix.map(function(row) {console.log("row to start: ", row); return row.map(function(i) {console.log("x again: ", $(row[i]).text()); return $(row[i]).text()})});
+  console.log("matrix at CheckMatrix ", matrix)
+
   var result = true
   // available spaces
   if (matrix.length < 4){result = false}
 
   // else check mataches
   for (var row=0; row<matrix.length; row++) {
+    console.log("--------68---------")
+    console.log("matrix: ", matrix )
+    console.log("matrix.length: ", matrix.length )
+
     if(matrix[row].length < 4) {result = false}
     for (var col=0; col<matrix[row].length; col++) {
       if (matrix[row][col] == matrix[row][col+1]) {
@@ -214,7 +227,9 @@ $(document).ready(function() {
         }
       }else {
         console.log("YOU LOST")
-        $('.win').text("GAME OVER");
+        $('#win').text("");
+        $('#lose').text("GAME OVER");
+        $('#gameboard').addClass("lost")
         if(game.bestScore < game.score){
           game.bestScore = game.score
           $('.best').text(game.bestScore);
@@ -222,6 +237,8 @@ $(document).ready(function() {
       }
     });
   reset.on('click',function(event){
+    $('#gameboard').removeClass("lost")
+
     if(game.bestScore < game.score){
       game.bestScore = game.score
       $('.best').text(game.bestScore);
