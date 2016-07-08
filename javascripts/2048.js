@@ -133,7 +133,7 @@ Game.prototype.moveUp = function () {
   }
 }
 
-Game.prototype.addTile = function (callback) {
+Game.prototype.addTile = function () {
   console.log(this._availableSpaces)
   console.log(Math.floor(Math.random() * this._availableSpaces.length))
   let random = this._availableSpaces[Math.floor(Math.random() * this._availableSpaces.length)]
@@ -142,7 +142,7 @@ Game.prototype.addTile = function (callback) {
   let firstIndex = random.toString()[0]
   let secondIndex = random.toString()[2]
   this._board[Number(firstIndex)][Number(secondIndex)] = Number(2)
-  callback
+  this.boardCleaner()
 }
 
 $(document).ready(function() {
@@ -162,8 +162,8 @@ $(document).ready(function() {
       game.moveTile(tile, event.which, game.addTile())
       $('#flash-background').removeClass('up-background right-background left-background down-background').addClass(directions[direction] + '-background')
       console.log(game._board)
-      game.boardCleaner()
       game.updateBoard()
+      game.boardCleaner()
     }
   });
 });
