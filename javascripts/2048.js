@@ -4,8 +4,16 @@ var Game = function() {
   // Game logic and initialization here
 
   // an object with cell data
-
+  this.score = 0
 };
+
+Game.prototype.checkWin = function (tileValue) {
+  // if there are any tiles with the value 2048, you win
+  if ($('.tile[data-val=2048]').length > 0) {
+    console.log("YOU WIN!!")
+  }
+}
+
 
 Game.prototype.restart = function() {
 
@@ -26,7 +34,7 @@ Game.prototype.newTile = function() {
     [3, 0], [3, 1], [3, 2], [3, 3]
   ]
 
-  //check if each coordinate is currently taken. if it is, remove from array.
+  //check if each coordinate is currently taken. if it is, remove from array of possibilities.
   //iterating through an array backwards is good for when you're deleting elements from the array as you go
   for (var index = possibleCoordinates.length - 1; index >= 0; index--) {
     var coordinates = possibleCoordinates[index]
@@ -36,6 +44,11 @@ Game.prototype.newTile = function() {
       //then you can't put a tile there, so
       //take it out of the array of possible coordinates
     }
+  }
+
+  // no possibilities left
+  if (possibleCoordinates.length < 1) {
+    console.log("YOU LOSE")
   }
 
   // if there is at least one possible coordinate, pick a random one from the array and set that to tileLocation
@@ -267,13 +280,22 @@ $(document).ready(function() {
     if (arrows.indexOf(event.which) > -1) {
       var tiles = $('.tile')
       game.moveTile(tiles, event.which);
+
+      game.checkWin()
+
+      //stolen from charles but I had a similar idea... just more... magic number-y
+      var delay = Number.parseFloat($(".tile").css("transition-duration")) * 1000
+      // makes sure that the new tile won't appear until after the transition completes. tried promise() and other stuff but this was the only way we could get working.
+      setTimeout(function() {
+          game.newTile()
+      }, delay)
     }
   });
 
-  $('body').keyup(function(event) {
+  // $('body').keyup(function(event) {
   //
-    game.newTile()
+    // game.newTile()
   //
-  });
+  // });
 
 });
