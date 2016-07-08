@@ -48,11 +48,11 @@ html {
 .tile[data-col=c2] { left: 9rem; }
 .tile[data-col=c3] { left: 13.5rem; }
 
-.tile[data-val="2"]    { color: rgb(163, 149, 196); background-color: rgb(55, 90, 159); }
-.tile[data-val="4"]    { color: #776e65; background-color: rgb(213, 66, 152); }
-.tile[data-val="8"]    { background-color: #f2b179; }
-.tile[data-val="16"]   { background-color: #f59563; }
-.tile[data-val="32"]   { background: #f67c5f; }
+.tile[data-val="2"]    { color: rgb(163, 149, 196); background-color: rgb(106, 93, 148); }
+.tile[data-val="4"]    { color: #776e65; background-color: rgb(48, 193, 238); }
+.tile[data-val="8"]    { background-color: rgb(101, 111, 246); }
+.tile[data-val="16"]   { background-color: rgb(156, 28, 235); }
+.tile[data-val="32"]   { background: rgb(217, 79, 240); }
 .tile[data-val="64"]   { background: #f65e3b; }
 .tile[data-val="128"]  { background: #edcf72; }
 .tile[data-val="256"]  { background: #edcc61; }

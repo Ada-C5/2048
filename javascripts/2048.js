@@ -333,7 +333,7 @@ Game.prototype.collideDown = function(row, col, val) {
       this.board[row + col] = null
     }
   }  else if (row === 'r0') {
-      var lower_col = 'c1'
+      var lower_row = 'c1'
       if (this.board[lower_row + col] === this.board[row + col]) {
         this.board[lower_row + col] = String(Number(val) * 2)
         this.board[row + col] = null
