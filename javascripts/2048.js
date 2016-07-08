@@ -1,15 +1,22 @@
 var Game = function() {
   // Game logic and initialization here
+this.score = 0
 
 };
 
 
+Game.prototype.won = function(tilesArray){
+  if(tilesArray === 2048){
+
+    $('p.won').text("You Won")
+  }
+}
 
 
 
-var board = {
-
-
+Game.prototype.addScore = function(sumScore){
+   this.score += sumScore
+  $('p.score').text('Your Score is:' + this.score)
 }
 
 
@@ -28,6 +35,15 @@ Game.prototype.sortUpMoveTiles = function(tilesArray){
 
 
   for (var i = 0; i < tilesArray.length; i++) {
+    if($(tilesArray[i]).attr('data-val') === $(tilesArray[i + 1]).attr('data-val')){
+      console.log('trying to remove', $(tilesArray[i + 1]))
+        $(tilesArray[i + 1]).remove()
+        tilesArray.splice(i + 1, 1)
+        $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
+        $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
+        this.won(Number($(tilesArray[i]).attr('data-val')))
+       this.addScore( Number($(tilesArray[i]).attr('data-val')) )
+      }
 
     $(tilesArray[i]).attr('data-row', 'r' + i)
   }
@@ -43,6 +59,14 @@ Game.prototype.sortDownMoveTiles = function(tilesArray){
   })
 
   for (var i = 0; i < tilesArray.length; i++) {
+    if($(tilesArray[i]).attr('data-val') === $(tilesArray[i + 1]).attr('data-val')){
+      console.log('trying to remove', $(tilesArray[i + 1]))
+        $(tilesArray[i + 1]).remove()
+        tilesArray.splice(i + 1, 1)
+        $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
+        $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
+         this.addScore( Number($(tilesArray[i]).attr('data-val')) )
+      }
 
     $(tilesArray[i]).attr('data-row', 'r' + (3 - i))
   }
@@ -57,16 +81,15 @@ Game.prototype.sortMoveLeftTiles = function(tilesArray){
     var combineTiles = Number((tilesArray[i]).attr('data-val')) * Number((tilesArray[i]).attr('data-val'))
   })
   for (var i = 0; i < tilesArray.length; i++) {
-    console.log(i)
+
 
     if($(tilesArray[i]).attr('data-val') === $(tilesArray[i + 1]).attr('data-val')){
       console.log('trying to remove', $(tilesArray[i + 1]))
         $(tilesArray[i + 1]).remove()
+        tilesArray.splice(i + 1, 1)
         $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
         $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
-
-        //$(selector).attr(attribute,value)
-
+         this.addScore( Number($(tilesArray[i]).attr('data-val')) )
       }
 
     $(tilesArray[i]).attr('data-col', 'c' + i)
@@ -82,9 +105,19 @@ Game.prototype.sortMoveRightTiles = function(tilesArray){
 
   var aColNumber = parseInt($(a).attr('data-col').substring(1))
   var bColNumber = parseInt($(b).attr('data-col').substring(1))
-  return aColNumber - bColNumber
+  return aColNumber + bColNumber
   })
 for (var i = 0; i < tilesArray.length; i++) {
+
+
+      if($(tilesArray[i]).attr('data-val') === $(tilesArray[i + 1]).attr('data-val')){
+        console.log('trying to remove', $(tilesArray[i + 1]))
+          $(tilesArray[i + 1]).remove()
+          tilesArray.splice(i + 1, 1)
+          $(tilesArray[i]).attr('data-val', Number($(tilesArray[i]).attr('data-val')) * 2)
+          $(tilesArray[i]).text( Number($(tilesArray[i]).attr('data-val')))
+           this.addScore( Number($(tilesArray[i]).attr('data-val')) )
+        }
 
   $(tilesArray[i]).attr('data-col', 'c' + (3 - i))
   }
