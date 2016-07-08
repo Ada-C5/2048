@@ -2,6 +2,18 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+#points{
+  top: 0; left: 0;
+  /*transition: all 0.1s ease-in-out;*/
+  color: grey;
+  font-size: 1.1rem;
+  font-weight: bold;
+  width: 85%;
+  display: inline-grid;
+  position: absolute;
+  top: 3.7rem;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.3rem;
@@ -85,6 +97,8 @@ html {
   width: 100%;
   margin-top: 0.5rem;
   text-align: center;
+  font-size: 1rem;
+
 }
 
 #reset{
@@ -93,6 +107,8 @@ html {
   width: 9rem;
   height: 4rem;
   color: #f9f6f2;
+  font-size: 1rem;
+
 }
 
 .cell {

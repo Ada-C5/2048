@@ -52,21 +52,12 @@ Game.prototype.availableMoves = function() {
   this.createMatrix(tile, 'data-col', 'data-row', matrixUp, "false")
   this.createMatrix(tile, 'data-row', 'data-col', matrixLeft, "false")
 
-  console.log("matrixUp: ", matrixUp)
-  console.log("matrixLeft: ", matrixLeft)
-
-  // matrixUp = matrixUp.map(function() { return $(this).data('value')})
-  // matrixLeft = matrixLeft.map(function() { return $(this).data('value')})
-  // console.log("matrixUp: ", matrixUp)
-  // console.log("matrixLeft: ", matrixLeft)
-
   return (this.checkMatrix(matrixUp) && this.checkMatrix(matrixLeft))
 }
 
 Game.prototype.checkMatrix = function(matrix) {
 
   matrix = matrix.map(function(row) {console.log("row to start: ", row); return row.map(function(i) {console.log("x again: ", $(row[i]).text()); return $(row[i]).text()})});
-  console.log("matrix at CheckMatrix ", matrix)
 
   var result = true
   // available spaces
@@ -74,10 +65,6 @@ Game.prototype.checkMatrix = function(matrix) {
 
   // else check mataches
   for (var row=0; row<matrix.length; row++) {
-    console.log("--------68---------")
-    console.log("matrix: ", matrix )
-    console.log("matrix.length: ", matrix.length )
-
     if(matrix[row].length < 4) {result = false}
     for (var col=0; col<matrix[row].length; col++) {
       if (matrix[row][col] == matrix[row][col+1]) {
@@ -104,6 +91,8 @@ Game.prototype.unoccupiedSpaces = function() {
 }
 
 Game.prototype.createTile = function(move) {
+  $('#points').remove()
+
   // console.log("MOVE NOW? ", this.move)
   if( this.move > 0){
     let availableSpaces = this.unoccupiedSpaces()
@@ -156,6 +145,18 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
     $(matrix[j][i3]).text(value);
     this.score += value
     $('.score').text(this.score);
+    $('#totalScore').append("<div id=points>+" + value + "</div>")
+    console.log("here")
+    $('#points').animate({'marginTop' : "-=200px"});
+    // $("#points").queue(function() {
+    //    $(this).remove();
+    //  });
+
+
+
+    setTimeout($('#totalScore').remove("#points"), 2*1000)
+    // setTimeout($('#points').remove(), 0.25*1000)
+
     this.move++
     if (value == 2048) {
       this.win = true;
