@@ -9,7 +9,6 @@ var Game = function () {
     // spawn 2 tiles in random spaces
     this.newTile()
     this.newTile()
-    // this.newTile(2)
   }
 
   this.newTile = function (numberOfTiles) {
@@ -19,23 +18,28 @@ var Game = function () {
     let randVal = randomVal({4:0.3, 2:0.7})
     var newTile = null
 
+    console.log('row: ', randRow)
+    console.log('col: ', randCol)
+
+    console.log('first: ', tiles[0])
     if (tiles[0] === undefined) {
-      newTile = $('<div>', { id: 'newTile', class: 'tile newTile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
+      newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
     } else {
       while (newTile === null) {
         for (let i = 0; i < tiles.length; i++) {
-          if (tiles[i].row !== randRow || tiles[i].col !== randCol) {
+          if (tiles[i].dataset.row !== randRow || tiles[i].dataset.col !== randCol) {
             newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
           } else {
             randRow = 'row' + randomSpace()
             randCol = 'col' + randomSpace()
           }
         }
+        tiles = $('.tile')
+        console.log('i2: ', tiles.length)
+        console.log('i3 :', $('.tile'))
       }
     }
     $(".cells").after(newTile)
-
-    // newTile = null
     return newTile
   }
 
