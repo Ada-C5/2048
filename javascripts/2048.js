@@ -3,7 +3,7 @@ var Game = function () {
   thisGame = this
   this.gameOver = false
   this.score = 0
-  this.validCollision = true
+  this.validCollision = null
 
   this.newGame = function () {
     // spawn 2 tiles in random spaces
@@ -73,21 +73,21 @@ var Game = function () {
     if (tile === 2048) {
       console.log('won!')
       $('#endgame').toggleClass('layer')
-      // setTimeout(function(){
-        $('.win-text').text("You Won!")
-      // }, 300);
+      $('.win-text').text("You Won!")
       thisGame.gameOver = true
     }
   }
 
   this.hasLost = function () {
-    console.log('lost!')
     // checks if the board is full
     // needs to check if there are no more valid moves
-    if ($('.tiles').length === 9 && this.validCollision === false) {
-      $('#endgame').text("You Lost :(")
+    if ($('.tiles').length >= 16 && thisGame.validCollision == false) {
+      console.log("lost");
+      $('#endgame').addClass('layer')
+      $('.win-text').text("LOOOSER!")
       thisGame.gameOver = true
     }
+    // return false
   }
 }
 
@@ -138,6 +138,9 @@ function rightSort(arr) {
 Game.prototype.moveTile = function (direction) {
   // Game method here
   if (!thisGame.gameOver) {
+    console.log($(".tile").length);
+    console.log(thisGame.validCollision);
+
     switch(direction) {
       case 38: //up
         seperateMovementFunction('row', '-')
@@ -151,6 +154,18 @@ Game.prototype.moveTile = function (direction) {
       case 39: //right
         seperateMovementFunction('col', '+')
         break;
+    }
+  }
+
+  function defineType2(value, type) {
+    if (type === "col") {
+      var type2 = "row"
+      var type2Number = value.dataset[type2][3]
+      return type2 + '=' + type2 + type2Number
+    } else if (type === "row") {
+      type2 = "col"
+      var type2Number = value.dataset[type2][3]
+      return type2 + '=' + type2 + type2Number
     }
   }
 
@@ -185,7 +200,6 @@ Game.prototype.moveTile = function (direction) {
     moveAllTheWay(sortArrays(type, operand), type, operand)
     collideIfSameValue(sortArrays(type, operand),type, operand)
     moveAllTheWay(sortArrays(type, operand), type, operand)
-
   }
 
   function moveAllTheWay(arrayQuerys, type, operand) {
@@ -196,27 +210,22 @@ Game.prototype.moveTile = function (direction) {
           $(value).removeAttr('id')
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
-            // debugger
             var nextEle = num + 1
             var wall = 4
           } else if (operand === "-") {
             var nextEle = num - 1
             var wall = 0
           }
-          if (type === "col") {
-            var type2 = "row"
-            var type2Number = value.dataset[type2][3]
-          } else if (type === "row") {
-            type2 = "col"
-            var type2Number = value.dataset[type2][3]
-          }
-          var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
+
+          let textTointepolate = defineType2(value, type)
+
+          var nextCol = '.tile[data-' + textTointepolate + '][data-' + type + '=' + type + nextEle.toString() + ']'
           var nextColEle = $(nextCol)
 
           if (wall === 4) {
             while (nextEle < wall) {
               let nextString = nextEle.toString()
-              var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
+              var nextCol = '.tile[data-' + textTointepolate + '][data-' + type + '=' + type + nextEle.toString() + ']'
               let nextColEle = $(nextCol)
 
               if (nextColEle.length === 0) {
@@ -227,11 +236,9 @@ Game.prototype.moveTile = function (direction) {
           } else if (wall === 0) {
             while (nextEle >= wall) {
               let nextString = nextEle.toString()
-              //interpolates the next element
-              var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
+              var nextCol = '.tile[data-' + textTointepolate + '][data-' + type + '=' + type + nextEle.toString() + ']'
               let nextColEle = $(nextCol)
 
-              //check if next tile is empty,
               if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
               }
@@ -254,20 +261,15 @@ Game.prototype.moveTile = function (direction) {
         var nextEle = num - 1
       }
 
-      if (type === "col") {
-        var type2 = "row"
-        var type2Number = value.dataset[type2][3]
-      } else if (type === "row") {
-        type2 = "col"
-        var type2Number = value.dataset[type2][3]
-      }
+      let textTointepolate = defineType2(value, type)
 
       let nextString = nextEle.toString()
-      var nextCol = '.tile[data-' + type2 + '=' + type2 + type2Number + '][data-' + type + '=' + type + nextEle.toString() + ']'
+      var nextCol = '.tile[data-' + textTointepolate + '][data-' + type + '=' + type + nextEle.toString() + ']'
       let nextColEle = $(nextCol)
 
         if (nextColEle.length > 0) {
           if (value.dataset.val === nextColEle[0].dataset.val) {
+            thisGame.validCollision = true
             value.dataset[type] = type + nextString
             let newVal = parseInt(value.dataset.val) + parseInt(nextColEle[0].dataset.val)
             value.dataset.val = newVal
@@ -276,13 +278,12 @@ Game.prototype.moveTile = function (direction) {
             setTimeout(function(){
               $(value).text(value.dataset.val)
             }, 240);
-
             nextColEle[0].remove()
           }
-          // return false
         }
       });
     }
+
   }
 }
 
