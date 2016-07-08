@@ -2,6 +2,10 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+#scoreboard {
+  float: left;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
