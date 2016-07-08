@@ -4,7 +4,8 @@ var Game = function() {
                 [null, null, null, null],
                 [null, null, null, null]]
 
-  this._availableSpaces = [[0, 1], [0, 2], [0, 3]]
+  this._availableSpaces = [[0, 1], [0, 2], [0, 3], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2], [2, 3], [3, 0], [3, 1], [3, 2]]
+  this._score = 0
 };
 
 Game.prototype.moveTile = function(tile, direction, callback) {
@@ -65,6 +66,7 @@ Game.prototype.collide = function (spaceOne, spaceTwo) {
   // spaces specified hold values
   if (spaceOne === spaceTwo) {
     spaceOne += spaceTwo
+    this._score += spaceOne
   } else if (spaceOne === null || spaceOne === 0 || typeof spaceOne === 'undefined' || isNaN(spaceOne)) {
     spaceOne = spaceTwo
   } else {
@@ -130,14 +132,16 @@ Game.prototype.moveUp = function () {
   }
 }
 
-Game.prototype.addTile = function () {
+Game.prototype.addTile = function (callback) {
   console.log(this._availableSpaces)
   console.log(Math.floor(Math.random() * this._availableSpaces.length))
   let random = this._availableSpaces[Math.floor(Math.random() * this._availableSpaces.length)]
   console.log(random)
+  this._score += 2
   let firstIndex = random.toString()[0]
   let secondIndex = random.toString()[2]
   this._board[Number(firstIndex)][Number(secondIndex)] = Number(2)
+  callback
 }
 
 $(document).ready(function() {
