@@ -14,7 +14,7 @@ Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
   this.createMatrix(tile, dataValue, dataValue2, matrix, reverse)
   this.moveTiles(tile, matrix, num, dataValue)
   // let self = this
-  setTimeout(() => this.createTile(), 1*1000)
+  setTimeout(() => this.createTile(), 0.22*1000)
   console.log("MATRIX AFTER: ", matrix)
 
 }
