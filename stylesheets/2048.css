@@ -23,6 +23,7 @@ html {
 .tile {
   position: absolute;
   top: 0; left: 0;
+  /*transition:  0.2s ease-in-out;*/
   transition: all 0.2s ease-in-out;
 
   color: #f9f6f2;
@@ -36,6 +37,16 @@ html {
   margin: 0.5rem 0 0 0.5rem ;
   text-align: center;
   width: 4rem;
+}
+
+#newTile {
+  animation: 0.15s ease 0s pop;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); }
+  85% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 .tile[data-row=row0] { top: 0; }

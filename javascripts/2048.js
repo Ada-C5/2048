@@ -20,12 +20,12 @@ var Game = function () {
     var newTile = null
 
     if (tiles[0] === undefined) {
-      newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
+      newTile = $('<div>', { id: 'newTile', class: 'tile newTile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
     } else {
       while (newTile === null) {
         for (let i = 0; i < tiles.length; i++) {
           if (tiles[i].row !== randRow || tiles[i].col !== randCol) {
-            newTile = $('<div>', { class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
+            newTile = $('<div>', { id: 'newTile', class: 'tile', 'data-row': randRow, 'data-col': randCol, 'data-val': randVal, text: randVal })
           } else {
             randRow = 'row' + randomSpace()
             randCol = 'col' + randomSpace()
@@ -34,6 +34,7 @@ var Game = function () {
       }
     }
     $(".cells").after(newTile)
+
     // newTile = null
     return newTile
   }
@@ -174,6 +175,8 @@ Game.prototype.moveTile = function (direction) {
     for( line of arrayQuerys) {
       if (line.length > 0) {
         $.each(line, function( index, value ) {
+          // remove the 'newTile' id that was used to animate popping in
+          $(value).removeAttr('id')
           var num = parseInt(value.dataset[type][3])
           if (operand === "+") {
             // debugger
