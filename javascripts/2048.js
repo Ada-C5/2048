@@ -26,7 +26,6 @@ var Game = function() {
 };
 
 Game.prototype.moveTile = function(tile, direction) {
-  // Game method here
   let available,
   axis_index,
   axis,
@@ -66,7 +65,6 @@ Game.prototype.moveTile = function(tile, direction) {
     case 40: //down
     available = [];
     axis = "row";
-    // tile.attr({ "data-row": "r2" });
     for (let n = 0; n < 4; n++) {
       axis_index = 3;
       array = $(".tile[data-col=c" + n + "]");
@@ -95,7 +93,6 @@ Game.prototype.moveTile = function(tile, direction) {
     case 37: //left
     available = [];
     axis = "col";
-    // axis = "data-col";
     // loop through all rows
     for (let n = 0; n < 4; n++) {
       axis_index = 0;
@@ -207,7 +204,7 @@ function slide_tile(array, axis_index, i, axis, game) {
       // check for win
       let val = tile[0].dataset.val;
       game.score += Number(val);
-      console.log(game.score);
+      $(".score").text("Score: " + game.score)
       if (val === "2048") {
         console.log("YOU WIN");
         $('.outcome').text("YOU WIN!");
@@ -248,9 +245,7 @@ Game.prototype.new_game = function() {
 
   for (let i = 0; i < 2; i++) {
     let r_num = Math.floor(Math.random() * (3 + 1) + 0);
-    // console.log(r_num)
     let c_num = Math.floor(Math.random() * (3 + 1) + 0);
-    // console.log(c_num)
     let vals = [2, 2, 2, 2, 2, 2, 4]
     var val = vals[Math.floor(Math.random() * vals.length)];
 
@@ -262,7 +257,6 @@ Game.prototype.new_game = function() {
     })
     .addClass("tile")
     .html(val)
-    console.log($elem)
 
     $("#gameboard").append($elem)
   };
@@ -270,12 +264,15 @@ Game.prototype.new_game = function() {
 
 $(document).ready(function() {
   console.log("ready to go!");
-  // Any interactive jQuery functionality
   var game = new Game();
+  var score = game.score
+  $(".score").text("Score: " + score)
 
   $("button.new_game_button").bind("click",function() {
     game.new_game()
     $('.outcome').text("")
+    game.score = 0;
+    $(".score").text("Score: " + game.score)
   });
 
   $("body").keydown(function(event){
