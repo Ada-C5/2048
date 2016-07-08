@@ -9,6 +9,10 @@ Game.prototype.addScore = function(value_to_add) {
 
   // Update in view
   $('.score').text(this._score)
+
+  if (value_to_add === 2048) {
+    alert('You win!')
+  }
 }
 
 // // // GET TILES // // //
