@@ -2,13 +2,117 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+#points{
+  top: 0; left: 0;
+  /*transition: all 0.1s ease-in-out;*/
+  color: grey;
+  font-size: 1.1rem;
+  font-weight: bold;
+  width: 85%;
+  display: inline-grid;
+  position: absolute;
+  top: 3.7rem;
+}
+
 #gameboard {
   background: #bbada0;
-  border-radius: 0.5rem;
-  height: 18.5rem;
+  border-radius: 0.3rem;
+  height: 25.5rem;
   margin: 1rem auto;
   position: relative;
   width: 18.5rem;
+}
+
+#score, #best {
+  margin: auto;
+  top: 10;
+  background: #FF9839;
+  border-radius: 0.5rem;
+  width: 9rem;
+  height: 4.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 2rem;
+  color: #f9f6f2;
+  text-align: center;
+  display: inline-block;
+  margin: auto;
+}
+
+#score p, #best p {
+  margin: 0;
+  padding: 0;
+  margin-top: 0;
+  letter-spacing: 2.8px;
+}
+
+.score .best {
+  margin: auto;
+  top: 10;
+  background: #FF9839;
+  border-radius: 0.5rem;
+  width: 9rem;
+  height: 4.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 2rem;
+  color: #f9f6f2;
+  text-align: center;
+  display: inline-block;
+  margin: auto;
+
+}
+
+#totalScore{
+  margin-top: 58px;
+  width: 100%;
+  text-align: center;
+}
+
+#win{
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f9f6f2;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#lose{
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: black;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.lost{
+  opacity: 0.6;
+}
+
+.game{
+  opacity: 1;
+}
+
+.reset{
+  height: 4rem;
+  display: inline-block;
+  width: 100%;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+
+}
+
+#reset{
+  background: rgba(128, 94, 49, 0.56);
+  border-radius: 0.5rem;
+  width: 9rem;
+  height: 4rem;
+  color: #f9f6f2;
+  font-size: 1rem;
+
 }
 
 .cell {
@@ -18,16 +122,16 @@ html {
   height: 4rem;
   margin: 0.5rem 0 0 0.5rem ;
   width: 4rem;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .tile {
   position: absolute;
   top: 0; left: 0;
-  transition: all 0.2s ease-in-out;
-
+  transition: all 0.1s ease-in-out;
   color: #f9f6f2;
   background: #000;
-
   border-radius: 0.5rem;
   font-size: 1.5rem;
   font-weight: bold;
@@ -38,18 +142,19 @@ html {
   width: 4rem;
 }
 
-.tile[data-row=r0] { top: 0; }
-.tile[data-row=r1] { top: 4.5rem; }
-.tile[data-row=r2] { top: 9rem; }
-.tile[data-row=r3] { top: 13.5rem; }
 
-.tile[data-col=c0] { left: 0; }
-.tile[data-col=c1] { left: 4.5rem; }
-.tile[data-col=c2] { left: 9rem; }
-.tile[data-col=c3] { left: 13.5rem; }
+.tile[data-row='0'] { top: 0; }
+.tile[data-row='1'] { top: 4.5rem; }
+.tile[data-row='2'] { top: 9rem; }
+.tile[data-row='3'] { top: 13.5rem; }
+
+.tile[data-col='0'] { left: 0; }
+.tile[data-col='1'] { left: 4.5rem; }
+.tile[data-col='2'] { left: 9rem; }
+.tile[data-col='3'] { left: 13.5rem; }
 
 .tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
-.tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
+.tile[data-val="4"]    { color: #776e65; background-color: #e8dabe; }
 .tile[data-val="8"]    { background-color: #f2b179; }
 .tile[data-val="16"]   { background-color: #f59563; }
 .tile[data-val="32"]   { background: #f67c5f; }

@@ -7,6 +7,19 @@
     <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
+    <div id="totalScore">
+      <div id="score">
+        <p>Score</p>
+        <div class="score">0</div>
+      </div>
+      <div id="best">
+        <p>Best</p>
+        <div class="best">0</div>
+      </div>
+      <!-- <div id="points"></div> -->
+
+    </div>
+
     <div id="gameboard">
       <div class="cells">
         <div class="cell"></div>
@@ -26,7 +39,11 @@
         <div class="cell"></div>
         <div class="cell"></div>
       </div>
-      <div class="tile" data-row="r1", data-col="c1" data-val="2">2</div>
+      <div class="reset">
+        <button id="reset">RESET</button>
+        <div id="win"></div>
+        <div id="lose"></div>
+
     </div>
   </body>
 </html>
