@@ -8,6 +8,7 @@ var Game = function() {
   this.win = false;
   this.score = 0;
   this.bestScore = 0;
+  this.start = true;
 };
 
 Game.prototype.moveAll = function(tile, dataValue, dataValue2, num, reverse) {
@@ -92,8 +93,8 @@ Game.prototype.unoccupiedSpaces = function() {
 
 Game.prototype.createTile = function(move) {
   $('#points').remove()
-
-  if( this.move > 0){
+  if( this.move > 0 || this.start === true){
+    this.start = false;
     let availableSpaces = this.unoccupiedSpaces()
     let tileLocation = availableSpaces[Math.floor(Math.random() * (availableSpaces.length))];
     var tileValueArray = ["2","4"]
@@ -185,7 +186,6 @@ Game.prototype.moveDirection = function(j, i, i2, i3, matrix, data) {
   }
 }
 
-
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
@@ -209,6 +209,7 @@ Game.prototype.moveTile = function(tile, direction) {
 $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
+  game.createTile();
   var reset = $('.reset button')
     $('body').keydown(function(event){
       if(game.gameOver() === false){
@@ -241,8 +242,9 @@ $(document).ready(function() {
     $('.tile').remove();
     game.score = 0;
     $('.score').text(game.score);
-    game.createTile();
+    game.start = true;
     game.win = false
+    {setTimeout(() => game.createTile(), 0.25*1000)}
 
   });
 });
