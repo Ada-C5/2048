@@ -91,6 +91,10 @@ html {
   opacity: 0.6;
 }
 
+.game{
+  opacity: 1;
+}
+
 .reset{
   height: 4rem;
   display: inline-block;
