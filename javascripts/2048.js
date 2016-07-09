@@ -2,6 +2,7 @@ var Game = function () {
   thisGame = this
   this.gameOver = false
   this.score = 0
+  this.validTileSpawn = false
 
   this.newGame = function () {
     // spawn 2 tiles in random spaces
@@ -163,6 +164,8 @@ function rightSort(arr) {
 }
 
 Game.prototype.moveTile = function (direction) {
+  this.validTileSpawn = false
+
   if (!thisGame.gameOver) {
     switch(direction) {
       case 38: //up
@@ -254,6 +257,7 @@ Game.prototype.moveTile = function (direction) {
 
               if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
+                thisGame.validTileSpawn = true
               }
               nextEle++;
             }
@@ -265,6 +269,7 @@ Game.prototype.moveTile = function (direction) {
 
               if (nextColEle.length === 0) {
                 value.dataset[type] = type + nextString
+                thisGame.validTileSpawn = true
               }
               nextEle--;
             }
@@ -303,6 +308,8 @@ Game.prototype.moveTile = function (direction) {
               $(value).attr('id', 'combineTile')
               nextColEle[0].remove()
             }, 120);
+            // if a collision, you can spawn a tile
+            thisGame.validTileSpawn = true
           }
         }
       });
@@ -326,7 +333,9 @@ $(document).ready(function () {
         game.moveTile(event.which)
         updateScore()
         // spawn a new tile after each move
-        thisGame.newTile()
+        if (game.validTileSpawn) {
+          game.newTile()
+        }
         // check if game lost
         game.hasLost()
       }
