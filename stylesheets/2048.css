@@ -1,18 +1,78 @@
+* {
+ color: #e6e600;
+}
+
 html {
-  font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font: normal normal 30px/1 'Bangers', cursive;
+}
+
+body:after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: url("../images/background-space.jpg");
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
+.logo {
+  display: block;
+  margin: auto;
+}
+
+.new-game {
+  float: left;
+}
+
+.scoring {
+  float: right;
+  margin-top: 5%;
+  margin-right: 5%;
+  text-align: center;
+  font-size: 40px;
+}
+
+.new-game {
+  background-color: Transparent;
+  font-weight: bolder;
+  border: 2px solid;
+  margin-top: 5%;
+  margin-left: 2%;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 15px;
+  height: 4em;
+  width: 15em;
+}
+
+.new-game:hover {
+  border-style: 2px;
+  border-color: rgb(26, 83, 255);
+  border-radius: 15px;
+  transition: all 0.25s linear;
+}
+
+.win-lose {
+  font-size: 30px;
+  float: right;
 }
 
 #gameboard {
-  background: #bbada0;
+  background:  #002080;
   border-radius: 0.5rem;
   height: 18.5rem;
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   position: relative;
   width: 18.5rem;
 }
 
 .cell {
-  background: rgba(238, 228, 218, 0.35);
+  background: rgba(26, 83, 255, 0.35);
   border-radius: 0.5rem;
   float: left;
   height: 4rem;
@@ -23,10 +83,8 @@ html {
 .tile {
   position: absolute;
   top: 0; left: 0;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.5s ease-in-out;
 
-  color: #f9f6f2;
-  background: #000;
 
   border-radius: 0.5rem;
   font-size: 1.5rem;
@@ -48,14 +106,21 @@ html {
 .tile[data-col=c2] { left: 9rem; }
 .tile[data-col=c3] { left: 13.5rem; }
 
-.tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
-.tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
-.tile[data-val="8"]    { background-color: #f2b179; }
-.tile[data-val="16"]   { background-color: #f59563; }
-.tile[data-val="32"]   { background: #f67c5f; }
-.tile[data-val="64"]   { background: #f65e3b; }
-.tile[data-val="128"]  { background: #edcf72; }
-.tile[data-val="256"]  { background: #edcc61; }
-.tile[data-val="512"]  { background: #edc850; }
-.tile[data-val="1024"] { background: #edc53f; }
-.tile[data-val="2048"] { background: #edc22e; }
+.tile[data-val="0"]    { background-color: rgba(238, 228, 218, 0.35); }
+.tile[data-val="2"]    { background-image: url("../images/r2d2.jpg"); background-size: cover; }
+.tile[data-val="4"]    { background-image: url("../images/c3po.jpg"); background-size: cover; }
+.tile[data-val="8"]    { background-image: url("../images/bb8.jpg"); background-size: cover; }
+.tile[data-val="16"]   { background-image: url("../images/yoda.png"); background-size: cover; }
+.tile[data-val="32"]   { background-image: url("../images/chewbacca.jpg"); background-size: cover; }
+.tile[data-val="64"]   { background-image: url("../images/storm-trooper.jpg"); background-size: cover; }
+.tile[data-val="128"]  { background-image: url("../images/boba.jpeg"); background-size: cover; }
+.tile[data-val="256"]  { background-image: url("../images/leia.jpg"); background-size: cover; }
+.tile[data-val="512"]  { background-image: url("../images/han.jpg"); background-size: cover; }
+.tile[data-val="1024"] { background-image: url("../images/vader.jpg"); background-size: cover; }
+.tile[data-val="2048"] { background-image: url("../images/luke.jpg"); background-size: cover; }
+.tile[data-val="4096"] { background-image: url("../images/palpatine.jpg"); background-size: cover; }
+.tile[data-val="8192"] { background-image: url("../images/lando.jpg"); background-size: cover; }
+.tile[data-val="16384"] { background-image: url("../images/rey.jpg"); background-size: cover; }
+.tile[data-val="32768"] { background-image: url("../images/jaba.png"); background-size: cover; }
+.tile[data-val="65536"] { background-image: url("../images/obi-wan.jpeg"); background-size: cover; }
+
