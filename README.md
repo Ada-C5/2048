@@ -28,3 +28,15 @@ Recreate as much of the original game as is reasonable in the one week we have a
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
+
+[Trello Board](https://trello.com/b/NxRw0yYj/2048)
+
+
+- **Scoring:** every time you combine 2 tiles, add the sum of those 2 tiles to your score
+- **Tiles Enter:** At start of game, 2 tiles appear on random cells and are either a 2 or 4 tile, 2tiles are more common than 4tiles.
+- **Win Condition:** Two tiles are combined that sum up to 2048 || when one tile exists that has a value of 2048
+- **Lose Condition:** The board spaces are filled and no tiles can be combined when pressing any direction key
+- **Causes Movement:** Pressing an arrow key shifts tiles in the direction of the arrow key
+- **Movement Consequences:** Tiles shift as far in the direction pressed as they can (meaning there are empty spaces for them to move to or there is a like tile that they can combine into) -- check if empty, if not empty, check if it's the same tile value (meaning it will be combined)
+ - _Note: one tile only combines once per turn/swipe_
+- **When Tiles Collide:** Two tiles combine into one with a new summed value, the tile that is farther from the direction sliding in is deleted
